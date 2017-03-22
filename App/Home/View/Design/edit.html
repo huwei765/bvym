@@ -1,0 +1,33 @@
+<div class="bjui-pageContent">
+    <form action="__URL__/edit/navTabId/{:CONTROLLER_NAME}" class="pageForm" data-toggle="validate">
+		<input type="hidden" name="id" value="{$id}">
+        <div class="pageFormContent" data-layout-h="0">
+          <table class="table table-condensed table-hover" width="100%">
+              <tbody>
+              <tr>
+                  <td colspan="2"><label for='title_input' class='control-label x85'>标题:</label><input type='text' id='title' name='title'  size='30' data-rule='required;'   value='{$Rs.title}'  ></td>
+              </tr>
+              <tr>
+                  <td><label for='cuname_input' class='control-label x85'>客户:</label><input type='text' id='cuname' name='cuname'  size='20' data-toggle='lookup' data-url='__MODULE__/public/custcon/navTabId/{:CONTROLLER_NAME}'  value='{$Rs.cuname}'  >
+                      <input type="hidden" id='cuid' name='cuid' value='{$Rs.cuid}'>
+                  </td>
+                  <td><label for='juname_input' class='control-label x85'>设计总监:</label><input type='text' id='juname' name='juname'  size='20' data-toggle='lookup' data-url='__MODULE__/public/hruser/navTabId/{:CONTROLLER_NAME}'  value='{$Rs.juname}'  >
+                      <input type="hidden" id='juid' name='juid' value='{$Rs.juid}'>
+                  </td>
+              </tr>
+              <tr><td colspan=2><label for='content_input' class='control-label x85'>详情:</label><textarea name='content'  cols='65' rows='5' >{$Rs.content}</textarea></td></tr>
+              <tr></tr>
+              <tr>
+                  <td colspan=2><label for='beizhu_input' class='control-label x85'>备注:</label><textarea name='beizhu'  cols='65' rows='2' >{$Rs.beizhu}</textarea></td>
+              </tr>
+              </tbody>
+          </table>
+        </div>
+        <div class="bjui-footBar">
+            <ul>
+                <li><button type="button" class="btn-close" data-icon="close">取消</button></li>
+                <li><button type="submit" class="btn-default" data-icon="save">保存</button></li>
+            </ul>
+        </div>
+    </form>
+</div>

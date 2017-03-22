@@ -1,0 +1,33 @@
+<div class="bjui-pageContent">
+    <form action="__URL__/edit/navTabId/{:CONTROLLER_NAME}" class="pageForm" data-toggle="validate">
+		<input type="hidden" name="id" value="{$id}">
+        <div class="pageFormContent" data-layout-h="0">
+          <table class="table table-condensed table-hover" width="100%">
+           <tbody>
+           <tr>
+               <td><label for='xingming_input' class='control-label x85'>姓名:</label><input type='text' id='xingming' name='xingming'  size='20'   value='{$Rs.xingming}'  ></td>
+               <td><label for='sex_input' class='control-label x85'>性别:</label><select name='sex'  data-toggle='selectpicker' ><option value=''>请选择</option><volist name='Think.config.BASE_SEX' id='sex'><option value='{$sex}' <if condition=" $sex EQ $Rs['sex'] " >selected</if> >{$sex}</option></volist></td>
+           </tr>
+           <tr>
+               <td><label for='phone_input' class='control-label x85'>手机号码:</label><input type='text' id='phone' name='phone' data-rule='required;' size='20'   value='{$Rs.phone}'  ></td>
+               <td><label for='email_input' class='control-label x85'>EMAIL:</label><input type='text' id='email' name='email'  size='20'   value='{$Rs.email}'  ></td>
+           </tr>
+           <tr>
+               <td><label for='company_input' class='control-label x85'>单位名称:</label><input type='text' id='company' name='company'  size='0'   value='{$Rs.company}'  ></td>
+               <td><label for='dept_input' class='control-label x85'>部门职务:</label><input type='text' id='dept' name='dept'  size='20'   value='{$Rs.dept}'  ></td>
+           </tr>
+           <tr>
+               <td colspan="2"><label for='addr_input' class='control-label x85'>联系地址:</label><input type='text' id='addr' name='addr'  size='20'   value='{$Rs.addr}'  ></td>
+           </tr>
+           <tr><td colspan=2><label for='memo_input' class='control-label x85'>备注:</label><textarea name='memo'  cols='65' rows='5' >{$Rs.memo}</textarea></td></tr>
+           </tbody>
+          </table>
+        </div>
+        <div class="bjui-footBar">
+            <ul>
+                <li><button type="button" class="btn-close" data-icon="close">取消</button></li>
+                <li><button type="submit" class="btn-default" data-icon="save">保存</button></li>
+            </ul>
+        </div>
+    </form>
+</div>
