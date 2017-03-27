@@ -42,7 +42,7 @@
 <td>{$custconv.qq|msubstr=###,0,20}</td>
 <td>{$custconv.addtime|substr=###,0,10}</td>
 <td>{$custconv.updatetime|substr=###,0,10}</td>
-  <td><a href='__MODULE__/custcon/view/id/{$custconv['id']}/navTabId/{:CONTROLLER_NAME}'  data-toggle='dialog' data-width='800' data-height='500' data-id='dialog-maskcustcon' data-mask='true' >详细</a></td></tr> </foreach> </tbody> </table></div><div class='tab-pane fade' id='custgd'><table class='table table-bordered table-striped table-hover'><php>$custgdlist=M('custgd')->where(array('jcid'=>I('id')))->select();</php> <thead> <tr><th>ID</th>
+  <td><a href='{:U(MODULE_NAME."/custcon/view",array("id"=>$custconv["id"],"navTabId"=>CONTROLLER_NAME))}'  data-toggle='dialog' data-width='800' data-height='500' data-id='dialog-maskcustcon' data-mask='true' >详细</a></td></tr> </foreach> </tbody> </table></div><div class='tab-pane fade' id='custgd'><table class='table table-bordered table-striped table-hover'><php>$custgdlist=M('custgd')->where(array('jcid'=>I('id')))->select();</php> <thead> <tr><th>ID</th>
 <th height=30>详情</th>
 <th height=30>客户名称</th>
 <th>跟单方式</th>
@@ -60,7 +60,7 @@
 <td>{$custgdv.uname|msubstr=###,0,20}</td>
 <td>{$custgdv.addtime|substr=###,0,10}</td>
 <td>{$custgdv.updatetime|substr=###,0,10}</td>
-  <td><a href='__MODULE__/custgd/view/id/{$custgdv['id']}/navTabId/{:CONTROLLER_NAME}'  data-toggle='dialog' data-width='800' data-height='500' data-id='dialog-maskcustgd' data-mask='true' >详细</a></td></tr> </foreach> </tbody> </table></div><div class='tab-pane fade' id='hetong'><table class='table table-bordered table-striped table-hover'><php>$hetonglist=M('hetong')->where(array('jcid'=>I('id')))->select();</php> <thead> <tr><th>ID</th>
+  <td><a href='{:U(MODULE_NAME."/custgd/view",array("id"=>$custgdv["id"],"navTabId"=>CONTROLLER_NAME))}'  data-toggle='dialog' data-width='800' data-height='500' data-id='dialog-maskcustgd' data-mask='true' >详细</a></td></tr> </foreach> </tbody> </table></div><div class='tab-pane fade' id='hetong'><table class='table table-bordered table-striped table-hover'><php>$hetonglist=M('hetong')->where(array('jcid'=>I('id')))->select();</php> <thead> <tr><th>ID</th>
 <th>签约日期</th>
 <th height=30>客户名称</th>
 <th height=30>联系人</th>
@@ -80,7 +80,7 @@
 <td>{$hetongv.uname}</td>
 <td>{$hetongv.dqrq|substr=###,0,10}</td>
 <td>{$hetongv.updatetime|substr=###,0,10}</td>
-  <td><a href='__MODULE__/hetong/view/id/{$hetongv['id']}/navTabId/{:CONTROLLER_NAME}'  data-toggle='dialog' data-width='800' data-height='500' data-id='dialog-maskhetong' data-mask='true' >详细</a></td></tr> </foreach> </tbody> </table></div>
+  <td><a href='{:U(MODULE_NAME."/hetong/view",array("id"=>$hetongv["id"],"navTabId"=>CONTROLLER_NAME))}'  data-toggle='dialog' data-width='800' data-height='500' data-id='dialog-maskhetong' data-mask='true' >详细</a></td></tr> </foreach> </tbody> </table></div>
 		   
 		 </div>
         </div>

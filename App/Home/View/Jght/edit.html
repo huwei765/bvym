@@ -1,11 +1,11 @@
 <div class="bjui-pageContent">
-    <form action="__URL__/edit/navTabId/{:CONTROLLER_NAME}" class="pageForm" data-toggle="validate">
+    <form action="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/edit',array('navTabId'=>CONTROLLER_NAME))}" class="pageForm" data-toggle="validate">
 		<input type="hidden" name="id" value="{$id}">
         <div class="pageFormContent" data-layout-h="0">
           <table class="table table-condensed table-hover" width="100%">
            <tbody>
 		   <tr>
-               <td colspan="2"><label for='juname_input' class='control-label x85'>机构名称:</label><input type='text' id='jcname' name='jcname'  size='20' data-toggle='lookup' data-url='__MODULE__/public/cname/navTabId/{:CONTROLLER_NAME}'  value='{$Rs.jcname}'  >
+               <td colspan="2"><label for='juname_input' class='control-label x85'>机构名称:</label><input type='text' id='jcname' name='jcname'  size='20' data-toggle='lookup' data-url='{:U(MODULE_NAME."/public/cname",array("navTabId"=>CONTROLLER_NAME))}'  value='{$Rs.jcname}'  >
                    <input type="hidden" name="jcid" id="jcid" value="{$Rs.jcid}">
                </td></tr>
 <tr><td><label for='title_input' class='control-label x85'>合同名称:</label><input type='text' id='title' name='title' data-rule='required;' size='20'   value='{$Rs.title}'  ></td><td><label for='bianhao_input' class='control-label x85'>合同编号:</label><input type='text' id='bianhao' name='bianhao'  size='20'   value='{$Rs.bianhao}'  ></td></tr>

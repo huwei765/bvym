@@ -56,7 +56,7 @@
                         <td>{$custgdv.uname|msubstr=###,0,20}</td>
                         <td>{$custgdv.addtime|date="Y-m-d H:i",###}</td>
                         <td>{$custgdv.updatetime|date="Y-m-d H:i",###}</td>
-                        <td><a href='__MODULE__/custgd/view/id/{$custgdv['id']}/navTabId/{:CONTROLLER_NAME}'  data-toggle='dialog' data-width='800' data-height='500' data-id='dialog-maskcustgd' data-mask='true' >详细</a></td></tr> </foreach> </tbody>
+                        <td><a href='{:U(MODULE_NAME."/custgd/view",array("id"=>$custgdv["id"],"navTabId"=>CONTROLLER_NAME))}'  data-toggle='dialog' data-width='800' data-height='500' data-id='dialog-maskcustgd' data-mask='true' >详细</a></td></tr> </foreach> </tbody>
                     </table>
                 </div>
             </div>

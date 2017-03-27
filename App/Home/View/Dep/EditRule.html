@@ -11,7 +11,7 @@ function CheckAll(form)
 //-->
     </SCRIPT>
 <div class="bjui-pageContent">
- <form action="__URL__/EditRule/navTabId/{:CONTROLLER_NAME}" class="pageForm" data-toggle="validate">
+ <form action="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/EditRule',array('navTabId'=>CONTROLLER_NAME))}" class="pageForm" data-toggle="validate">
  <input type="hidden" name="id" value="{$id}">
     <div class="pageFormContent" data-layout-h="0">
      <table class="table table-condensed table-hover" width="100%">
