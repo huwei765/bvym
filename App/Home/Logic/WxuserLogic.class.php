@@ -94,7 +94,7 @@ class WxuserLogic extends Model{
 	 * @return mixed
 	 */
 	public function getWxUserInfoByOpenId($openId,$field="*"){
-		return $this->getWxUserInfo(array("openid"=>"'".$openId."'"),$field);
+		return $this->getWxUserInfo("openid = '".$openId."'",$field);
 	}
 
 	/**

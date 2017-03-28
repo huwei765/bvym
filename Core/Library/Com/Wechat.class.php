@@ -85,7 +85,6 @@ class Wechat {
             $msg = $this->_msg;
         }
         $xmldata=  $this->xml_encode($msg);
-        $this->log($xmldata);
         if ($this->encrypt_type == 'aes') { //如果来源消息为加密方式
             //Todo:加密方式暂不考虑
         }
@@ -441,7 +440,7 @@ class Wechat {
         foreach ($data as $key => $val) {
             is_numeric($key) && $key = "item id=\"$key\"";
             $xml    .=  "<$key>";
-            $xml    .=  ( is_array($val) || is_object($val)) ? self::data_to_xml($val)  : self::xmlSafeStr($val);
+            $xml    .=  is_array($val) ? self::data_to_xml($val)  : self::xmlSafeStr($val);
             list($key, ) = explode(' ', $key);
             $xml    .=  "</$key>";
         }
