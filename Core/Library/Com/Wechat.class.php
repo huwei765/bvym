@@ -42,8 +42,8 @@ class Wechat {
     {
         $this->token = isset($options['token'])?$options['token']:'';
         $this->encodingAesKey = isset($options['encodingaeskey'])?$options['encodingaeskey']:'';
-        $this->appId = isset($options['appid'])?$options['appid']:'';
-        $this->appSecret = isset($options['appsecret'])?$options['appsecret']:'';
+        $this->appId = isset($options['appId'])?$options['appId']:'';
+        $this->appSecret = isset($options['appSecret'])?$options['appSecret']:'';
         $this->debug = isset($options['debug'])?$options['debug']:false;
         $this->logcallback = isset($options['logcallback'])?$options['logcallback']:false;
     }

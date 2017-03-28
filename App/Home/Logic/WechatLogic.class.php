@@ -12,7 +12,12 @@ class WechatLogic{
 	const SIGN_QR_TICKET_CACHE_NAME = "cache_sign_100";//永久签到码的缓存标记
 	private $wechat;//wechat实例
 
+
 	public function __construct(){
+		$this->setWechat();
+	}
+
+	private function setWechat(){
 		if(!$this->wechat){
 			$options = array(
 				'token'=>C("WX_PUBLIC.token"), //填写应用接口的Token

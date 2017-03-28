@@ -9,7 +9,7 @@ Class WeixinController extends BaseWxController{
 	 * @throws Exception
 	 */
 	public function index(){
-		if ($_GET['echostr'] != NULL ) {
+		if (!empty($_GET['echostr'])) {
 			echo $_GET['echostr'];
 			exit;
 		}
@@ -109,5 +109,4 @@ Class WeixinController extends BaseWxController{
 		);
 		D("wechat","Logic")->replyTextMsg($data);
 	}
-	
 }

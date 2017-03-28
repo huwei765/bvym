@@ -12,7 +12,7 @@
                <td colspan="2"><label for='addr_input' class='control-label x85'>地址:</label><input type='text' id='addr' name='addr'  size='20'   value='{$Rs.addr}'  ></td>
            </tr>
            <tr>
-               <td colspan="2"><label for='uname_input' class='control-label x85'>分享给:</label><input type='text' id='uname' name='uname'  size='20' data-toggle='lookup' data-url='__MODULE__/public/user/navTabId/{:CONTROLLER_NAME}'  value='{$Rs.uid}'  ></td>
+               <td colspan="2"><label for='uname_input' class='control-label x85'>分享给:</label><input type='text' id='uname' name='uname'  size='20' data-toggle='lookup' data-url='{:U(MODULE_NAME."/public/user",array("navTabId"=>CONTROLLER_NAME))}'  value='{$Rs.uid}'  ></td>
            </tr>
            <tr>
                <td colspan=2><label for='memo_input' class='control-label x85'>客户描述:</label><textarea name='memo'  cols='65' rows='5' >{$Rs.memo}</textarea></td>

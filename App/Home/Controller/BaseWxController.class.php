@@ -25,7 +25,7 @@ Class BaseWxController extends Controller{
 	 * @throws Exception
 	 */
 	public function checkSignature() {
-		$_token = C("WX_PUBLIC.user_token");
+		$_token = C("WX_PUBLIC.token");
 		if(empty($_token)){
 			throw new Exception("TOKEN is not defined!");
 		}

@@ -19,7 +19,7 @@ class WxuserLogic extends Model{
 		if(empty($userData)){
 			return array();
 		}
-		if(isset($userData["openid"])){
+		if(!isset($userData["openid"])){
 			return array();
 		}
 		//查询用户是否已经注册
@@ -43,7 +43,7 @@ class WxuserLogic extends Model{
 		if(empty($userData)){
 			return 0;
 		}
-		if(isset($userData["openid"])){
+		if(!isset($userData["openid"])){
 			return 0;
 		}
 		//data
@@ -94,7 +94,7 @@ class WxuserLogic extends Model{
 	 * @return mixed
 	 */
 	public function getWxUserInfoByOpenId($openId,$field="*"){
-		return $this->getWxUserInfo(array("openid"=>$openId),$field);
+		return $this->getWxUserInfo(array("openid"=>"'".$openId."'"),$field);
 	}
 
 	/**
