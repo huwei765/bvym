@@ -5,7 +5,7 @@
           <table class="table table-condensed table-hover" width="100%">
            <tbody>
 			<tr>
-                <td colspan="2"><label for='jhname_input' class='control-label x85'>关联合同:</label><input type='text' id='jhname' name='jhname'  size='20' data-toggle='lookup' data-url='__MODULE__/public/htname/navTabId/{:CONTROLLER_NAME}'  value='{$Rs.jhname}'  >
+                <td colspan="2"><label for='jhname_input' class='control-label x85'>关联合同:</label><input type='text' id='jhname' name='jhname'  size='20' data-toggle='lookup' data-url='{:U(MODULE_NAME."/public/htname",array("navTabId"=>CONTROLLER_NAME))}'  value='{$Rs.jhname}'  >
                     <input type="hidden" name="jhid" id="jhid" value="{$Rs.jhid}">
                 </td>
             </tr>
@@ -18,7 +18,7 @@
                 <td><label for='beizhu_input' class='control-label x85'>备注:</label><input type='text' id='beizhu' name='beizhu'  size='20'   value='{$Rs.beizhu}'  ></td>
             </tr>
             <tr>
-                <td colspan="2"><label for='juname_input' class='control-label x85'>经办人:</label><input type='text' id='juname' name='juname'  size='20' data-toggle='lookup' data-url='__MODULE__/public/hruser/navTabId/{:CONTROLLER_NAME}'  value='{$Rs.juname}'  >
+                <td colspan="2"><label for='juname_input' class='control-label x85'>经办人:</label><input type='text' id='juname' name='juname'  size='20' data-toggle='lookup' data-url='{:U(MODULE_NAME."/public/hruser",array("navTabId"=>CONTROLLER_NAME))}'  value='{$Rs.juname}'  >
                 <input type="hidden" name="juid" id="juid" value="{$Rs.juid}">
                 </td>
             </tr>

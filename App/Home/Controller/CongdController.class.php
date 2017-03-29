@@ -32,36 +32,15 @@ class CongdController extends CommonController{
   
   
   public function _befor_add(){
-	  if(I("get.cid")!==""){
-		$jcid=I("get.cid");
-	    $jcname=get_con_name($jcid);
-	    $this->assign('jcid',$jcid);
-	    $this->assign('jcname',$jcname);  
-	  }
-	  $attid=time();
-	  $this->assign('attid',$attid);
-    
   }
 	
    public function _after_add($id){
-    $upda["id"]=I("jcid");
-	$upda["fenlei"]=I("fenlei");
-	$upda['xcrq']=I("xcrq");
-	$upda['updatetime']=date("Y-m-d H:i:s",time());
-	 M("cust")->data($upda)->save();
-	
    }
 
   public function _befor_insert($data){
-	 //$data['addtime']=date("Y-m-d H:i:s",time());
-	// return $data;
   }
   
   public function _befor_edit(){
-     $model = D($this->dbname);
-	 $info = $model->find(I('get.id'));
-	 $attid=$info['attid'];
-	 $this->assign('attid',$attid);
   }
    
   public function _befor_update($data){
@@ -69,11 +48,6 @@ class CongdController extends CommonController{
   }
   
     public function _after_edit($id){
-     $upda["id"]=I("jcid");
-	 $upda["fenlei"]=I("fenlei");
-	 $upda['xcrq']=I("xcrq");
-	 $upda['updatetime']=date("Y-m-d H:i:s",time());
-	 M("cust")->data($upda)->save();
    }
 
    public function _befor_del($id){
