@@ -22,7 +22,7 @@ class SigninLogic extends Model{
 			return array('status' => 0,'data' => '该微信用户未注册！');
 		}
 		//查询该微信用户是否已经注册成为客户
-		$custcon_data = D("custcon","Logic")->getCustconInfoByWeixinId($wxUserData["openid"]);
+		$custcon_data = D("custcon","Logic")->getCustconInfoByWeixinId($wxUserData["id"]);
 		if(empty($custcon_data)){
 			return array('status' => 1,'data' => '该微信用户还未成为正式客户！');
 		}

@@ -78,12 +78,12 @@ class WechatLogic{
 	 */
 	public function getSignInQRTicket(){
 		//从缓存中读取ticket
-		$ticket = S(SIGN_QR_TICKET_CACHE_NAME);
+		$ticket = S(self::SIGN_QR_TICKET_CACHE_NAME);
 		if(!$ticket){
-			$grCode = $this->wechat->getQRCode(SIGN_QR_SCENE_STR,2);
+			$grCode = $this->wechat->getQRCode(self::SIGN_QR_SCENE_STR,2);
 			if($grCode){
 				$ticket = $grCode["ticket"];
-				S(SIGN_QR_TICKET_CACHE_NAME,$grCode["ticket"],$grCode["expire_seconds"]);
+				S(self::SIGN_QR_TICKET_CACHE_NAME,$grCode["ticket"],$grCode["expire_seconds"]);
 			}
 		}
 		return $ticket;

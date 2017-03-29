@@ -26,7 +26,7 @@ class AdminService extends CommonService {
 	   session('logins',$account['logins']);
 
         $data['id'] = session('uid');
-        $data['logintime'] = date("Y-m-d H:i:s",time());
+        $data['logintime'] = time();
         $data['loginip'] = get_client_ip();
 		$data['logins'] = array('exp','logins+1');
 		$data['update_time']=time();

@@ -6,7 +6,7 @@
            <tbody>
 			<tr>
                 <td>
-                    <label for='cuname_input' class='control-label x85'>客户:</label><input type='text' id='cuname' name='cuname'  size='20' data-toggle='lookup' data-url='__MODULE__/public/custcon/navTabId/{:CONTROLLER_NAME}'  value='{$Rs.cuname}'  >
+                    <label for='cuname_input' class='control-label x85'>客户:</label><input type='text' id='cuname' name='cuname'  size='20' data-toggle='lookup' data-url='{:U(MODULE_NAME."/public/custcon",array("navTabId"=>CONTROLLER_NAME))}'  value='{$Rs.cuname}'  >
                     <input type="hidden" name="cuid" id="cuid" value='{$Rs.cuid}'>
                 </td>
                 <td><label for='dianhua_input' class='control-label x85'>联系电话:</label><input type='text' id='dianhua' name='dianhua'  size='20'   value='{$Rs.dianhua}'  ></td>

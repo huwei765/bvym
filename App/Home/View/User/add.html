@@ -21,18 +21,19 @@
              </td></tr>
             <tr><td>
             <label for="j_title" class="control-label x85">性别：</label>
-              <select name="sex"  data-toggle="selectpicker" data-rule="required">
-			    <if condition="$Rs['sex'] EQ 男 "><option value="男" selected>男</option><else/><option value="女" selected>女</option></if>
-                <option value="男">男</option>
-                <option value="女">女</option>
-                 </select>
+                <select name='sex'  data-toggle='selectpicker' data-rule="required">
+                    <option value=''>请选择</option>
+                    <volist name='Think.config.SYS_SEX' id='sex'>
+                        <option value='{$sex.value}' <if condition=" $sex.value EQ $Rs['sex'] " >selected</if> >{$sex.name}</option>
+                    </volist>
+                </select>
              </td></tr>
             <tr><td>
             <label for="j_name" class="control-label x85">所在部门：</label>
-			<select  name="depname" data-toggle="selectpicker" data-rule="required">
+			<select  name="depid" data-toggle="selectpicker" data-rule="required">
              <option  value="0">请选择</option>
 	         <foreach name="list" item="v">
-              <option <if condition="$v.title EQ $Rs['depname'] ">selected value="{$Rs['depname']}" <else/>value="{$v.title}"</if> >
+              <option <if condition="$v.id EQ $Rs['depid'] ">selected value="{$Rs['depid']}" <else/>value="{$v.id}"</if> >
 	          <switch name="v.level">  <case value="0">+</case> <case value="1">+--</case><case value="2">+------</case><default /></switch>
 	         {$v.title}
 	          </option>
@@ -41,11 +42,11 @@
              </td></tr>
             <tr><td>
                <label for="j_name" class="control-label x85">担任职位：</label>
-			   <select  name="posname" data-toggle="selectpicker" data-rule="required">
+			   <select  name="posid" data-toggle="selectpicker" data-rule="required">
                <option  value="0">请选择</option>
 	         <php>$listz=M('auth_group')->where(array('type'=>1))->select();</php>
 	          <foreach name="listz" item="v">
-              <option <if condition="$v.title EQ $Rs['posname'] ">selected value="{$Rs['posname']}" <else/>value="{$v.title}"</if> >
+              <option <if condition="$v.id EQ $Rs['posid'] ">selected value="{$Rs['posid']}" <else/>value="{$v.id}"</if> >
 	          +{$v.title}
 	          </option>
               </foreach>
@@ -68,7 +69,7 @@
                 <input type="text" data-rule="required" size="25" name="qq" id="j_qq" value="{$Rs['qq']}" >
             </td></tr>
 			<tr><td>
-                <label for="j_title" class="control-label x85">U盾号：</label>
+                <label for="j_title" class="control-label x85">简介：</label>
                 <input type="text"  size="35" name="memo"  value="{$Rs['memo']}" >
             </td></tr>
             </tbody>

@@ -295,10 +295,10 @@ function get_con_name($id){
  * @return string
  */
 function getSex($sex_code){
-    if($sex_code == "0"){
+    if($sex_code == "1"){
         return iconv('GB2312', 'UTF-8', "ÄÐ");
     }
-    elseif($sex_code == "1"){
+    elseif($sex_code == "2"){
         return iconv('GB2312', 'UTF-8', "Å®");
     }
     else{

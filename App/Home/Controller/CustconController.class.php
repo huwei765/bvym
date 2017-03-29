@@ -50,6 +50,14 @@ class CustconController extends CommonController{
   public function _befor_insert($data){
 	 //$data['addtime']=date("Y-m-d H:i:s",time());
 	// return $data;
+	  //根据wxid查询微信信息
+	  if(intval($data["wxid"]) > 0){
+		  $wxuser_data = D("wxuser","Logic")->getWxUserInfoById(intval($data["wxid"]));
+		  if(!empty($wxuser_data)){
+			  $data["headimgurl"] = $wxuser_data["headimgurl"];
+			  $data["nickname"] = $wxuser_data["nickname"];
+		  }
+	  }
   }
   
   public function _befor_edit(){

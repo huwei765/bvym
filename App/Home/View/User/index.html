@@ -52,7 +52,7 @@
            <td>{$v.phone}</td>
            <td>{$v.email}</td>
 		   <td>{$v.qq}</td>
-		   <td <php>echo display(CONTROLLER_NAME.'/editrule');</php> ><a href="__URL__/editrule/id/{$v['id']}/depname/{$v['depname']}/posname/{$v['posname']}/navTabId/{:CONTROLLER_NAME}" data-toggle="doajax" data-confirm-msg="确定要操作吗？"><php>M('auth_group_access')->where(array("group_id"=>0))->delete();if (M('auth_group_access')->where(array("uid"=>$v['id']))->count() > 0){echo "有";}else{echo "无";}</php></a></td>
+		   <td <php>echo display(CONTROLLER_NAME.'/editrule');</php> ><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/editrule',array('id'=>$v['id'],'depname'=>$v['depname'],'posname'=>$v['posname'],'navTabId'=>CONTROLLER_NAME))}" data-toggle="doajax" data-confirm-msg="确定要操作吗？"><php>M('auth_group_access')->where(array("group_id"=>0))->delete();if (M('auth_group_access')->where(array("uid"=>$v['id']))->count() > 0){echo "有";}else{echo "无";}</php></a></td>
            <td>{$v.logintime}</td>
 		   <td>{$v.loginip}</td>
 		   <td>{$v.logins}</td>
