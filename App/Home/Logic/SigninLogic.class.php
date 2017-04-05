@@ -99,10 +99,10 @@ class SigninLogic extends Model{
 	 * @param $field
 	 * @return mixed
 	 */
-	public function getTodaySignInfoByCuid($cuid,$field){
+	public function getTodaySignInfoByCuid($cuid,$field="*"){
 		$condition["cuid"] = $cuid;
-		$condition["addtime"] = array(array("gt",strtotime("Y-m-d",time())),array('lt',strtotime(date('Y-m-d',strtotime('+1 day')))));
-		return $this->getSignInfo($condition);
+		$condition["addtime"] = array(array("gt",strtotime(date("Y-m-d"))),array('lt',strtotime(date('Y-m-d',strtotime('+1 day')))));
+		return $this->getSignInfo($condition,$field);
 	}
 
 	/**
