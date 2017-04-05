@@ -21,7 +21,7 @@
         <thead>
             <tr>
                 <th data-order-field="id">No.</th>
-                <th data-order-field="title">合同名称</th>
+                <th data-order-field="title">合同编号</th>
                 <th data-order-field="jcname">客户名称</th>
 				<th data-order-field="jine">金额</th>
                 <th data-order-field="name">业务员</th>
@@ -32,12 +32,12 @@
 		  <volist id="v" name="list">
             <tr>
              <td>{$v.id}</td>
-             <td>{$v.title}</td>
+             <td>{$v.bianhao}</td>
 			 <td>{$v.cuname}</td>
 		     <td>{$v.jine} </td>
 		     <td>{$v.juname}</td>
                 <td>
-                    <a href="javascript:;" data-toggle="lookupback" data-args="{jhid:'{$v.id}', jhname:'{$v.title}'}" class="btn btn-blue" title="选择本项" data-icon="check">选择</a>
+                    <a href="javascript:;" data-toggle="lookupback" data-args="{jhid:'{$v.id}', jhname:'{$v.bianhao}'}" class="btn btn-blue" title="选择本项" data-icon="check">选择</a>
                 </td>
             </tr>
 			</volist>
