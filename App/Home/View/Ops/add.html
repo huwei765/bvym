@@ -1,0 +1,49 @@
+
+<div class="bjui-pageContent">
+    <form action="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/add',array('navTabId'=>CONTROLLER_NAME))}" class="pageForm" data-toggle="validate">
+		<input type="hidden" name="id" value="{$id}"><input type="hidden" name="type" value="{$type}">
+        <div class="pageFormContent" data-layout-h="0">
+          <table class="table table-condensed table-hover" width="100%">
+           <tbody>
+            <tr><td>
+                <label for="j_title" class="control-label x85">项目名称：</label>
+                <input type="text" data-rule="required" size="30" name="title" id="j_title" value="{$Rs['title']}" >
+             </td></tr>
+            <tr><td>
+                <label for="j_name" class="control-label x85">项目类别：</label><select  name="cid" data-toggle="selectpicker" data-rule="required">
+                <option  value="0">请选择</option>
+                <foreach name="list" item="v">
+                    <option <if condition="$v.id EQ $Rs['cid'] ">selected value="{$Rs['cid']}" <else/>value="{$v.id}"</if> >
+                    {$v.title}</option>
+                </foreach>
+            </select>
+            </td></tr>
+            
+            <if condition="$id EQ '' ">
+			<else/>
+            <tr><td>
+                <label for="j_status" class="control-label x85">是否启用：</label>
+               <select name="status"  data-container="body"  id="j_status" data-toggle="selectpicker" data-rule="required">
+			    <if condition="$Rs['status'] EQ 1 "><option value="1" selected>启用</option><else/><option value="0" selected>禁用</option></if>
+                <option value="1">启用</option>
+                <option value="0">禁用</option>
+                 </select>
+           </td></tr>
+			</if>
+            <tr>
+                <td colspan=2><label for='j_memo' class='control-label x85'>备注:</label><textarea name='memo' id="j_memo"  cols='65' rows='5' >{$Rs.memo}</textarea></td>
+            </tr>
+            </tbody>
+            </table>
+        </div>
+        <div class="bjui-footBar">
+            <ul>
+                <li><button type="button" class="btn-close" data-icon="close">取消</button></li>
+                <li><button type="submit" class="btn-default" data-icon="save">保存</button></li>
+            </ul>
+        </div>
+    </form>
+</div>
+
+			
+			

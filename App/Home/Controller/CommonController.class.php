@@ -436,7 +436,7 @@ Class CommonController extends Controller{
 				array('name' => '客户信息','id' => 12, 'act'=>'custcon', 'op'=>'index'),
 				array('name' => '跟单记录','id' => 13, 'act'=>'congd', 'op'=>'index'),
 				array('name' => '咨询方案','id' => 14, 'act'=>'design', 'op'=>'index'),
-				array('name' => '合同管理','id' => 15, 'act'=>'hetong', 'op'=>'index'),
+				array('name' => '订单管理','id' => 15, 'act'=>'hetong', 'op'=>'index'),
 				array('name' => '收款记录','id' => 16, 'act'=>'shou', 'op'=>'index'),
 				array('name' => '开票记录','id' => 17, 'act'=>'piao', 'op'=>'index'),
 				array('name' => '手术记录','id' => 18, 'act'=>'huo', 'op'=>'index'),
@@ -474,8 +474,8 @@ Class CommonController extends Controller{
 				array('name' => '医院信息','id' => 41, 'act'=>'hospital', 'op'=>'index'),
 				array('name' => '医生信息','id' => 42, 'act'=>'doctor', 'op'=>'index'),
 				array('name' => '整形项目','id' => 43, 'act'=>'ops', 'op'=>'index'),
-				array('name' => '项目分类','id' => 44, 'act'=>'ops_class', 'op'=>'index'),
-				array('name' => '整形记录','id' => 45, 'act'=>'ops_record', 'op'=>'index')
+				array('name' => '项目分类','id' => 44, 'act'=>'opscate', 'op'=>'index'),
+				array('name' => '整形记录','id' => 45, 'act'=>'opsrecord', 'op'=>'index')
 			)),
 			'hr' => array('name' => '人事管理','sort' => 4,'id' => 5, 'child' => array(
 				array('name' => '员工档案','id' => 51, 'act'=>'hr', 'op'=>'index'),
