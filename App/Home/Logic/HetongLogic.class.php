@@ -41,6 +41,16 @@ class HetongLogic extends Model{
 	}
 
 	/**
+	 * 修改总金额减少和利润基数减少
+	 * @param $jhid
+	 * @param $jine
+	 */
+	public function reduceSumJineByIdBH($jhid,$bianhao,$jine){
+		M("hetong")->where(array("id"=>$jhid,"bianhao"=>$bianhao))->setDec('jine',$jine);
+		M("hetong")->where(array("id"=>$jhid,"bianhao"=>$bianhao))->setDec('profit',$jine);
+	}
+
+	/**
 	 * 收款完成后的执行逻辑
 	 * 完成两个动作：1.修改合同状态为收款完成  2.增加推广提成
 	 */

@@ -5,17 +5,26 @@
         <div class="pageFormContent" data-layout-h="0">
           <table class="table table-condensed table-hover" width="100%">
            <tbody>
-            <tr><td>
+            <tr><td colspan="2">
                 <label for="j_title" class="control-label x85">项目名称：</label>
                 <input type="text" data-rule="required" size="30" name="title" id="j_title" value="{$Rs['title']}" >
              </td></tr>
-            <tr><td>
+            <tr><td colspan="2">
                 <label for="j_name" class="control-label x85">项目类别：</label><select  name="cid" data-toggle="selectpicker" data-rule="required">
                 <option  value="0">请选择</option>
                 <foreach name="list" item="v">
                     <option <if condition="$v.id EQ $Rs['cid'] ">selected value="{$Rs['cid']}" <else/>value="{$v.id}"</if> >
                     {$v.title}</option>
                 </foreach>
+            </select>
+            </td></tr>
+            <tr><td>
+                <label for="j_price" class="control-label x85">单价：</label>
+                <input type="text" data-rule="required" size="30" name="price" id="j_price" value="{$Rs['price']}" >
+            </td><td>
+                <label for="j_unit" class="control-label x85">单位：</label><select  name="unit" data-toggle="selectpicker" data-rule="required">
+                <option  value="0">请选择</option>
+                <option  value="1">疗程</option>
             </select>
             </td></tr>
             

@@ -33,6 +33,59 @@ class HetongController extends CommonController{
    public function _befor_index(){ 
    
    }
+
+	/**
+	 * 新增订单
+	 */
+	public function add(){
+		if(IS_POST){
+			$model = D($this->dbname);
+			$bianhao=I('post.bianhao');
+			$ops_list = I("post.ops_list");
+			$ops_list = htmlspecialchars_decode($ops_list);
+			$ops_arr = json_decode($ops_list,true);
+
+			if (false === $data = $model->create()) {
+				$this->mtReturn(300,'失败，请检查值是否已经存在',$_REQUEST['navTabId'],true);
+			}
+			if($model->add($data)){
+				$id = $model->getLastInsID();
+				$tmp_data = array("hid"=>$id,"bianhao"=>$bianhao);
+				//新增相关项目
+				if(is_array($ops_arr)){
+					foreach($ops_arr as $val){
+						$tmp_data["oid"] = $val["oid"];
+						$tmp_data["oname"] = $val["oname"];
+						$tmp_data["ocname"] = $val["ocname"];
+						$tmp_data["price"] = $val["oprice"];
+						D("htops","Logic")->addHtOpsInfo($tmp_data);
+					}
+				}
+				$this->mtReturn(200,"新增成功",$_REQUEST['navTabId'],true);
+			}
+		}
+		$this->display();
+	}
+
+	/**
+	 * 删除相关项目
+	 */
+	public function ops_del(){
+		$htops_id = I("get.id");
+		$htops_id = intval($htops_id);
+		if($htops_id > 0){
+			$ret = D("htops","Logic")->delHtOpsInfoById($htops_id);
+			if($ret){
+				$this->mtReturn(200,'删除成功',$_REQUEST['navTabId'],false);
+			}
+			else{
+				$this->mtReturn(300,'删除失败',$_REQUEST['navTabId'],false);
+			}
+		}
+		else{
+			$this->mtReturn(300,'参数错误',$_REQUEST['navTabId'],false);
+		}
+	}
   
   
   public function _befor_add(){
@@ -40,9 +93,8 @@ class HetongController extends CommonController{
 	  $this->assign('attid',$attid);
     
   }
-	
+
    public function _after_add($id){
-    
    }
 
   public function _befor_insert($data){
@@ -366,6 +418,20 @@ public function qunian(){
     $legend = explode(",", substr ($info, 1));
     ob_end_clean();
     $chart->createcolumnar($title,$data,$size,$height,$width,$legend);
+	}
+
+	/**
+	 * 查询所有的合同相关项目列表
+	 */
+	public function ops(){
+		$hid=I('get.id');
+		$hid = intval($hid);
+		if($hid > 0){
+			//查询所有的项目列表
+			$ops_list = D("htops","Logic")->getHtOpsListByHid($hid);
+			$this->assign('list', $ops_list);
+		}
+		$this->display();
 	}
 
 

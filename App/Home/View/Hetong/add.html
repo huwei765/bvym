@@ -25,7 +25,36 @@
                 </td>
             </tr>
             <tr></tr>
-            <tr></tr>
+            <tr>
+                <td colspan="2">
+                    <div class="modal_box clearfix">
+                        <div class="modal_tit">
+                            <p><label class="control-label x85">订单项目:</label>
+                                <button data-toggle='lookup' data-url="{:U(MODULE_NAME.'/public/ops',array('id'=>$v['id'],'navTabId'=>CONTROLLER_NAME))}">新增</button>
+                                <input type="hidden" name="oid" id="oid" value="0">
+                                <input type="hidden" name="oname" id="oname" value="">
+                                <input type="hidden" name="ocname" id="ocname" value="">
+                                <input type="hidden" name="oprice" id="oprice" value="">
+                                <input type="hidden" name="ops_list" id="ops_list" value="">
+                            </p>
+                        </div>
+                        <div id="modal_addPanel" class="modal_scroll">
+                            <table data-toggle="tablefixed" data-width="100%" data-layout-h="0" data-nowrap="true">
+                                <thead>
+                                <tr>
+                                    <th>项目名称</th>
+                                    <th>项目类别</th>
+                                    <th>单价</th>
+                                    <th>删除</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </td>
+            </tr>
             <tr>
                 <td colspan=2><label for='beizhu_input' class='control-label x85'>订单详情:</label><div style='display: inline-block; vertical-align: middle;'><textarea name='beizhu'   data-toggle='kindeditor' data-minheight='150' data-items='fontname, fontsize, |, forecolor, hilitecolor, bold, italic, underline, removeformat, |, justifyleft, justifycenter, justifyright, insertorderedlist, insertunorderedlist, |, emoticons, image, link'>{$Rs.beizhu}</textarea></div></td>
             </tr>
@@ -41,3 +70,125 @@
         </div>
     </form>
 </div>
+<style type="text/css">
+    .modal_box{
+        position: relative;
+        width: 100%;
+        background: no-repeat 0 0 scroll #f1f1f1;
+    }
+    .modal_box .modal_tit{
+        padding: 10px 0;
+    }
+    .modal_box .modal_scroll{
+        border: 1px solid #f00;
+        float: left;
+        height: 200px;
+        margin-left: 2%;
+        width: 96%;
+        overflow: scroll;
+    }
+</style>
+<script type="text/javascript">
+    $(document).ready(function(){
+        var tmp_ops = {tag:0,data:{}};
+        var onDelClick = function(obj){
+            //从ops_list中删除
+            var _tmp_oid = $(obj).closest("tr").attr("data-oid");
+            var _ops_list = $("input[name='ops_list']").val();
+            _ops_list = JSON.parse(_ops_list);
+            for(var i = 0;i<_ops_list.length;i++){
+                if(_ops_list[i].hasOwnProperty("oid")){
+                    if(parseInt(_ops_list[i]["oid"]) - _tmp_oid ==0){
+                        _ops_list.splice(i,1);
+                        break;
+                    }
+                }
+            }
+            $("input[name='ops_list']").val(JSON.stringify(_ops_list));
+            afterUpdateTmpList();
+        };
+        var afterUpdateTmpList = function(){
+            var _ops_list = $("input[name='ops_list']").val();
+            if(_ops_list == ""){
+                $("#modal_addPanel").find("table tbody").html("");
+            }
+            else{
+                _ops_list = JSON.parse(_ops_list);
+                //更新之前先清空
+                $("#modal_addPanel").find("table tbody").html("");
+                //更新列表
+                for(var j = 0;j<_ops_list.length;j++){
+                    var _tmp_html = "<td>"+_ops_list[j].oname+"</td>";
+                    _tmp_html = _tmp_html + "<td>"+_ops_list[j].ocname+"</td>";
+                    _tmp_html = _tmp_html + "<td>"+_ops_list[j].oprice+"</td>";
+                    _tmp_html = _tmp_html + "<td><a name='btn_del_"+j+"' href='javascript:void(0)'>删除</a></td>";
+                    _tmp_html = "<tr data-oid='"+_ops_list[j].oid+"'>"+_tmp_html + "</tr>";
+                    $("#modal_addPanel").find("table tbody").append(_tmp_html);
+                }
+                //绑定事件
+                $("#modal_addPanel").find("table tbody").find("a[name^='btn_del_']").click(function(){
+                    onDelClick(this);
+                });
+            }
+            //恢复初始状态
+            tmp_ops = {tag:0,data:{}};
+        };
+        var updateTmpList = function(){
+            console.log(tmp_ops.tag);
+            if(parseInt(tmp_ops.tag) < 4){
+                return true;
+            }
+            var tmp_id = tmp_ops.data.oid ? tmp_ops.data.oid : 0;
+            if(parseInt(tmp_id) <= 0){
+                return false;
+            }
+            //获取所有值
+            var ops_list = [];
+            var _tmp_ops_list = $("input[name='ops_list']").val();
+            if(_tmp_ops_list != "" && _tmp_ops_list != null){
+                var _obj_ops_list = JSON.parse(_tmp_ops_list);
+                if (typeof _obj_ops_list === "object" && _obj_ops_list instanceof Array){
+                    ops_list = _obj_ops_list;
+                }
+            }
+            var isRepeat = false;
+            for(var i=0;i<ops_list.length;i++){
+                if(ops_list[i].hasOwnProperty("oid")){
+                    if(parseInt(ops_list[i]["oid"]) - tmp_id ==0){
+                        isRepeat = true;
+                        //更新
+                        ops_list[i]["oname"] = tmp_ops.data.oname;
+                        ops_list[i]["ocname"] = tmp_ops.data.ocname;
+                        ops_list[i]["oprice"] = tmp_ops.data.oprice;
+                        break;
+                    }
+                }
+            }
+            if(!isRepeat){
+                ops_list.push(tmp_ops.data);
+            }
+            $("input[name='ops_list']").val(JSON.stringify(ops_list));
+            afterUpdateTmpList();
+        };
+        $(document).on('afterchange.bjui.lookup', '[name="oid"]', function(e) {
+            tmp_ops.tag = parseInt(tmp_ops.tag) + 1;
+            tmp_ops.data.oid = $(e.target).val();
+            updateTmpList();
+        });
+        $(document).on('afterchange.bjui.lookup', '[name="oname"]', function(e) {
+            tmp_ops.tag = parseInt(tmp_ops.tag) + 1;
+            tmp_ops.data.oname = $(e.target).val();
+            updateTmpList();
+        });
+        $(document).on('afterchange.bjui.lookup', '[name="ocname"]', function(e) {
+            tmp_ops.tag = parseInt(tmp_ops.tag) + 1;
+            tmp_ops.data.ocname = $(e.target).val();
+            updateTmpList();
+        });
+        $(document).on('afterchange.bjui.lookup', '[name="oprice"]', function(e) {
+            tmp_ops.tag = parseInt(tmp_ops.tag) + 1;
+            tmp_ops.data.oprice = $(e.target).val();
+            updateTmpList();
+        });
+    });
+</script>

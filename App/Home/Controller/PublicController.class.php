@@ -143,7 +143,6 @@ class PublicController extends Controller {
    $info=M('user');
    $where['update_time']=array('gt',time()-600);
    $numPerPage=10;
-   cookie('_currentUrl_', __SELF__);
    $list=$info->where($where)->limit($numPerPage)->page($_GET['pageNum'].','.$numPerPage.'')->select();
    $this->assign('list',$list);
     $count = $info->where($where)->count();
@@ -259,7 +258,6 @@ class PublicController extends Controller {
 		 $where['_complex'] = $map;
 		}
    $numPerPage=10;
-   cookie('_currentUrl_', __SELF__);
    $list=$info->where($where)->order("`" . $order . "` " . $sort)->limit($numPerPage)->page($pageCurrent.','.$numPerPage.'')->select();
     $this->assign('list',$list);
     $count = $info->where($where)->count();
@@ -306,7 +304,6 @@ class PublicController extends Controller {
 		 $where['_complex'] = $map;
 		}
    $numPerPage=10;
-   cookie('_currentUrl_', __SELF__);
    $list=$info->where($where)->order("`" . $order . "` " . $sort)->limit($numPerPage)->page($pageCurrent.','.$numPerPage.'')->select();
     $this->assign('list',$list);
     $count = $info->where($where)->count();
@@ -341,7 +338,6 @@ class PublicController extends Controller {
 		 $where['_complex'] = $map;
 		}
    $numPerPage=10;
-   cookie('_currentUrl_', __SELF__);
    $list=$info->where($where)->order("`" . $order . "` " . $sort)->limit($numPerPage)->page($pageCurrent.','.$numPerPage.'')->select();
     $this->assign('list',$list);
     $count = $info->where($where)->count();
@@ -374,7 +370,6 @@ class PublicController extends Controller {
 		 $where['_complex'] = $map;
 		}
    $numPerPage=10;
-   cookie('_currentUrl_', __SELF__);
    $list=$info->where($where)->order("`" . $order . "` " . $sort)->limit($numPerPage)->page($pageCurrent.','.$numPerPage.'')->select();
     $this->assign('list',$list);
     $count = $info->where($where)->count();
@@ -407,7 +402,6 @@ class PublicController extends Controller {
 		 $where['_complex'] = $map;
 		}
    $numPerPage=10;
-   cookie('_currentUrl_', __SELF__);
    $list=$info->where($where)->order("`" . $order . "` " . $sort)->limit($numPerPage)->page($pageCurrent.','.$numPerPage.'')->select();
     $this->assign('list',$list);
     $count = $info->where($where)->count();
@@ -440,7 +434,6 @@ class PublicController extends Controller {
 			$where['_complex'] = $map;
 		}
 		$numPerPage=10;
-		cookie('_currentUrl_', __SELF__);
 		$list=$info->where($where)->order("`" . $order . "` " . $sort)->limit($numPerPage)->page($pageCurrent.','.$numPerPage.'')->select();
 		$this->assign('list',$list);
 		$count = $info->where($where)->count();
@@ -467,7 +460,32 @@ class PublicController extends Controller {
 			$where['_logic'] = 'or';
 		}
 		$numPerPage=10;
-		cookie('_currentUrl_', __SELF__);
+		$list=$info->where($where)->order("`" . $order . "` " . $sort)->limit($numPerPage)->page($pageCurrent.','.$numPerPage.'')->select();
+		$this->assign('list',$list);
+		$count = $info->where($where)->count();
+		$this->assign('totalCount', $count);
+		$this->assign('currentPage', !empty($_GET['pageNum']) ? $_GET['pageNum'] : 1);
+		$this->assign('numPerPage', $numPerPage);
+		$this->display();
+	}
+
+	public function ops(){
+		$info=M('ops');
+		if (isset($_REQUEST ['orderField'])) {$order = $_REQUEST ['orderField'];}
+		if($order=='') {$order = $info->getPk();}
+
+		if (isset($_REQUEST ['orderDirection'])) {$sort = $_REQUEST ['orderDirection'];}
+		if($sort=='') {$sort = $asc ? 'asc' : 'desc';}
+
+		if (isset($_REQUEST ['pageCurrent'])) {$pageCurrent = $_REQUEST ['pageCurrent'];}
+		if($pageCurrent=='') {$pageCurrent =1;}
+
+		$key=I('keys');
+		if($key){
+			$where['title'] = array('like','%'.$key.'%');
+			$where['_logic'] = 'or';
+		}
+		$numPerPage=10;
 		$list=$info->where($where)->order("`" . $order . "` " . $sort)->limit($numPerPage)->page($pageCurrent.','.$numPerPage.'')->select();
 		$this->assign('list',$list);
 		$count = $info->where($where)->count();

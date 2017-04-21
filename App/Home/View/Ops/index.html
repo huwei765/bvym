@@ -24,6 +24,7 @@
             <th data-order-direction='desc' data-order-field='id'>ID</th>
                 <th>项目名称</th>
                 <th>项目类别</th>
+                <th data-order-direction='desc' data-order-field='addtime'>单价</th>
                 <th data-order-direction='desc' data-order-field='addtime'>添加时间</th>
                 <th>详细</th>
                 <th <php>echo display(CONTROLLER_NAME.'/del');</php> >状态</th>
@@ -38,6 +39,7 @@
 		   <td>{$v.id}</td>
             <td>{$v.title|msubstr=###,0,20}</td>
             <td>{$v.cname|msubstr=###,0,20}</td>
+            <td>{$v.price}</td>
             <td>{$v.addtime|date="Y-m-d H:i",###}</td>
 		   <td><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/view',array('id'=>$v['id'],'navTabId'=>CONTROLLER_NAME))}"  data-toggle="dialog" data-width="900" data-height="500" data-id="dialog-mask" data-mask="true" >详细</a></td>
 		   <td <php>echo display(CONTROLLER_NAME.'/del');</php> ><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/del',array('id'=>$v['id'],'navTabId'=>CONTROLLER_NAME))}" data-toggle="doajax" data-confirm-msg="确定要操作吗？"><if condition="$v.status EQ 1 "><img src="__PUBLIC__/images/ok.gif" border="0"/><else/><img src="__PUBLIC__/images/locked.gif" border="0"/></if></a></td>

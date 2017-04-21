@@ -131,7 +131,6 @@ Class CommonController extends Controller{
 		$this->assign('totalCount', $count);//数据总数
 		$this->assign('currentPage', !empty($_REQUEST[C('VAR_PAGE')]) ? $_REQUEST[C('VAR_PAGE')] : 1);//当前的页数，默认为1
 		$this->assign('numPerPage', $numPerPage); //每页显示多少条
-		cookie('_currentUrl_', __SELF__);
 		return;
 	}
 
@@ -189,12 +188,11 @@ Class CommonController extends Controller{
                 $data = $this->_befor_insert($data);
             }		  
           if($model->add($data)){
-			if (method_exists($this, '_after_add')) {
 			  $id = $model->getLastInsID();
-			  $this->_after_add($id);
-		    }
-			$id = $model->getLastInsID();
-			$this->mtReturn(200,"新增成功".$id,$_REQUEST['navTabId'],true);  
+			  if (method_exists($this, '_after_add')) {
+				  $this->_after_add($id);
+			  }
+			  $this->mtReturn(200,"新增成功",$_REQUEST['navTabId'],true);
 		  }
 	      
 		}
