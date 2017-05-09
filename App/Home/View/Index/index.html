@@ -195,10 +195,10 @@ function MainMenuClick(event, treeId, treeNode) {
                                             <if condition="$v.child NEQ null ">
                                                 <li data-id="{$v.id}" data-pid="{$c.id}" >{$v.name}</li>
                                                 <foreach name="v.child" item="vv">
-                                                    <li data-id="{$vv.id}" data-pid="{$v.id}" data-url="{:U($vv['act'].'/'.$vv['op'])}" data-tabid="{:U($vv['act'].'/'.$vv['op'])}">{$vv.name}</li>
+                                                    <li data-id="{$vv.id}" data-pid="{$v.id}" data-url="{:U($vv['act'].'/'.$vv['op'])}" data-tabid="{$vv['act']}/{$vv['op']}">{$vv.name}</li>
                                                 </foreach>
                                             <else/>
-                                                <li data-id="{$v.id}" data-pid="{$c.id}" data-url="{:U($v['act'].'/'.$v['op'])}" data-tabid="{:U($v['act'].'/'.$v['op'])}">{$v.name}</li>
+                                                <li data-id="{$v.id}" data-pid="{$c.id}" data-url="{:U($v['act'].'/'.$v['op'])}" data-tabid="{$v['act']}/{$v['op']}">{$v.name}</li>
                                             </if>
                                         </foreach>
                                     </if>
