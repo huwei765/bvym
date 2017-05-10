@@ -290,6 +290,20 @@
                 _forward()
             }
         }
+        if (json.skip) {
+            if(json.skip.type && json.skip.type == "dialog" && json.skip.url){
+                var _skip = function() {
+                    BJUI.dialog(json.skip);
+                }
+                if (json.skip.forwardConfirm) {
+                    that.$element.alertmsg('confirm', json.skip.forwardConfirm, {
+                        okCall: function() { _skip() }
+                    })
+                } else {
+                    _skip()
+                }
+            }
+        }
     }
     
     Bjuiajax.prototype.pageCallback = function(options, target) {

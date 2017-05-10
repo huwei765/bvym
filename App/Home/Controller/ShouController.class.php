@@ -38,7 +38,17 @@ class ShouController extends CommonController{
   }
 	
    public function _after_add($id){
-    
+	   if(IS_POST){
+		   $skip = array(
+			   "url"=>"/index.php?m=Home&c=piao&a=add&navTabId=piao",
+			   "title"=>"开发票",
+			   "height"=>"500",
+			   "width"=>"900",
+			   "forwardConfirm"=>"要开发票吗？",
+			   "type"=>"dialog"
+		   );
+		   $this->mtReturn(200,"新增成功",$_REQUEST['navTabId'],true,$skip);
+	   }
    }
 
   public function _befor_insert($data){
@@ -59,7 +69,17 @@ class ShouController extends CommonController{
   }
   
     public function _after_edit($id){
-     
+		if(IS_POST){
+			$skip = array(
+				"url"=>"/index.php?m=Home&c=piao&a=add&navTabId=piao",
+				"title"=>"开发票",
+				"height"=>"500",
+				"width"=>"900",
+				"forwardConfirm"=>"要开发票吗？",
+				"type"=>"dialog"
+			);
+			$this->mtReturn(200,"新增成功",$_REQUEST['navTabId'],true,$skip);
+		}
    }
 
    public function _befor_del($id){

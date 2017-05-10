@@ -61,7 +61,15 @@ class HetongController extends CommonController{
 						D("htops","Logic")->addHtOpsInfo($tmp_data);
 					}
 				}
-				$this->mtReturn(200,"新增成功",$_REQUEST['navTabId'],true);
+				$skip = array(
+					"url"=>"/index.php?m=Home&c=shou&a=add&navTabId=shou",
+					"title"=>"新增收款",
+					"height"=>"500",
+					"width"=>"900",
+					"forwardConfirm"=>"去收款吗？",
+					"type"=>"dialog"
+				);
+				$this->mtReturn(200,"新增成功",$_REQUEST['navTabId'],true,$skip);
 			}
 		}
 		$this->display();
@@ -115,7 +123,17 @@ class HetongController extends CommonController{
   }
   
     public function _after_edit($id){
-     
+		if(IS_POST){
+			$skip = array(
+				"url"=>"/index.php?m=Home&c=shou&a=add&navTabId=shou",
+				"title"=>"新增收款",
+				"height"=>"500",
+				"width"=>"900",
+				"forwardConfirm"=>"去收款吗？",
+				"type"=>"dialog"
+			);
+			$this->mtReturn(200,"新增成功",$_REQUEST['navTabId'],true,$skip);
+		}
    }
 
    public function _befor_del($id){

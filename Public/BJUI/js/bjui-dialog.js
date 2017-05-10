@@ -667,6 +667,9 @@
     
     // DIALOG DATA-API
     // ==============
+    BJUI.dialog = function() {
+        Plugin.apply($('body'), arguments)
+    };
 
     $(document).on('click.bjui.dialog.data-api', '[data-toggle="dialog"]', function(e) {
         var $this   = $(this)

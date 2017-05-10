@@ -31,7 +31,7 @@ Class CommonController extends Controller{
 	}
 	
 	
-	protected function mtReturn($status,$info,$navTabId="",$closeCurrent=true) {
+	protected function mtReturn($status,$info,$navTabId="",$closeCurrent=true,$skip=array(),$forward='',$forwardConfirm='') {
        
 	    $udata['id']=session('uid');
         $udata['update_time']=time();
@@ -49,8 +49,9 @@ Class CommonController extends Controller{
         $result['statusCode'] = $status; 
         $result['message'] = $info;
 		$result['tabid'] = strtolower($navTabId).'/index';
-        $result['forward'] = '';
-		$result['forwardConfirm']='';
+		$result['skip'] = $skip;
+        $result['forward'] = $forward;
+		$result['forwardConfirm']=$forwardConfirm;
         $result['closeCurrent'] =$closeCurrent;
        
         if (empty($type))
@@ -182,7 +183,7 @@ Class CommonController extends Controller{
 		  $model = D($this->dbname);
 		  $data=I('post.');
 		  if (false === $data = $model->create()) {
-			   $this->mtReturn(300,'失败，请检查值是否已经存在',$_REQUEST['navTabId'],true);  
+			   $this->mtReturn(300,"失败，".$model->getError(),$_REQUEST['navTabId'],true);
             }
           if (method_exists($this, '_befor_insert')) {
                 $data = $this->_befor_insert($data);
@@ -208,7 +209,7 @@ Class CommonController extends Controller{
 	  if(IS_POST){
 		   $data=I('post.');
 		   if (false === $data = $model->create()) {
-			   $this->mtReturn(300,'失败，请检查值是否已经存在',$_REQUEST['navTabId'],true);  
+			   $this->mtReturn(300,'失败，'.$model->getError(),$_REQUEST['navTabId'],true);
             }
            if (method_exists($this, '_befor_update')) {
                 $data = $this->_befor_update($data);
@@ -217,10 +218,9 @@ Class CommonController extends Controller{
 			if (method_exists($this, '_after_edit')) {
 			  $id = $data['id'];
 			  $this->_after_edit($id);
-			  } 
-		  }	
-          $id = $data['id'];
-		  $this->mtReturn(200,"编辑成功".$id,$_REQUEST['navTabId'],true); 		  
+			  }
+		  }
+		  $this->mtReturn(200,"编辑成功",$_REQUEST['navTabId'],true);
 	   }
 	     if (method_exists($this, '_befor_edit')) {
 			$this->_befor_edit();
