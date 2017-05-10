@@ -83,8 +83,10 @@ class HetongController extends CommonController{
 					$this->assign('cuname', $custcon_data["xingming"]);
 					$this->assign('dianhua', $custcon_data["phone"]);
 				}
-
 			}
+			//自动生成订单编号
+			$orderSn = $this->generateHtSn($cuid);
+			$this->assign('bianhao', $orderSn);
 		}
 		$this->display();
 	}

@@ -512,5 +512,21 @@ Class CommonController extends Controller{
 		);
 		return $menu_list;
 	}
+
+	/**
+	 * 生成订单编号
+	 * @param $suffix
+	 * @return string
+	 */
+	public function generateHtSn($suffix){
+		$yCode = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J');
+		$orderSn = $yCode[intval(date('Y')) - 2011];
+		$orderSn = $orderSn . date("YmdHis");
+		if(isset($suffix) && $suffix != ""){
+			$orderSn = $orderSn . $suffix;
+		}
+		$orderSn = $orderSn . sprintf('%02d', rand(0, 99));
+		return $orderSn;
+	}
 	
 }
