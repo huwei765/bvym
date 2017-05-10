@@ -16,7 +16,10 @@ class CustModel extends Model{
 
 
     protected $_validate = array(
-        //array('name','','名称已经存在！',0,'unique',1),
+		array('title','require','请输入客户姓名！'),
+        array('title','','名称已经存在！',0,'unique',1),
+		array('phone','/^1[3|4|5|8][0-9]\d{4,8}$/','手机号码错误！',0,'regex',1),
+		array('email','email','email格式错误！',2),
     );
     
 		// 自动完成规则

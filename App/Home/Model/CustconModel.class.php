@@ -16,7 +16,11 @@ class CustconModel extends Model{
 
 
     protected $_validate = array(
-        //array('name','','名称已经存在！',0,'unique',1),
+		array('xingming','require','请输入客户姓名！'),
+        array('xingming','','姓名已经存在！',0,'unique',1),
+		array('phone','','手机号已经存在！',2,'unique',3),
+		array('phone','/^1[3|4|5|8][0-9]\d{4,8}$/','手机号码错误！',2,'regex',3),//新增、编辑都得验证手机号是否错误
+		array('email','email','email格式错误！',2),
     );
     
 		// 自动完成规则
