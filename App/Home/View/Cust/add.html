@@ -9,7 +9,7 @@
                 <td><label for='dizhi_input' class='control-label x85'>机构地址:</label><input type='text' id='dizhi' name='dizhi'  size='20'   value='{$Rs.dizhi}'  ></td>
             </tr>
             <tr>
-                <td><label for='xingming_input' class='control-label x85'>联系人:</label><input type='text' id='xingming' name='xingming'  size='20'   value='{$Rs.xingming}'  ></td>
+                <td><label for='xingming_input' class='control-label x85'>联系人:</label><input type='text' id='xingming' name='xingming' data-rule='required;chinese;'  size='20'   value='{$Rs.xingming}'  ></td>
                 <td><label for='sex_input' class='control-label x85'>性别:</label><select name='sex'  data-toggle='selectpicker' ><option value=''>请选择</option>
                     <volist name='Think.config.SYS_SEX' id='sex'>
                         <option value='{$sex.value}' <if condition=" $sex.value EQ $Rs['sex'] " >selected</if> >{$sex.name}</option></volist></select>
@@ -17,10 +17,10 @@
             </tr>
             <tr>
                 <td><label for='bumen_input' class='control-label x85'>部门职务:</label><input type='text' id='bumen' name='bumen'  size='20'   value='{$Rs.bumen}'  ></td>
-                <td><label for='phone_input' class='control-label x85'>手机号码:</label><input type='text' id='phone' name='phone' data-rule='required;' size='20'   value='{$Rs.phone}'  ></td>
+                <td><label for='phone_input' class='control-label x85'>手机号码:</label><input type='text' id='phone' name='phone' data-rule='required;mobile;' size='20'   value='{$Rs.phone}'  ></td>
             </tr>
             <tr>
-                <td><label for='email_input' class='control-label x85'>EMAIL:</label><input type='text' id='email' name='email'  size='20'   value='{$Rs.email}'  ></td>
+                <td><label for='email_input' class='control-label x85'>EMAIL:</label><input type='text' id='email' name='email' data-rule='email;'  size='20'   value='{$Rs.email}'  ></td>
                 <td><label for='type_input' class='control-label x85'>机构类别:</label>
                     <select name='cate'  data-toggle='selectpicker' >
                         <option value=''>请选择</option>
@@ -29,12 +29,12 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="2"><label for='wxname_input' class='control-label x85'>绑定微信号:</label><input type='text' id='wxname' name='wxname'  size='20' data-toggle='lookup' data-url='{:U(MODULE_NAME."/public/wxuser",array("navTabId"=>CONTROLLER_NAME))}'  value='{$wxname}'>
+                <td colspan="2"><label for='wxname_input' class='control-label x85'>绑定微信号:</label><input type='text' id='wxname' name='wxname'  size='20' data-toggle='lookup' data-url='{:U(MODULE_NAME."/public/wxuser",array("navTabId"=>CONTROLLER_NAME))}'  value='{$wxname}' readonly>
                     <input type="hidden" id='wxid' name='wxid' value='{$wxid}'>
                 </td>
             </tr>
             <tr>
-                <td colspan="2"><label for='juname_input' class='control-label x85'>跟单人:</label><input type='text' id='juname' name='juname'  size='20' data-toggle='lookup' data-url='{:U(MODULE_NAME."/public/user",array("navTabId"=>CONTROLLER_NAME))}'  value='{$Rs.juname}'  >
+                <td colspan="2"><label for='juname_input' class='control-label x85'>跟单人:</label><input type='text' id='juname' name='juname'  size='20' data-toggle='lookup' data-url='{:U(MODULE_NAME."/public/user",array("navTabId"=>CONTROLLER_NAME))}'  value='{$Rs.juname}'  readonly>
                     <input type="hidden" id="juid" name="juid" value="{$Rs.juid}">
                 </td>
             </tr>

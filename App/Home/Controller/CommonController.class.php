@@ -514,13 +514,21 @@ Class CommonController extends Controller{
 	}
 
 	/**
-	 * 生成订单编号
+	 * 生成单据编号
 	 * @param $suffix
+	 * @param int $type
 	 * @return string
 	 */
-	public function generateHtSn($suffix){
+	public function generateHtSn($suffix,$type=0){
 		$yCode = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J');
-		$orderSn = $yCode[intval(date('Y')) - 2011];
+		$index = (intval(date('Y')) - 2011) % 10;
+		if($type == 1){
+			$index = (intval($index) + 1) % 10;
+		}
+		else if($type == 2){
+			$index = (intval($index) + 2) % 10;
+		}
+		$orderSn = $yCode[$index];
 		$orderSn = $orderSn . date("YmdHis");
 		if(isset($suffix) && $suffix != ""){
 			$orderSn = $orderSn . $suffix;

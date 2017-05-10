@@ -15,8 +15,8 @@
                 <td colspan="2"><label for='bianhao_input' class='control-label x85'>订单编号:</label><input type='text' id='bianhao' name='bianhao'  size='20'   value='{$bianhao}' readonly></td>
             </tr>
             <tr>
-                <td><label for='jine_input' class='control-label x85'>订单金额:</label><input type='text' id='jine' name='jine' data-rule='required;doubles' size='20'   value='{$Rs.jine}'  ></td>
-                <td><label for='profit_input' class='control-label x85'>金额基数:</label><input type='text' id='profit' name='profit' data-rule='required;doubles' size='20'   value='{$Rs.profit}'  ></td>
+                <td><label for='jine_input' class='control-label x85'>订单金额:</label><input type='text' id='jine' name='jine' data-rule='订单金额:required;digits;' size='20'   value='{$Rs.jine}'  ></td>
+                <td><label for='profit_input' class='control-label x85'>金额基数:</label><input type='text' id='profit' name='profit' data-rule="金额基数:required;digits;match(lte, jine);" size='20'   value='{$Rs.profit}'  ></td>
             </tr>
             <tr>
                 <td colspan="2">

@@ -32,6 +32,7 @@ class ShouController extends CommonController{
   
   
   public function _befor_add(){
+	  //自动填充合同
 	  $hid = I("get.hid");
 	  if(!empty($hid) && intval($hid) > 0){
 		  //查询订单信息
@@ -41,6 +42,10 @@ class ShouController extends CommonController{
 			  $this->assign('jhname', $hetong_info["bianhao"]);
 		  }
 	  }
+	  //自动生成单据编号
+	  $shouSn = $this->generateHtSn("",1);
+	  $this->assign('bianhao', $shouSn);
+
 	  $attid=time();
 	  $this->assign('attid',$attid);
     

@@ -7,7 +7,7 @@
            <tbody>
             <tr><td colspan="2">
                 <label for="j_title" class="control-label x85">项目名称：</label>
-                <input type="text" data-rule="required" size="30" name="title" id="j_title" value="{$Rs['title']}" >
+                <input type="text" size="30" name="title" id="title" value="{$Rs['title']}" data-rule="required;remote(get:{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/validatebyname')})" >
              </td></tr>
             <tr><td colspan="2">
                 <label for="j_name" class="control-label x85">项目类别：</label><select  name="cid" data-toggle="selectpicker" data-rule="required">

@@ -80,4 +80,21 @@ class OpsController extends CommonController{
 		$this->xlsout($filename,$headArr,$list);
 	}
 
+    public function validatebyname(){
+//        $title = I("param.title");
+//        if(isset($title) && $title != ""){
+//            $info = D("ops","Logic")->getInfoByTit($title);
+//            if(!empty($info)){
+//                echo "项目有重复";
+//            }
+//            else{
+//                echo "";
+//            }
+//        }
+//        else{
+//            echo "";
+//        }
+        echo "项目有重复";
+    }
+
 }

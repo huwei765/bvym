@@ -15,6 +15,16 @@ use Think\Model;
 class CustconLogic extends Model{
 
 	/**
+	 * 根据姓名查询用户
+	 * @param $name
+	 * @param string $field
+	 * @return Model
+	 */
+	public function getOneInfoByName($name,$field="*"){
+		return $this->getCustconInfo(array("xingming"=>$name),$field);
+	}
+
+	/**
 	 * 根据id查询客户信息的基本逻辑
 	 * @param $cuid
 	 * @param string $field

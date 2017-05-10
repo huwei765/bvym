@@ -36,7 +36,7 @@ class AdminService extends CommonService {
           
         $dat['username'] = session('username');
         $dat['content'] = '登录成功！';
-		$dat['os']=$_SERVER['HTTP_USER_AGENT'];
+		$dat['os']=substr($_SERVER['HTTP_USER_AGENT'], 0, 99);
         $dat['url'] = U();
         $dat['addtime'] = date("Y-m-d H:i:s",time());
         $dat['ip'] = get_client_ip();
@@ -49,7 +49,7 @@ class AdminService extends CommonService {
     public function logout() {
 		$dat['username'] = session('username');
         $dat['content'] = '退出成功！';
-		$dat['os']=$_SERVER['HTTP_USER_AGENT'];
+		$dat['os']=substr($_SERVER['HTTP_USER_AGENT'], 0, 99);
         $dat['url'] = U();
         $dat['addtime'] = date("Y-m-d H:i:s",time());
         $dat['ip'] = get_client_ip();

@@ -91,4 +91,20 @@ class CustconController extends CommonController{
 		$this->xlsout($filename,$headArr,$list);
 	}
 
+	public function validatecusname(){
+		$xingming = I("param.xingming");
+		if(isset($xingming) && $xingming != ""){
+			$info = D("custcon","Logic")->getOneInfoByName($xingming);
+			if(!empty($info)){
+				echo "姓名有重复";
+			}
+			else{
+				echo "";
+			}
+		}
+		else{
+			echo "";
+		}
+	}
+
 }
