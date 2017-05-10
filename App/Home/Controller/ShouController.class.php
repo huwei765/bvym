@@ -32,6 +32,15 @@ class ShouController extends CommonController{
   
   
   public function _befor_add(){
+	  $hid = I("get.hid");
+	  if(!empty($hid) && intval($hid) > 0){
+		  //查询订单信息
+		  $hetong_info = D("hetong","Logic")->getHetongInfoById($hid);
+		  if(!empty($hetong_info)){
+			  $this->assign('jhid', $hetong_info["id"]);
+			  $this->assign('jhname', $hetong_info["bianhao"]);
+		  }
+	  }
 	  $attid=time();
 	  $this->assign('attid',$attid);
     

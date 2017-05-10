@@ -44,15 +44,18 @@ class DesignController extends CommonController{
   }
 	
    public function _after_add($id){
-	   $skip = array(
-		   "url"=>"/index.php?m=Home&c=Hetong&a=add&navTabId=Hetong",
-		   "title"=>"新增订单",
-		   "height"=>"600",
-		   "width"=>"900",
-		   "forwardConfirm"=>"是否要去新增订单呢？",
-		   "type"=>"dialog"
-	   );
-	   $this->mtReturn(200,"新增成功",$_REQUEST['navTabId'],true,$skip);
+	   if(IS_POST){
+		   $cuid = I('post.cuid');
+		   $skip = array(
+			   "url"=>"/index.php?m=Home&c=Hetong&a=add&navTabId=Hetong&cuid=".$cuid,
+			   "title"=>"新增订单",
+			   "height"=>"600",
+			   "width"=>"900",
+			   "forwardConfirm"=>"是否要去新增订单呢？",
+			   "type"=>"dialog"
+		   );
+		   $this->mtReturn(200,"新增成功",$_REQUEST['navTabId'],true,$skip);
+	   }
    }
 
   public function _befor_insert($data){

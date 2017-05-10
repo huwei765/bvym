@@ -62,7 +62,7 @@ class HetongController extends CommonController{
 					}
 				}
 				$skip = array(
-					"url"=>"/index.php?m=Home&c=shou&a=add&navTabId=shou",
+					"url"=>"/index.php?m=Home&c=shou&a=add&navTabId=shou&hid=".$id,
 					"title"=>"新增收款",
 					"height"=>"500",
 					"width"=>"900",
@@ -70,6 +70,20 @@ class HetongController extends CommonController{
 					"type"=>"dialog"
 				);
 				$this->mtReturn(200,"新增成功",$_REQUEST['navTabId'],true,$skip);
+			}
+		}
+		else{
+			//若带有客户信息则自动查询客户信息
+			$cuid = I("get.cuid");
+			if(!empty($cuid) && intval($cuid) > 0){
+				//查询客户信息
+				$custcon_data = D("custcon","Logic")->getCustconInfoById($cuid);
+				if(!empty($custcon_data)){
+					$this->assign('cuid', $custcon_data["id"]);
+					$this->assign('cuname', $custcon_data["xingming"]);
+					$this->assign('dianhua', $custcon_data["phone"]);
+				}
+
 			}
 		}
 		$this->display();
