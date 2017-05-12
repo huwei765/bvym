@@ -434,8 +434,14 @@ class PublicController extends Controller {
 		if($filter != "1"){
 			$sigin_cuid_list = D("signin","Logic")->getSignInListByToday("cuid");
 			if(!empty($sigin_cuid_list)){
-				$map['id'] = array('in', $sigin_cuid_list);
-				$where['_complex'] = $map;
+				$tmp_cuid = array();
+				foreach($sigin_cuid_list as $val){
+					$tmp_cuid[] = $val["cuid"];
+				}
+				if(!empty($tmp_cuid)){
+					$map['id'] = array('in', $tmp_cuid);
+					$where['_complex'] = $map;
+				}
 			}
 			else{
 				$map['id'] = array('in', array(""));

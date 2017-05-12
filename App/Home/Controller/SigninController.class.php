@@ -47,13 +47,13 @@ class SigninController extends CommonController{
    function _filter(&$map) {
 	   if((IS_POST) && isset($_REQUEST['date_type_checked']) && $_REQUEST['date_type_checked'] != ''){
 		   if(intval($_REQUEST['date_type_checked']) == 1){
-			   $map['addtime'] = array(array('egt',time()),array('elt',strtotime("+1 day")));
+			   $map['addtime'] = array(array("egt",strtotime(date("Y-m-d"))),array('elt',strtotime(date('Y-m-d',strtotime('+1 day')))));
 		   }
 	   }
 	   else{
-		   $map['addtime'] = array(array('egt',time()),array('elt',strtotime("+1 day")));
+		   $map['addtime'] = array(array("egt",strtotime(date("Y-m-d"))),array('elt',strtotime(date('Y-m-d',strtotime('+1 day')))));
 	   }
-	}
+   }
 	
    public function _befor_index(){ 
    
