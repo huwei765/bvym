@@ -10,7 +10,7 @@ class PublicController extends Controller {
 		if (!$rs['status']) {
             $this->error($rs['data']);
         }
-		$this->success('登录成功，正在跳转...',__APP__,1);
+		$this->success('登录成功，正在跳转...',__APP__);
 	  }
 	  else{
 		  $this->display();
@@ -424,14 +424,23 @@ class PublicController extends Controller {
 
 		$key=I('keys');
 		if($key){
-			$where['title'] = array('like','%'.$key.'%');
-			$where['cuname'] = array('like','%'.$key.'%');
-			$where['juname'] = array('like','%'.$key.'%');
+			$where['nickname'] = array('like','%'.$key.'%');
+			$where['xingming'] = array('like','%'.$key.'%');
 			$where['phone'] = array('like','%'.$key.'%');
-			$where['_logic'] = 'or'; }
-		if(IS_POST&&isset($_REQUEST['filter']) && $_REQUEST['filter'] != ''){
-			$map['fenlei'] = array('EQ', I('filter'));
-			$where['_complex'] = $map;
+			$where['_logic'] = 'or';
+		}
+		//查询是否今日签到客户
+		$filter = I("param.filter");
+		if($filter != "1"){
+			$sigin_cuid_list = D("signin","Logic")->getSignInListByToday("cuid");
+			if(!empty($sigin_cuid_list)){
+				$map['id'] = array('in', $sigin_cuid_list);
+				$where['_complex'] = $map;
+			}
+			else{
+				$map['id'] = array('in', array(""));
+				$where['_complex'] = $map;
+			}
 		}
 		$numPerPage=10;
 		$list=$info->where($where)->order("`" . $order . "` " . $sort)->limit($numPerPage)->page($pageCurrent.','.$numPerPage.'')->select();
@@ -440,6 +449,7 @@ class PublicController extends Controller {
 		$this->assign('totalCount', $count);
 		$this->assign('currentPage', !empty($_GET['pageNum']) ? $_GET['pageNum'] : 1);
 		$this->assign('numPerPage', $numPerPage);
+
 		$this->display();
 	}
 

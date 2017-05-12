@@ -10,6 +10,28 @@ use Think\Model;
 class SigninLogic extends Model{
 
 	/**
+	 * 获取当天的签到信息列表
+	 * @param string $field
+	 * @param string $order
+	 * @return mixed
+	 */
+	public function getSignInListByToday($field="*",$order="id desc"){
+		$condition["addtime"] = array(array("gt",strtotime(date("Y-m-d"))),array('lt',strtotime(date('Y-m-d',strtotime('+1 day')))));
+		return $this->getSignInList($condition,$field,$order);
+	}
+
+	/**
+	 * 获取签到列表
+	 * @param $condition
+	 * @param string $field
+	 * @param string $order
+	 * @return mixed
+	 */
+	public function getSignInList($condition,$field="*",$order="id desc"){
+		return M("signin")->field($field)->where($condition)->order($order)->select();
+	}
+
+	/**
 	 * 通过微信扫码签到
 	 * @param $openId
 	 * @return array

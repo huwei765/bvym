@@ -20,7 +20,7 @@
             </td></tr>
             <tr><td>
                 <label for="j_price" class="control-label x85">单价：</label>
-                <input type="text" data-rule="required" size="30" name="price" id="j_price" value="{$Rs['price']}" >
+                <input type="text" data-rule="required" size="30" name="price" id="j_price" value="{$Rs['price']}" data-rule='required;digits;' >
             </td><td>
                 <label for="j_unit" class="control-label x85">单位：</label><select  name="unit" data-toggle="selectpicker" data-rule="required">
                 <option  value="0">请选择</option>
