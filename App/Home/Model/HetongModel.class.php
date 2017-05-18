@@ -18,7 +18,7 @@ class HetongModel extends Model{
     protected $_validate = array(
 		array('bianhao','require','请输入订单编号！'),
         array('bianhao','','编号已经存在！',0,'unique',1),
-		array('bianhao','/[a-z0-9]{6,12}/','编号长度必须是6到12位，且必须为数字或字母！',0,'length'),
+		array('bianhao','/[a-z0-9]{6,20}/','编号长度必须是6到20位，且必须为数字或字母！',0,'length'),
 		array('cuid','require','请选择客户！'),
     );
     

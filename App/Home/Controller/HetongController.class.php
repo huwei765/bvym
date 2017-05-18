@@ -41,23 +41,22 @@ class HetongController extends CommonController{
 		if(IS_POST){
 			$model = D($this->dbname);
 			$bianhao=I('post.bianhao');
-			$ops_list = I("post.ops_list");
-			$ops_list = htmlspecialchars_decode($ops_list);
-			$ops_arr = json_decode($ops_list,true);
 
 			if (false === $data = $model->create()) {
-				$this->mtReturn(300,'失败，请检查值是否已经存在',$_REQUEST['navTabId'],true);
+				$this->mtReturn(300,'失败，'.$model->getError(),$_REQUEST['navTabId'],true);
 			}
 			if($model->add($data)){
 				$id = $model->getLastInsID();
-				$tmp_data = array("hid"=>$id,"bianhao"=>$bianhao);
 				//新增相关项目
-				if(is_array($ops_arr)){
-					foreach($ops_arr as $val){
-						$tmp_data["oid"] = $val["oid"];
-						$tmp_data["oname"] = $val["oname"];
-						$tmp_data["ocname"] = $val["ocname"];
-						$tmp_data["price"] = $val["oprice"];
+				for($i = 0;$i<10;$i++){
+					$tmp_data = array("hid"=>$id,"bianhao"=>$bianhao);
+					$tmp_data["oid"] = I("post.ops".$i."_oid");
+					$tmp_data["oname"] = I("post.ops".$i."_oname");
+					$tmp_data["ocname"] = I("post.ops".$i."_ocname");
+					$tmp_data["price"] = I("post.ops".$i."_oprice");
+					$tmp_data["num"] = I("post.ops".$i."_num");
+					$tmp_data["money"] = I("post.ops".$i."_sumprice");
+					if(intval($tmp_data["oid"]) > 0 && intval($tmp_data["num"]) > 0){
 						D("htops","Logic")->addHtOpsInfo($tmp_data);
 					}
 				}

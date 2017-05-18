@@ -65,6 +65,8 @@ class HtopsLogic extends Model{
 		$htOpsData["oname"] = $newData["oname"];
 		$htOpsData["ocname"] = $newData["ocname"];
 		$htOpsData["price"] = $newData["price"];
+		$htOpsData["num"] = $newData["num"];
+		$htOpsData["money"] = $newData["money"];
 		$htOpsData["addtime"] = time();
 
 		$htOpsModel = M("htops");

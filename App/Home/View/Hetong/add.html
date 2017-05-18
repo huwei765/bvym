@@ -2,65 +2,89 @@
     <form action="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/add',array('navTabId'=>CONTROLLER_NAME))}" class="pageForm" data-toggle="validate">
 		<input type="hidden" name="id" value="{$id}">
         <div class="pageFormContent" data-layout-h="0">
-          <table class="table table-condensed table-hover" width="100%">
-           <tbody>
-			<tr>
-                <td>
-                    <label for='cuname_input' class='control-label x85'>客户:</label><input type='text' id='cuname' name='cuname'  size='20' data-toggle='lookup' data-url='{:U(MODULE_NAME."/public/custcon",array("navTabId"=>CONTROLLER_NAME))}'  value='{$cuname}'  >
-                    <input type="hidden" name="cuid" id="cuid" value='{$cuid}'>
-                </td>
-                <td><label for='dianhua_input' class='control-label x85'>联系电话:</label><input type='text' id='dianhua' name='dianhua'  size='20'   value='{$dianhua}'  ></td>
-            </tr>
-            <tr>
-                <td colspan="2"><label for='bianhao_input' class='control-label x85'>订单编号:</label><input type='text' id='bianhao' name='bianhao'  size='20'   value='{$bianhao}' readonly></td>
-            </tr>
-            <tr>
-                <td><label for='jine_input' class='control-label x85'>订单金额:</label><input type='text' id='jine' name='jine' data-rule='订单金额:required;digits;' size='20'   value='{$Rs.jine}'  ></td>
-                <td><label for='profit_input' class='control-label x85'>金额基数:</label><input type='text' id='profit' name='profit' data-rule="金额基数:required;digits;match(lte, jine);" size='20'   value='{$Rs.profit}'  ></td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <label for='juname_input' class='control-label x85'>业务员:</label><input type='text' id='juname' name='juname'  size='20' data-toggle='lookup' data-url='{:U(MODULE_NAME."/public/hruser",array("navTabId"=>CONTROLLER_NAME))}'  value='{$Rs.juname}'  >
-                    <input type="hidden" name="juid" id="juid" value="{$Rs.juid}">
-                </td>
-            </tr>
-            <tr></tr>
-            <tr>
-                <td colspan="2">
-                    <div class="modal_box clearfix">
-                        <div class="modal_tit">
-                            <p><label class="control-label x85">订单项目:</label>
-                                <button data-toggle='lookup' data-url="{:U(MODULE_NAME.'/public/ops',array('id'=>$v['id'],'navTabId'=>CONTROLLER_NAME))}">新增</button>
-                                <input type="hidden" name="oid" id="oid" value="0">
-                                <input type="hidden" name="oname" id="oname" value="">
-                                <input type="hidden" name="ocname" id="ocname" value="">
-                                <input type="hidden" name="oprice" id="oprice" value="">
-                                <input type="hidden" name="ops_list" id="ops_list" value="">
-                            </p>
-                        </div>
-                        <div id="modal_addPanel" class="modal_scroll">
-                            <table data-toggle="tablefixed" data-width="100%" data-layout-h="0" data-nowrap="true">
-                                <thead>
-                                <tr>
-                                    <th>项目名称</th>
-                                    <th>项目类别</th>
-                                    <th>单价</th>
-                                    <th>删除</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td colspan=2><label for='beizhu_input' class='control-label x85'>订单详情:</label><div style='display: inline-block; vertical-align: middle;'><textarea name='beizhu'   data-toggle='kindeditor' data-minheight='150' data-items='fontname, fontsize, |, forecolor, hilitecolor, bold, italic, underline, removeformat, |, justifyleft, justifycenter, justifyright, insertorderedlist, insertunorderedlist, |, emoticons, image, link'>{$Rs.beizhu}</textarea></div></td>
-            </tr>
-            <tr><td colspan=2><label for='attid_input' class='control-label x85'>上传附件:</label><div style='display: inline-block; vertical-align: middle;'><IFRAME   src='{:U(MODULE_NAME."/public/attfile",array("attid"=>$attid))}'  frameBorder=0 width='100%' height='30' scrolling=no ></IFRAME><input type='hidden' id='attid' name='attid'  value='{$attid}'  ></div></td></tr>
-           </tbody>
-          </table>
+            <div class="pageFormOrder">
+                <table class="table tableNoRow" width="100%">
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4"><h4 class="text-center">新增订单</h4></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4"></td>
+                        </tr>
+                        <tr>
+                            <td><label for='cuname_input' class='control-label x70'>客户:</label>
+                                <input type='text' id='cuname' name='cuname'  size='13' data-toggle='lookup' data-url='{:U(MODULE_NAME."/public/custcon",array("navTabId"=>CONTROLLER_NAME))}'  value='{$cuname}' readonly>
+                                <input type="hidden" name="cuid" id="cuid" value='{$cuid}'>
+                            </td>
+                            <td><label for='dianhua_input' class='control-label x70'>联系电话:</label><input type='text' id='dianhua' name='dianhua'  size='13'   value='{$dianhua}'  readonly></td>
+                            <td colspan="2"><label for='bianhao_input' class='control-label x70'>订单编号:</label><input type='text' id='bianhao' name='bianhao'  size='18'   value='{$bianhao}' readonly></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <label for='juname_input' class='control-label x70'>业务员:</label><input type='text' id='juname' name='juname'  size='15' data-toggle='lookup' data-url='{:U(MODULE_NAME."/public/hruser",array("navTabId"=>CONTROLLER_NAME))}'  value='{$Rs.juname}'  readonly>
+                                <input type="hidden" name="juid" id="juid" value="{$Rs.juid}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" style="vertical-align: top;" valign="top">
+                                <div class="datagrid-box-b">
+                                    <div class="datagrid-wrap-b">
+                                        <table class="table table-bordered table-hover table-striped table-top tabledit" data-toggle="tabledit">
+                                            <thead>
+                                            <tr>
+                                                <th title="项目名称">
+                                                    <input type="text" name="ops#index#.oname" data-toggle="lookup"  data-url="{:U(MODULE_NAME.'/public/ops',array('id'=>$v['id'],'navTabId'=>CONTROLLER_NAME))}" data-group="ops#index#" data-width="700" data-height="300"
+                                                           aria-required="true" readonly>
+                                                    <input type="hidden" name="ops#index#.oid">
+                                                </th>
+                                                <th title="类型">
+                                                    <input type="text" name="ops#index#.ocname" placeholder="类型" readonly>
+                                                </th>
+                                                <th title="数量">
+                                                    <input name="ops#index#.num" value="1" aria-required="true" data-toggle="spinner" type="text" readonly>
+                                                </th>
+                                                <th title="单价">
+                                                    <input type="text" name="ops#index#.oprice" placeholder="单价" readonly>
+                                                </th>
+                                                <th title="总价">
+                                                    <input type="text" name="ops#index#.sumprice" placeholder="总价" readonly>
+                                                </th>
+                                                <th title="" data-addtool="true" width="100">
+                                                    <a href="ajaxDone2.html" class="btn btn-red row-del" data-confirm-msg="确定要删除该行信息吗？">删</a>
+                                                </th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                            <td>
+                                <table class="table tableNoRow tableSum" width="40%">
+                                    <tbody>
+                                        <tr>
+                                            <td><label class='control-label x70'>总价:</label><input type='text' id='jine' name='jine'  size='12'   value='0' readonly></td>
+                                        </tr>
+                                        <tr>
+                                            <td><label class='control-label x70'>利润基数:</label><input type='text' id='profit' name='profit'  size='12'   value='0' readonly></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <div class="bjui-footBar">
             <ul>
@@ -71,124 +95,91 @@
     </form>
 </div>
 <style type="text/css">
-    .modal_box{
-        position: relative;
-        width: 100%;
-        background: no-repeat 0 0 scroll #f1f1f1;
+    table.tableNoRow{width: 100%;}
+    .tableNoRow > tbody > tr > td{
+        border:0 none;
+        width: 25%;
     }
-    .modal_box .modal_tit{
-        padding: 10px 0;
+    .tableNoRow .form-control{
+        background-color: #f8f6fa;
+        background-image: none;
+        border-width: 0 0 1px 0;
+        border-bottom: 1px solid #cccccc;
+        border-radius: 0px;
+        box-shadow: 0 0 0px rgba(0, 0, 0, 0.075) inset;
+        color: #0f4c0f;
+        width:100px;
     }
-    .modal_box .modal_scroll{
-        border: 1px solid #f00;
-        float: left;
-        height: 200px;
-        margin-left: 2%;
-        width: 96%;
-        overflow: scroll;
+    .tabledit .form-control{
+        border-width: 0;
+        background-color: #ffffff;
+    }
+    div.datagrid-box-b{
+        position:relative;padding: 10px 20px;
+    }
+    div.datagrid-wrap-b{
+        position:relative;overflow:auto;height: 250px;background: no-repeat 0 0 scroll #ffffff;
+    }
+    .bjui-dialog > .dialogContent .bjui-pageContent{
+        background: #f8f6fa none repeat scroll 0 0;
+    }
+    .table > thead > tr > th{
+        background: #eae7ef none repeat scroll 0 0;
+    }
+    .table-striped > tbody > tr:nth-child(2n) > td, .table-striped > tbody > tr:nth-child(2n) > th{
+        background-color: #ffffff;
+    }
+    .tableNoRow .tableSum{
+        background: no-repeat 0 0 scroll #f8f6fa;
     }
 </style>
 <script type="text/javascript">
     $(document).ready(function(){
-        var tmp_ops = {tag:0,data:{}};
-        var onDelClick = function(obj){
-            //从ops_list中删除
-            var _tmp_oid = $(obj).closest("tr").attr("data-oid");
-            var _ops_list = $("input[name='ops_list']").val();
-            _ops_list = JSON.parse(_ops_list);
-            for(var i = 0;i<_ops_list.length;i++){
-                if(_ops_list[i].hasOwnProperty("oid")){
-                    if(parseInt(_ops_list[i]["oid"]) - _tmp_oid ==0){
-                        _ops_list.splice(i,1);
-                        break;
-                    }
-                }
-            }
-            $("input[name='ops_list']").val(JSON.stringify(_ops_list));
-            afterUpdateTmpList();
+
+        //计算总价
+        var countTotalPrice = function(obj_tr){
+            var obj_table = obj_tr.closest("table");
+            var total_price = 0;
+            obj_table.find("input[name$='sumprice']").each(function(i){
+                total_price = parseInt($(this).val()) + total_price;
+            });
+            $("#jine").val(total_price);
+            $("#profit").val(total_price);
         };
-        var afterUpdateTmpList = function(){
-            var _ops_list = $("input[name='ops_list']").val();
-            if(_ops_list == ""){
-                $("#modal_addPanel").find("table tbody").html("");
+
+        //计算单个项目价格
+        var countSumPrice = function(obj_tr){
+            var obj_price = obj_tr.find("input[name$='oprice']");
+            var obj_num = obj_tr.find("input[name$='num']");
+            var var_price = obj_price.val();
+            var var_num = obj_num.val();
+            if(parseInt(var_num) - var_num == 0 && parseInt(var_price) - var_price == 0){
+                var var_sumprice = var_num * var_price;
+                obj_price.closest("tr").find("input[name$='sumprice']").val(var_sumprice);
+                //每次单价改变都引起总价改变
+                countTotalPrice(obj_tr);
             }
-            else{
-                _ops_list = JSON.parse(_ops_list);
-                //更新之前先清空
-                $("#modal_addPanel").find("table tbody").html("");
-                //更新列表
-                for(var j = 0;j<_ops_list.length;j++){
-                    var _tmp_html = "<td>"+_ops_list[j].oname+"</td>";
-                    _tmp_html = _tmp_html + "<td>"+_ops_list[j].ocname+"</td>";
-                    _tmp_html = _tmp_html + "<td>"+_ops_list[j].oprice+"</td>";
-                    _tmp_html = _tmp_html + "<td><a name='btn_del_"+j+"' href='javascript:void(0)'>删除</a></td>";
-                    _tmp_html = "<tr data-oid='"+_ops_list[j].oid+"'>"+_tmp_html + "</tr>";
-                    $("#modal_addPanel").find("table tbody").append(_tmp_html);
-                }
-                //绑定事件
-                $("#modal_addPanel").find("table tbody").find("a[name^='btn_del_']").click(function(){
-                    onDelClick(this);
-                });
-            }
-            //恢复初始状态
-            tmp_ops = {tag:0,data:{}};
         };
-        var updateTmpList = function(){
-            console.log(tmp_ops.tag);
-            if(parseInt(tmp_ops.tag) < 4){
-                return true;
-            }
-            var tmp_id = tmp_ops.data.oid ? tmp_ops.data.oid : 0;
-            if(parseInt(tmp_id) <= 0){
-                return false;
-            }
-            //获取所有值
-            var ops_list = [];
-            var _tmp_ops_list = $("input[name='ops_list']").val();
-            if(_tmp_ops_list != "" && _tmp_ops_list != null){
-                var _obj_ops_list = JSON.parse(_tmp_ops_list);
-                if (typeof _obj_ops_list === "object" && _obj_ops_list instanceof Array){
-                    ops_list = _obj_ops_list;
-                }
-            }
-            var isRepeat = false;
-            for(var i=0;i<ops_list.length;i++){
-                if(ops_list[i].hasOwnProperty("oid")){
-                    if(parseInt(ops_list[i]["oid"]) - tmp_id ==0){
-                        isRepeat = true;
-                        //更新
-                        ops_list[i]["oname"] = tmp_ops.data.oname;
-                        ops_list[i]["ocname"] = tmp_ops.data.ocname;
-                        ops_list[i]["oprice"] = tmp_ops.data.oprice;
-                        break;
-                    }
-                }
-            }
-            if(!isRepeat){
-                ops_list.push(tmp_ops.data);
-            }
-            $("input[name='ops_list']").val(JSON.stringify(ops_list));
-            afterUpdateTmpList();
-        };
-        $(document).on('afterchange.bjui.lookup', '[name="oid"]', function(e) {
-            tmp_ops.tag = parseInt(tmp_ops.tag) + 1;
-            tmp_ops.data.oid = $(e.target).val();
-            updateTmpList();
+
+        //增加一个新记录
+//        $(document).on("afteradd.bjui.tabledit",function(e){
+//            var tr_obj = $(e.target);
+//            var obj_num = tr_obj.find("input[name$='num']");
+//            var obj_price = tr_obj.find("input[name$='oprice']");
+//            var obj_sumprice = tr_obj.find("input[name$='sumprice']");
+//            var var_price = obj_price.val();
+//            var var_num = obj_num.val();
+//            var var_sumprice = var_price * var_num;
+//            obj_sumprice.val(var_sumprice);
+//        });
+        //改变数量
+        $(document).on("afterchange.bjui.spinner",function(e){
+            countSumPrice($(e.target).closest("tr"));
         });
-        $(document).on('afterchange.bjui.lookup', '[name="oname"]', function(e) {
-            tmp_ops.tag = parseInt(tmp_ops.tag) + 1;
-            tmp_ops.data.oname = $(e.target).val();
-            updateTmpList();
+        //当增加新项目价格时
+        $(document).on('afterchange.bjui.lookup', '[name$="oprice"]', function(e) {
+            countSumPrice($(e.target).closest("tr"));
         });
-        $(document).on('afterchange.bjui.lookup', '[name="ocname"]', function(e) {
-            tmp_ops.tag = parseInt(tmp_ops.tag) + 1;
-            tmp_ops.data.ocname = $(e.target).val();
-            updateTmpList();
-        });
-        $(document).on('afterchange.bjui.lookup', '[name="oprice"]', function(e) {
-            tmp_ops.tag = parseInt(tmp_ops.tag) + 1;
-            tmp_ops.data.oprice = $(e.target).val();
-            updateTmpList();
-        });
+
     });
 </script>

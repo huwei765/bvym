@@ -39,7 +39,8 @@
     }
     
     Tabledit.EVENTS = {
-        afterDelete: 'afterdelete.bjui.tabledit'
+        afterDelete: 'afterdelete.bjui.tabledit',
+        afterAdd:'afteradd.bjui.tabledit'
     }
     
     Tabledit.prototype.TOOLS = function() {
@@ -325,6 +326,9 @@
                 
                 that.$element.trigger(deletedEvent)
                 if (deletedEvent.isDefaultPrevented()) return
+            },
+            afterAdd:function($addTr){
+                $addTr.trigger(Tabledit.EVENTS.afterAdd);
             }
         }
         
@@ -372,7 +376,8 @@
             $addTr.hide().appendTo($tbody)
             tools.initSuffix($tbody)
             tools.initEnter($tbody)
-            $addTr.show().css('display', '').initui()
+            $addTr.show().css('display', '').initui();
+            tools.afterAdd($addTr);
         }
         /*置入焦点*/
         if ($firstTr && $firstTr.length) {
