@@ -307,13 +307,7 @@
                 }
                 
                 if ($btnDel.is('[href^=javascript:]') || $btnDel.is('[href^="#"]')) {
-                    if ($btnDel.data('confirmMsg')) {
-                        $btnDel.alertmsg('confirm', $btnDel.data('confirmMsg'), {okCall: function() {
-                            _delRow()
-                        }})
-                    } else {
-                        _delRow()
-                    }
+                    _delRow();
                 } else {
                     $btnDel.bjuiajax('doAjax', {
                         url      : $btnDel.attr('href'),
