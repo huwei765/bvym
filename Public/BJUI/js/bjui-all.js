@@ -6216,10 +6216,11 @@
                         var $tr = $(this).closest('tr'), callback = that.options.callback
                         
                         if (that.options.action) {
+                            var tmp_tr_index = $tr.index();//解决BUG:index一直为0
                             $tr.wrap('<form action="" method="POST"></form>')
                             if ($tr.attr('data-id')) {
                                 var name = $table.find('> thead > tr:eq(0)').data('idname') || 'id'
-                                $tr.before('<input type="hidden" name="'+ name.replaceSuffix($tr.index()) +'" value="'+ $tr.attr('data-id') +'">')
+                                $tr.before('<input type="hidden" name="'+ name.replaceSuffix(tmp_tr_index) +'" value="'+ $tr.attr('data-id') +'">')
                             }
                             var data = $tr.parent().serializeArray()
                             

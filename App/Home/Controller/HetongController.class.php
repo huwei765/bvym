@@ -91,6 +91,67 @@ class HetongController extends CommonController{
 	}
 
 	/**
+	 * 修改订单
+	 */
+	public function edit(){
+		if(IS_POST){
+			$data=I('post.');
+			$model = D($this->dbname);
+			if (false === $data = $model->create()) {
+				$this->mtReturn(300,'失败，'.$model->getError(),$_REQUEST['navTabId'],true);
+			}
+			if($model->save($data)){
+			}
+			$this->mtReturn(200,"编辑成功",$_REQUEST['navTabId'],true);
+		}
+		$id = I("param.id");
+		$hetong_data = D("hetong","Logic")->getHetongInfoById($id);
+		if(!empty($hetong_data) && isset($hetong_data["id"])){
+			$ops_list = D("htops","Logic")->getHtOpsListByHid($hetong_data["id"]);
+			$this->assign('ops_list', $ops_list);
+		}
+		$this->assign('Rs', $hetong_data);
+		$this->assign('id',$id);
+		$this->display();
+	}
+
+	/**
+	 * 订单项目单个保存
+	 */
+	public function edit_ops(){
+		if(IS_POST){
+			$hid = I("get.hid");
+			$bianhao = I("get.bianhao");
+			$ops_no = I("post.ops_no");
+			if(is_numeric($hid) && is_numeric($ops_no) && strlen($bianhao) > 6 && strlen($bianhao) < 20){
+				$ops_index = intval($ops_no) -1;
+				$data["hid"] = $hid;
+				$data["bianhao"] = $bianhao;
+				$data["oname"] = I("post.ops".$ops_index."_oname");
+				$data["oid"] = I("post.ops".$ops_index."_oid");
+				$data["ocname"] = I("post.ops".$ops_index."_ocname");
+				$data["price"] = I("post.ops".$ops_index."_oprice");
+				$data["num"] = I("post.ops".$ops_index."_num");
+				$data["money"] = I("post.ops".$ops_index."_sumprice");
+				$data["id"] = I("post.ops".$ops_index."_id");
+				$ret = D("htops","Logic")->saveInfo($data);
+				if(intval($ret) > 0){
+					$this->mtReturn(200,"编辑成功",$_REQUEST['navTabId'],true);
+				}
+				else{
+					$this->mtReturn(300,'编辑失败',$_REQUEST['navTabId'],true);
+				}
+			}
+			else{
+				$this->mtReturn(300,'编辑失败,订单信息错误',$_REQUEST['navTabId'],true);
+			}
+		}
+		else{
+			$this->mtReturn(300,'不好意思，流程错误',$_REQUEST['navTabId'],true);
+		}
+	}
+
+	/**
 	 * 删除相关项目
 	 */
 	public function ops_del(){

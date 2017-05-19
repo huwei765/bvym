@@ -116,4 +116,52 @@ class HtopsLogic extends Model{
 			return false;
 		}
 	}
+
+	/**
+	 * 保存信息
+	 * @param $data
+	 * @return int
+	 */
+	public function saveInfo($data){
+		if(empty($data)){
+			return 0;
+		}
+		if(isset($data["id"]) && is_numeric($data["id"])){
+			//更新
+			$where["id"] = $data["id"];
+			$where["hid"] = $data["hid"];
+			$where["bianhao"] = $data["bianhao"];
+			return $this->updateInfoByHtInfo($where,$data);
+		}
+		else{
+			return $this->addHtOpsInfo($data);
+		}
+	}
+
+	/**
+	 * 更新信息
+	 * @param $htData
+	 * @param $data
+	 * @return bool|int
+	 */
+	public function updateInfoByHtInfo($htData,$data){
+		if(isset($htData["id"]) && is_numeric($htData["id"])){
+			unset($data["id"]);
+			unset($data["hid"]);
+			unset($data["bianhao"]);
+
+			$where["id"] = $htData["id"];
+			if(isset($htData["hid"]) && is_numeric($htData["hid"])){
+				$where["hid"] = $htData["hid"];
+			}
+			if(isset($htData["bianhao"]) && strlen($htData["bianhao"]) > 6 && strlen($htData["bianhao"]) < 20){
+				$where["bianhao"] = $htData["bianhao"];
+			}
+			$htOpsModel = M("htops");
+			return $htOpsModel->where($where)->data($data)->save();
+		}
+		else{
+			return 0;
+		}
+	}
 }

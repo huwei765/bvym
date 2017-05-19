@@ -2,36 +2,110 @@
     <form action="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/edit',array('navTabId'=>CONTROLLER_NAME))}" class="pageForm" data-toggle="validate">
 		<input type="hidden" name="id" value="{$id}">
         <div class="pageFormContent" data-layout-h="0">
-          <table class="table table-condensed table-hover" width="100%">
-              <tbody>
-              <tr>
-                  <td>
-                      <label for='cuname_input' class='control-label x85'>客户:</label><input type='text' id='cuname' name='cuname'  size='20' data-toggle='lookup' data-url='{:U(MODULE_NAME."/public/custcon",array("navTabId"=>CONTROLLER_NAME))}'  value='{$Rs.cuname}'  >
-                      <input type="hidden" name="cuid" id="cuid" value='{$Rs.cuid}'>
-                  </td>
-                  <td><label for='dianhua_input' class='control-label x85'>联系电话:</label><input type='text' id='dianhua' name='dianhua'  size='20'   value='{$Rs.dianhua}'  ></td>
-              </tr>
-              <tr>
-                  <td colspan="2"><label for='bianhao_input' class='control-label x85'>订单编号:</label><input type='text' id='bianhao' name='bianhao'  size='20'   value='{$Rs.bianhao}'  readonly></td>
-              </tr>
-              <tr>
-                  <td><label for='jine_input' class='control-label x85'>订单金额:</label><input type='text' id='jine' name='jine' data-rule='订单金额:required;digits;' size='20'   value='{$Rs.jine}'  ></td>
-                  <td><label for='profit_input' class='control-label x85'>金额基数:</label><input type='text' id='profit' name='profit' data-rule="金额基数:required;digits;match(lte, jine);" size='20'   value='{$Rs.profit}'  ></td>
-              </tr>
-              <tr>
-                  <td colspan="2">
-                      <label for='juname_input' class='control-label x85'>业务员:</label><input type='text' id='juname' name='juname'  size='20' data-toggle='lookup' data-url='{:U(MODULE_NAME."/public/hruser",array("navTabId"=>CONTROLLER_NAME))}'  value='{$Rs.juname}'  >
-                      <input type="hidden" name="juid" id="juid" value="{$Rs.juid}">
-                  </td>
-              </tr>
-              <tr></tr>
-              <tr></tr>
-              <tr>
-                  <td colspan=2><label for='beizhu_input' class='control-label x85'>订单详情:</label><div style='display: inline-block; vertical-align: middle;'><textarea name='beizhu'   data-toggle='kindeditor' data-minheight='150' data-items='fontname, fontsize, |, forecolor, hilitecolor, bold, italic, underline, removeformat, |, justifyleft, justifycenter, justifyright, insertorderedlist, insertunorderedlist, |, emoticons, image, link'>{$Rs.beizhu}</textarea></div></td>
-              </tr>
-              <tr><td colspan=2><label for='attid_input' class='control-label x85'>上传附件:</label><div style='display: inline-block; vertical-align: middle;'><IFRAME   src='{:U(MODULE_NAME."/public/attfile",array("attid"=>$attid))}'  frameBorder=0 width='100%' height='30' scrolling=no ></IFRAME><input type='hidden' id='attid' name='attid'  value='{$attid}'  ></div></td></tr>
-              </tbody>
-          </table>
+            <div class="pageFormOrder">
+                <table class="table tableNoRow" width="100%">
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4"><h4 class="text-center">修改订单</h4></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4"></td>
+                        </tr>
+                        <tr>
+                            <td><label for='cuname_input' class='control-label x70'>客户:</label>
+                                <input type='text' id='cuname' name='cuname'  size='13' data-toggle='lookup' data-url='{:U(MODULE_NAME."/public/custcon",array("navTabId"=>CONTROLLER_NAME))}'  value='{$Rs.cuname}' readonly>
+                                <input type="hidden" name="cuid" id="cuid" value='{$Rs.cuid}'>
+                            </td>
+                            <td><label for='dianhua_input' class='control-label x70'>联系电话:</label><input type='text' id='dianhua' name='dianhua'  size='13'   value='{$Rs.dianhua}'  readonly></td>
+                            <td colspan="2"><label for='bianhao_input' class='control-label x70'>订单编号:</label><input type='text' id='bianhao' name='bianhao'  size='18'   value='{$Rs.bianhao}' readonly></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <label for='juname_input' class='control-label x70'>业务员:</label><input type='text' id='juname' name='juname'  size='15' data-toggle='lookup' data-url='{:U(MODULE_NAME."/public/hruser",array("navTabId"=>CONTROLLER_NAME))}'  value='{$Rs.juname}'  readonly>
+                                <input type="hidden" name="juid" id="juid" value="{$Rs.juid}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" style="vertical-align: top;" valign="top">
+                                <div class="datagrid-box-b">
+                                    <div class="datagrid-wrap-b">
+                                        <table class="table table-bordered table-hover table-striped table-top tabledit" data-toggle="tabledit" data-initnum="0" data-single-noindex="true" data-action="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/edit_ops',array('navTabId'=>CONTROLLER_NAME,'hid'=>$id,'bianhao'=>$Rs['bianhao']))}">
+                                            <thead>
+                                            <tr data-idname="ops#index#.id">
+                                                <th title="NO">
+                                                    <input type="text" name="ops.no" value="1" class="no" data-rule="required"  readonly>
+                                                </th>
+                                                <th title="项目名称">
+                                                    <input type="text" name="ops#index#.oname" data-toggle="lookup"  data-url="{:U(MODULE_NAME.'/public/ops',array('id'=>$v['id'],'navTabId'=>CONTROLLER_NAME))}" data-group="ops#index#" data-width="700" data-height="300"
+                                                           aria-required="true" readonly>
+                                                </th>
+                                                <th title="项目ID">
+                                                    <input type="text" name="ops#index#.oid" placeholder="ID"  readonly>
+                                                </th>
+                                                <th title="类型">
+                                                    <input type="text" name="ops#index#.ocname" placeholder="类型" readonly>
+                                                </th>
+                                                <th title="数量">
+                                                    <input name="ops#index#.num" value="1" aria-required="true" data-toggle="spinner" type="text" readonly>
+                                                </th>
+                                                <th title="单价">
+                                                    <input type="text" name="ops#index#.oprice" placeholder="单价" readonly>
+                                                </th>
+                                                <th title="总价">
+                                                    <input type="text" name="ops#index#.sumprice" placeholder="总价" readonly>
+                                                </th>
+                                                <th title="" data-addtool="true" width="100">
+                                                    <a href="javascript:;" class="btn btn-green" data-toggle="dosave">保存</a>
+                                                    <a href="ajaxDone2.html" class="btn btn-red row-del" data-confirm-msg="确定要删除该行信息吗？">删</a>
+                                                </th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <volist id="v" name="ops_list" key="k">
+                                                <tr data-id="{$v.id}">
+                                                    <td>{$k}</td>
+                                                    <td>{$v.oname}</td>
+                                                    <td>{$v.oid}</td>
+                                                    <td>{$v.ocname}</td>
+                                                    <td>{$v.num}</td>
+                                                    <td>{$v.price}</td>
+                                                    <td>{$v.money}</td>
+                                                    <td data-noedit="true">
+                                                        <button type="button" class="btn-green" data-toggle="doedit">编辑</button>
+                                                        <a href="ajaxDone2.html" class="btn btn-red row-del" data-confirm-msg="确定要删除该行信息吗？">删</a>
+                                                    </td>
+                                                </tr>
+                                            </volist>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                            <td>
+                                <table class="table tableNoRow tableSum" width="40%">
+                                    <tbody>
+                                        <tr>
+                                            <td><label class='control-label x70'>总价:</label><input type='text' id='jine' name='jine'  size='12'   value='{$Rs.jine}' readonly></td>
+                                        </tr>
+                                        <tr>
+                                            <td><label class='control-label x70'>利润基数:</label><input type='text' id='profit' name='profit'  size='12'   value='{$Rs.profit}' readonly></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <div class="bjui-footBar">
             <ul>
@@ -41,3 +115,80 @@
         </div>
     </form>
 </div>
+<style type="text/css">
+    table.tableNoRow{width: 100%;}
+    .tableNoRow > tbody > tr > td{
+        border:0 none;
+        width: 25%;
+    }
+    .tableNoRow .form-control{
+        background-color: #f8f6fa;
+        background-image: none;
+        border-width: 0 0 1px 0;
+        border-bottom: 1px solid #cccccc;
+        border-radius: 0px;
+        box-shadow: 0 0 0px rgba(0, 0, 0, 0.075) inset;
+        color: #0f4c0f;
+        width:100px;
+    }
+    .tabledit .form-control{
+        border-width: 0;
+        background-color: #ffffff;
+    }
+    div.datagrid-box-b{
+        position:relative;padding: 10px 20px;
+    }
+    div.datagrid-wrap-b{
+        position:relative;overflow:auto;height: 250px;background: no-repeat 0 0 scroll #ffffff;
+    }
+    .bjui-dialog > .dialogContent .bjui-pageContent{
+        background: #f8f6fa none repeat scroll 0 0;
+    }
+    .table > thead > tr > th{
+        background: #eae7ef none repeat scroll 0 0;
+    }
+    .table-striped > tbody > tr:nth-child(2n) > td, .table-striped > tbody > tr:nth-child(2n) > th{
+        background-color: #ffffff;
+    }
+    .tableNoRow .tableSum{
+        background: no-repeat 0 0 scroll #f8f6fa;
+    }
+</style>
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        //计算总价
+        var countTotalPrice = function(obj_tr){
+            var obj_table = obj_tr.closest("table");
+            var total_price = 0;
+            obj_table.find("input[name$='sumprice']").each(function(i){
+                total_price = parseInt($(this).val()) + total_price;
+            });
+            $("#jine").val(total_price);
+            $("#profit").val(total_price);
+        };
+
+        //计算单个项目价格
+        var countSumPrice = function(obj_tr){
+            var obj_price = obj_tr.find("input[name$='oprice']");
+            var obj_num = obj_tr.find("input[name$='num']");
+            var var_price = obj_price.val();
+            var var_num = obj_num.val();
+            if(parseInt(var_num) - var_num == 0 && parseInt(var_price) - var_price == 0){
+                var var_sumprice = var_num * var_price;
+                obj_price.closest("tr").find("input[name$='sumprice']").val(var_sumprice);
+                //每次单价改变都引起总价改变
+                countTotalPrice(obj_tr);
+            }
+        };
+        //改变数量
+        $(document).on("afterchange.bjui.spinner",function(e){
+            countSumPrice($(e.target).closest("tr"));
+        });
+        //当增加新项目价格时
+        $(document).on('afterchange.bjui.lookup', '[name$="oprice"]', function(e) {
+            countSumPrice($(e.target).closest("tr"));
+        });
+
+    });
+</script>
