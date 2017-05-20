@@ -155,19 +155,22 @@ class HetongController extends CommonController{
 	 * 删除相关项目
 	 */
 	public function ops_del(){
-		$htops_id = I("get.id");
-		$htops_id = intval($htops_id);
-		if($htops_id > 0){
-			$ret = D("htops","Logic")->delHtOpsInfoById($htops_id);
-			if($ret){
-				$this->mtReturn(200,'删除成功',$_REQUEST['navTabId'],false);
+		if(IS_POST) {
+			$hid = I("get.hid");
+			$bianhao = I("get.bianhao");
+			$ht_id = I("get.id");
+			if (is_numeric($ht_id) && is_numeric($hid) && strlen($bianhao) > 6 && strlen($bianhao) < 20) {
+				if ($ht_id > 0) {
+					$ret = D("htops", "Logic")->delHtOpsInfoById($ht_id);
+					if ($ret) {
+						$this->mtReturn(200, '删除成功', $_REQUEST['navTabId'], false);
+					} else {
+						$this->mtReturn(300, '删除失败', $_REQUEST['navTabId'], false);
+					}
+				} else {
+					$this->mtReturn(300, '参数错误', $_REQUEST['navTabId'], false);
+				}
 			}
-			else{
-				$this->mtReturn(300,'删除失败',$_REQUEST['navTabId'],false);
-			}
-		}
-		else{
-			$this->mtReturn(300,'参数错误',$_REQUEST['navTabId'],false);
 		}
 	}
   

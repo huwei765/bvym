@@ -62,7 +62,7 @@
                                                 </th>
                                                 <th title="" data-addtool="true" width="100">
                                                     <a href="javascript:;" class="btn btn-green" data-toggle="dosave">保存</a>
-                                                    <a href="ajaxDone2.html" class="btn btn-red row-del" data-confirm-msg="确定要删除该行信息吗？">删</a>
+                                                    <a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/ops_del',array('navTabId'=>CONTROLLER_NAME,'hid'=>$id,'bianhao'=>$Rs['bianhao']))}" class="btn btn-red row-del" data-confirm-msg="确定要删除该行信息吗？">删</a>
                                                 </th>
                                             </tr>
                                             </thead>
@@ -78,7 +78,7 @@
                                                     <td>{$v.money}</td>
                                                     <td data-noedit="true">
                                                         <button type="button" class="btn-green" data-toggle="doedit">编辑</button>
-                                                        <a href="ajaxDone2.html" class="btn btn-red row-del" data-confirm-msg="确定要删除该行信息吗？">删</a>
+                                                        <a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/ops_del',array('navTabId'=>CONTROLLER_NAME,'hid'=>$id,'bianhao'=>$Rs['bianhao'],'id'=>$v['id']))}" class="btn btn-red row-del" data-confirm-msg="确定要删除该行信息吗？">删</a>
                                                     </td>
                                                 </tr>
                                             </volist>
