@@ -11,7 +11,7 @@
               <a class="btn btn-orange" href="javascript:;" onclick="$(this).navtab('reloadForm', true);" data-icon="undo">清空查询</a>
 			  <span <php>echo display(CONTROLLER_NAME.'/del');</php> style="float:right;" ><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/del',array('navTabId'=>CONTROLLER_NAME))}" class="btn btn-red" data-toggle="doajax" data-confirm-msg="确定要清理吗？" data-icon="remove">清理</a></span>
 			  <span <php>echo display(CONTROLLER_NAME.'/outxls');</php> style="float:right;margin-right:20px;"><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/outxls')}" class="btn btn-blue" data-toggle="doexport" data-confirm-msg="确定要导出吗？" data-icon="arrow-up">导出</a></span>
-			  <span <php>echo display(CONTROLLER_NAME.'/add');</php> style="float:right;margin-right:20px;"><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/add',array('navTabId'=>CONTROLLER_NAME))}" class="btn btn-green" data-toggle="dialog" data-width="900" data-height="600" data-id="dialog-mask" data-mask="true" data-icon="plus">新增</a></span>
+			  <span <php>echo display(CONTROLLER_NAME.'/add');</php> style="float:right;margin-right:20px;"><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/add',array('navTabId'=>CONTROLLER_NAME))}" class="btn btn-green" data-toggle="dialog" data-width="900" data-height="620" data-id="dialog-mask" data-mask="true" data-icon="plus">新增</a></span>
 		</div> 
 </form>
     
@@ -24,18 +24,18 @@
             <th data-order-direction='desc' data-order-field='id'>ID</th>
 <th>订单编号</th>
 <th>客户</th>
-<th data-order-direction='desc' data-order-field='jine'>订单金额</th>
+<th data-order-direction='desc' data-order-field='summoney'>订单金额</th>
+<th data-order-direction='desc' data-order-field='jine'>成交金额</th>
 <th data-order-direction='desc' data-order-field='jine'>金额基数</th>
 <th data-order-direction='desc' data-order-field='yishou'>已收款</th>
 <th data-order-direction='desc' data-order-field='weishou'>未收款</th>
 <th data-order-direction='desc' data-order-field='yikai'>已开票</th>
 <th data-order-direction='desc' data-order-field='fukuan'>已付款</th>
-<th data-order-direction='desc' data-order-field='juname'>业务员</th>
+<th data-order-direction='desc' data-order-field='juname'>设计师</th>
 <th data-order-direction='desc' data-order-field='uname'>添加人</th>
 <th data-order-direction='desc' data-order-field='addtime'>生成时间</th>
-<th data-order-direction='desc' data-order-field='updatetime'>更新时间</th>
+<th data-order-direction='desc' data-order-field='status'>状态</th>
 			<th>详细</th>
-		    <th <php>echo display(CONTROLLER_NAME.'/del');</php> >状态</th>
 		    <th <php>echo display(CONTROLLER_NAME.'/edit');</php> >编辑</th>
             </tr>
         </thead>
@@ -47,6 +47,7 @@
 		   <td>{$v.id}</td>
 <td><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/ops',array('id'=>$v['id'],'navTabId'=>CONTROLLER_NAME))}" data-toggle="dialog" data-width="900" data-height="600">{$v.bianhao|msubstr=###,0,30}</a></td>
 <td>{$v.cuname|msubstr=###,0,20}</td>
+<td>{$v.summoney}</td>
 <td>{$v.jine}</td>
 <td>{$v.profit}</td>
 <td>{$v.yishou}</td>
@@ -56,13 +57,17 @@
 <td>{$v.juname}</td>
 <td>{$v.uname}</td>
 <td>{$v.addtime|date="Y-m-d H:i",###}</td>
-<td>{$v.updatetime|date="Y-m-d H:i",###}</td>
+              <td>
+                  <if condition="$v.status EQ 1 ">
+                      <span>收款完成</span>
+                      <else/>
+                      <a href="{:U(MODULE_NAME.'/shou/add',array('navTabId'=>'shou','hid'=>$v['id']))}"  data-toggle="dialog" data-width="900" data-height="500" data-id="dialog-mask" data-mask="true" >去收款</a>
+                  </if>
+              </td>
 
 		   <td><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/view',array('id'=>$v['id'],'navTabId'=>CONTROLLER_NAME))}"  data-toggle="dialog" data-width="900" data-height="500" data-id="dialog-mask" data-mask="true" >详细</a>&nbsp;&nbsp;
-               <a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/ops',array('id'=>$v['id'],'navTabId'=>CONTROLLER_NAME))}"  data-toggle="dialog" data-width="900" data-height="500" data-id="dialog-mask" data-mask="true" >相关项目</a>
            </td>
-		   <td <php>echo display(CONTROLLER_NAME.'/del');</php> ><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/del',array('id'=>$v['id'],'navTabId'=>CONTROLLER_NAME))}" data-toggle="doajax" data-confirm-msg="确定要操作吗？"><if condition="$v.status EQ 1 "><img src="__PUBLIC__/images/ok.gif" border="0"/><else/><img src="__PUBLIC__/images/locked.gif" border="0"/></if></a></td>
-		   <td <php>echo display(CONTROLLER_NAME.'/edit');</php> > <a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/edit',array('id'=>$v['id'],'navTabId'=>CONTROLLER_NAME))}"   class="btn btn-green btn-sm" data-toggle="dialog" data-width="900" data-height="600" data-id="dialog-mask" data-mask="true" >编辑</a></td>
+		   <td <php>echo display(CONTROLLER_NAME.'/edit');</php> > <a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/edit',array('id'=>$v['id'],'navTabId'=>CONTROLLER_NAME))}"   class="btn btn-green btn-sm" data-toggle="dialog" data-width="900" data-height="620" data-id="dialog-mask" data-mask="true" >编辑</a></td>
 		   </td>
          </tr> 
           </volist>

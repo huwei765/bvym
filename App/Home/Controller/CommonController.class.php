@@ -433,7 +433,7 @@ Class CommonController extends Controller{
 				array('name' => '客户签到','id' => 11, 'act'=>'signin', 'op'=>'index'),
 				array('name' => '客户信息','id' => 12, 'act'=>'custcon', 'op'=>'index'),
 				array('name' => '跟单记录','id' => 13, 'act'=>'congd', 'op'=>'index'),
-				array('name' => '咨询方案','id' => 14, 'act'=>'design', 'op'=>'index'),
+				//array('name' => '咨询方案','id' => 14, 'act'=>'design', 'op'=>'index'),
 				array('name' => '订单管理','id' => 15, 'act'=>'hetong', 'op'=>'index'),
 				array('name' => '收款记录','id' => 16, 'act'=>'shou', 'op'=>'index'),
 				array('name' => '开票记录','id' => 17, 'act'=>'piao', 'op'=>'index'),
