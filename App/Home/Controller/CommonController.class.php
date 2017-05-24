@@ -38,7 +38,7 @@ Class CommonController extends Controller{
         $Rs=M("user")->save($udata);
         $dat['username'] = session('username');
         $dat['content'] = $info;
-		$dat['os']=$_SERVER['HTTP_USER_AGENT'];
+		$dat['os']=substr($_SERVER['HTTP_USER_AGENT'], 0, 99);
         $dat['url'] = U();
         $dat['addtime'] = date("Y-m-d H:i:s",time());
         $dat['ip'] = get_client_ip();
