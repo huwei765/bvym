@@ -6145,7 +6145,7 @@
                             if ($texts.eq(nexInd)) {
                                 $texts.eq(nexInd).focus()
                             }
-                            e.preventDefault()
+                            //e.preventDefault()
                         }
                     })
                 })
