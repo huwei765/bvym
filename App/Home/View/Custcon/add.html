@@ -5,7 +5,7 @@
           <table class="table table-condensed table-hover" width="100%">
            <tbody>
             <tr>
-                <td><label for='xingming_input' class='control-label x85'>客户姓名:</label><input type='text' id='xingming' name='xingming'  size='20' data-rule="required;chinese;remote(get:{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/validatecusname')})"   value='{$Rs.xingming}'  ></td>
+                <td><label for='xingming_input' class='control-label x85'>客户姓名:</label><input type='text' id='xingming' name='xingming'  size='20' data-rule="required;remote(get:{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/validatecusname')})"   value='{$Rs.xingming}'  ></td>
                 <td><label for='sex_input' class='control-label x85'>性别:</label>
                     <select name='sex'  data-toggle='selectpicker' >
                         <option value=''>请选择</option>

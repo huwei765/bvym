@@ -40,7 +40,7 @@
           <tr>
 		   <td></td>
 		   <td>{$v.id}</td>
-<td>{$v.xingming}</td>
+<td><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/view',array('id'=>$v['id'],'navTabId'=>CONTROLLER_NAME))}"  data-toggle="dialog" data-width="900" data-height="500" data-id="dialog-mask" data-mask="true" >{$v.xingming}</a></td>
 <td>{$v.sex|getSex=###}</td>
 <td>{$v.phone|msubstr=###,0,20}</td>
 <td>{$v.email|msubstr=###,0,20}</td>

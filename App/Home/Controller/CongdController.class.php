@@ -66,4 +66,17 @@ class CongdController extends CommonController{
 		$this->xlsout($filename,$headArr,$list);
 	}
 
+    /**
+     * 根据客户ID查询客户的跟单记录
+     */
+    public function getlist(){
+        $cuid = I("get.cuid");
+        if(isset($cuid) && is_numeric($cuid) && intval($cuid) > 0){
+            //根据cuid查询
+            $list = D("congd","Logic")->getListByCUid($cuid);
+            $this->assign('list',$list);
+        }
+        $this->display("list");
+    }
+
 }

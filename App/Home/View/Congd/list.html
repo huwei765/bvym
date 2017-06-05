@@ -1,0 +1,51 @@
+<div class="bjui-pageHeader">
+        <div class="bjui-searchBar">
+            <span <php>echo display(CONTROLLER_NAME.'/del');</php> style="float:right;" ><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/del',array('navTabId'=>CONTROLLER_NAME))}" class="btn btn-red" data-toggle="doajax" data-confirm-msg="确定要清理吗？" data-icon="remove">清理</a></span>
+            <span <php>echo display(CONTROLLER_NAME.'/outxls');</php> style="float:right;margin-right:20px;"><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/outxls')}" class="btn btn-blue" data-toggle="doexport" data-confirm-msg="确定要导出吗？" data-icon="arrow-up">导出</a></span>
+            <span <php>echo display(CONTROLLER_NAME.'/add');</php> style="float:right;margin-right:20px;"><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/add',array('navTabId'=>CONTROLLER_NAME))}" class="btn btn-green" data-toggle="dialog" data-width="900" data-height="500" data-id="dialog-mask" data-mask="true" data-icon="plus">新增</a></span>
+        </div>
+</div>
+<div class="bjui-pageContent">
+    <table class="table table-bordered table-hover table-striped table-top" data-width="100%" data-layout-h="120" data-nowrap="true">
+        <thead>
+        <tr>
+            <th width="10" height="30"></th>
+            <th data-order-direction='desc' data-order-field='id'>ID</th>
+            <th>详情</th>
+            <th>客户名称</th>
+            <th data-order-direction='desc' data-order-field='type'>跟单方式</th>
+            <th data-order-direction='desc' data-order-field='fenlei'>进展阶段</th>
+            <th data-order-direction='desc' data-order-field='xcrq'>下次联系</th>
+            <th>跟单人</th>
+            <th data-order-direction='desc' data-order-field='addtime'>跟单时间</th>
+            <th data-order-direction='desc' data-order-field='updatetime'>更新时间</th>
+
+            <th>详细</th>
+            <th <php>echo display(CONTROLLER_NAME.'/del');</php> >状态</th>
+            <th <php>echo display(CONTROLLER_NAME.'/edit');</php> >编辑</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <volist id="v" name="list">
+            <tr>
+                <td></td>
+                <td>{$v.id}</td>
+                <td>{$v.value|msubstr=###,0,20}</td>
+                <td>{$v.cuname|msubstr=###,0,20}</td>
+                <td>{$v.type|getCustType=###}</td>
+                <td>{$v.fenlei|getCustFenlei=###}</td>
+                <td>{$v.xcrq|substr=###,0,10}</td>
+                <td>{$v.uname|msubstr=###,0,20}</td>
+                <td>{$v.addtime|date="Y-m-d H:i",###}</td>
+                <td>{$v.updatetime|date="Y-m-d H:i",###}</td>
+
+                <td><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/view',array('id'=>$v['id'],'navTabId'=>CONTROLLER_NAME))}"  data-toggle="dialog" data-width="900" data-height="500" data-id="dialog-mask" data-mask="true" >详细</a></td>
+                <td <php>echo display(CONTROLLER_NAME.'/del');</php> ><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/del',array('id'=>$v['id'],'navTabId'=>CONTROLLER_NAME))}" data-toggle="doajax" data-confirm-msg="确定要操作吗？"><if condition="$v.status EQ 1 "><img src="__PUBLIC__/images/ok.gif" border="0"/><else/><img src="__PUBLIC__/images/locked.gif" border="0"/></if></a></td>
+                <td <php>echo display(CONTROLLER_NAME.'/edit');</php> > <a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/edit',array('id'=>$v['id'],'navTabId'=>CONTROLLER_NAME))}"   class="btn btn-green btn-sm" data-toggle="dialog" data-width="900" data-height="500" data-id="dialog-mask" data-mask="true" >编辑</a></td>
+                </td>
+            </tr>
+        </volist>
+        </tbody>
+    </table>
+</div>

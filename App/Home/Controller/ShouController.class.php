@@ -38,8 +38,10 @@ class ShouController extends CommonController{
 		  //查询订单信息
 		  $hetong_info = D("hetong","Logic")->getHetongInfoById($hid);
 		  if(!empty($hetong_info)){
-			  $this->assign('jhid', $hetong_info["id"]);
-			  $this->assign('jhname', $hetong_info["bianhao"]);
+			  //查询订单商品信息
+			  $ops_list = D("htops","Logic")->getHtOpsListByHid($hetong_info["id"]);
+			  $this->assign('ht_rs', $hetong_info);
+			  $this->assign('ops_list', $ops_list);
 		  }
 	  }
 	  //自动生成单据编号

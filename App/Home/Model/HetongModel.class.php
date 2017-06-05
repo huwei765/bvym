@@ -31,6 +31,7 @@ class HetongModel extends Model{
 		array('uuid','getuserid',2,'function'),
         array('uuname','gettruename',2,'function'), 		
 	    array('updatetime','getUnixTime',2,'function'),
+		array('weishou','jine',1,'field'),//新增时未收款等于成交金额
 	);
 
 }

@@ -38,6 +38,24 @@ class HetongLogic extends Model{
 	public function modifyJineById($jhid,$jine){
 		M("hetong")->where('id='.$jhid)->setInc('yishou',$jine);
 		M("hetong")->where('id='.$jhid)->setDec('weishou',$jine);
+		//查询订单是否完成
+		$this->changeHtStatus($jhid);
+	}
+
+	/**
+	 * 检查合同是否完成，若完成就改变状态到完成状态
+	 * @param $jhid
+	 */
+	public function changeHtStatus($jhid){
+		$info = $this->getHetongInfoById($jhid);
+		if(!empty($info) && isset($info["weishou"])){
+			if(intval($info["weishou"]) == 0){
+				M("hetong")->where('id='.$jhid)->setField(array("status"=>1));
+			}
+			else{
+				M("hetong")->where('id='.$jhid)->setField(array("status"=>0));
+			}
+		}
 	}
 
 	/**
@@ -127,6 +145,28 @@ class HetongLogic extends Model{
 	 */
 	public function getHetongInfo($condition,$field="*"){
 		return M("hetong")->field($field)->where($condition)->find();
+	}
+
+	/**
+	 * 根据客户ID查询订单列表
+	 * @param $cuid
+	 * @param string $order
+	 * @param string $field
+	 * @return mixed
+	 */
+	public function getListByCUid($cuid,$order="id desc",$field="*"){
+		return $this->getList(array("cuid"=>$cuid),$order,$field);
+	}
+
+	/**
+	 * 获取列表
+	 * @param $condition
+	 * @param string $order
+	 * @param string $field
+	 * @return mixed
+	 */
+	public function getList($condition,$order="id desc",$field="*"){
+		return M("hetong")->field($field)->where($condition)->order($order)->select();
 	}
 
 }

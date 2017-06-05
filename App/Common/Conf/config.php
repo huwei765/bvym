@@ -63,6 +63,11 @@ return array(
         array("name"=>"现金","value"=>"0"),
         array("name"=>"银行转账","value"=>"1")
     ),
+    //手术类型
+    'OPS_CUS_TYPE'=>array(
+        array("name"=>"初诊","value"=>"0"),
+        array("name"=>"复诊","value"=>"1")
+    ),
     //推广提成
     'SPREAD_LEVEL'=>array("JG"=>3,"WX"=>3),
     'CUS_SPREAD_RATE'=>array("1"=>50,"2"=>40,"3"=>30,"other"=>20),

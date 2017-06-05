@@ -429,5 +429,22 @@ function getConfigKeyByVal($value,$arr){
     return $key_name;
 }
 
+/**
+ * 获取手术类型
+ * @param $type
+ * @return string
+ */
+function getOPSCusType($type){
+    $type_name = "";
+    switch($type){
+        case "0":
+            $type_name = iconv('GB2312', 'UTF-8', "初诊");
+            break;
+        case "1":
+            $type_name = iconv('GB2312', 'UTF-8', "复诊");
+            break;
+    }
+    return $type_name;
+}
 
 

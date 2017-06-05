@@ -63,7 +63,7 @@ class HetongController extends CommonController{
 				$skip = array(
 					"url"=>"/index.php?m=Home&c=shou&a=add&navTabId=shou&hid=".$id,
 					"title"=>"新增收款",
-					"height"=>"500",
+					"height"=>"560",
 					"width"=>"900",
 					"forwardConfirm"=>"去收款吗？",
 					"type"=>"dialog"
@@ -529,6 +529,19 @@ public function qunian(){
 			$this->assign('list', $ops_list);
 		}
 		$this->display();
+	}
+
+	/**
+	 * 根据客户ID获取客户相关订单
+	 */
+	public function getlist(){
+		$cuid = I("get.cuid");
+		if(isset($cuid) && is_numeric($cuid) && intval($cuid) > 0){
+			//根据cuid查询
+			$list = D("hetong","Logic")->getListByCUid($cuid);
+			$this->assign('list',$list);
+		}
+		$this->display("list");
 	}
 
 
