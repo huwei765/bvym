@@ -36,6 +36,13 @@ class ShouController extends CommonController{
 	public function add() {
 		if(IS_POST){
 			$data=I('post.');
+			//参数检测
+			if(!isset($data["jine"]) || !is_numeric($data["jine"])){
+				$this->mtReturn(300,"操作失败,金额数据不符合！",$_REQUEST['navTabId'],true);
+			}
+			if(intval($data["jine"]) < 100 || intval($data["jine"]) > 1000000){
+				$this->mtReturn(300,"操作失败,单笔支付额度必须在100到10000000之内！",$_REQUEST['navTabId'],true);
+			}
 			//新增收款记录
 			$ret = D("shou","Logic")->addShouInfoForHt($data);
 			if($ret){

@@ -46,7 +46,7 @@
           <tr>
 		   <td></td>
 		   <td>{$v.id}</td>
-<td><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/ops',array('id'=>$v['id'],'navTabId'=>CONTROLLER_NAME))}" data-toggle="dialog" data-width="900" data-height="600">{$v.bianhao|msubstr=###,0,30}</a></td>
+<td><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/view',array('id'=>$v['id'],'navTabId'=>CONTROLLER_NAME))}" data-toggle="dialog" data-width="900" data-height="500">{$v.bianhao|msubstr=###,0,30}</a></td>
 <td>{$v.cuname|msubstr=###,0,20}</td>
 <td>{$v.summoney}</td>
 <td>{$v.jine}</td>

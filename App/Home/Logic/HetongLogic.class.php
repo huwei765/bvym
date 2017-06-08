@@ -23,7 +23,12 @@ class HetongLogic extends Model{
 		$ret = false;
 		$data = $this->getHetongInfoById($jhid);
 		if(!empty($data)){
-			if(intval($data["yishou"]) - intval($data["jine"]) == 0 && intval($data["weishou"]) == 0){
+			if(intval($data["status"]) == 1){
+				$ret = true;
+			}
+			else if(intval($data["yishou"]) - intval($data["jine"]) >= 0 || intval($data["weishou"]) <= 0){
+				//强制收款完成
+				$this->changeHtStatus($jhid);
 				$ret = true;
 			}
 		}
@@ -49,7 +54,7 @@ class HetongLogic extends Model{
 	public function changeHtStatus($jhid){
 		$info = $this->getHetongInfoById($jhid);
 		if(!empty($info) && isset($info["weishou"])){
-			if(intval($info["weishou"]) == 0){
+			if(intval($info["yishou"]) - intval($info["jine"]) >= 0 || intval($info["weishou"]) <= 0){
 				M("hetong")->where('id='.$jhid)->setField(array("status"=>1));
 			}
 			else{
