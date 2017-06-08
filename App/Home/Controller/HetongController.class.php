@@ -544,6 +544,19 @@ public function qunian(){
 		$this->display("list");
 	}
 
+	/**
+	 * 查询订单基本信息
+	 */
+	public function getbase(){
+		$hid=I('get.id');
+		if(is_numeric($hid)){
+			//查询订单详情
+			$info = D("hetong","Logic")->getHetongInfoById($hid);
+			$this->assign('Rs',$info);
+		}
+		$this->display("base");
+	}
+
 
 
 }

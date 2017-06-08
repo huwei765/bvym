@@ -1,0 +1,47 @@
+<table class="table table-bordered table-striped table-hover">
+    <tbody>
+    <tr>
+
+    </tr>
+    <tr>
+        <td colspan="2"><label for='bianhao_input' class='control-label x85'>订单编号:</label>{$Rs.bianhao}</td>
+    </tr>
+    <tr>
+        <td><label for='cuname_input' class='control-label x85'>客户名称:</label>{$Rs.cuname}</td>
+        <td><label for='dianhua_input' class='control-label x85'>联系电话:</label>{$Rs.dianhua}</td>
+    </tr>
+    <tr>
+        <td><label for='jine_input' class='control-label x85'>订单金额:</label>{$Rs.jine}</td>
+        <td><label for='profit_input' class='control-label x85'>金额基数:</label>{$Rs.profit}</td>
+    </tr>
+    <tr>
+        <td><label for='yishou_input' class='control-label x85'>已收款:</label>{$Rs.yishou}</td>
+        <td><label for='weishou_input' class='control-label x85'>未收款:</label>{$Rs.weishou}</td>
+    </tr>
+    <tr>
+        <td><label for='yikai_input' class='control-label x85'>已开票:</label>{$Rs.yikai}</td>
+        <td><label for='fukuan_input' class='control-label x85'>已付款:</label>{$Rs.fukuan}</td>
+    </tr>
+    <tr>
+        <td><label for='juname_input' class='control-label x85'>业务员:</label>{$Rs.juname}</td>
+    </tr>
+    <tr>
+        <td><label for='uname_input' class='control-label x85'>添加人:</label>{$Rs.uname}</td>
+        <td colspan="2"><label for='addtime_input' class='control-label x85'>添加时间:</label>{$Rs.addtime|date="Y-m-d H:i:s",###}</td>
+    </tr>
+    <tr>
+        <td><label for='uuname_input' class='control-label x85'>更新人:</label>{$Rs.uuname}</td>
+        <td><label for='updatetime_input' class='control-label x85'>更新时间:</label>{$Rs.updatetime|date="Y-m-d H:i:s"}</td>
+    </tr>
+    <tr></tr>
+    <tr></tr>
+    <tr>
+        <td><label for='addm_input' class='control-label x85'>订单年月:</label>{$Rs.addm}</td>
+    </tr>
+    <tr>
+        <td colspan=2><label for='beizhu_input' class='control-label x85'>订单详情:</label><div style='display: inline-block; vertical-align: middle;'><textarea name='beizhu'   data-toggle='kindeditor' data-minheight='150' data-items='fontname, fontsize, |, forecolor, hilitecolor, bold, italic, underline, removeformat, |, justifyleft, justifycenter, justifyright, insertorderedlist, insertunorderedlist, |, emoticons, image, link'>{$Rs.beizhu}</textarea></div></td></tr></tr>
+    <tr><td colspan=2><label for='attid_input' class='control-label x85'>上传附件:</label>
+        <php>$attlist=M('files')->where('attid='.$Rs['attid'])->select();</php>
+        <foreach name='attlist' item='vf'>{$vf['uid']|truename=###}:<a href='__ROOT__/{$vf['folder']}{$vf['filename']}' target=_blank>{$vf['filedesc']}</A>&nbsp;&nbsp;{$vf['addtime']}<Br/><label  class='control-label x85'></label></foreach></td></tr>
+    </tbody>
+</table>
