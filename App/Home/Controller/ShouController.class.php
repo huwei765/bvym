@@ -29,6 +29,27 @@ class ShouController extends CommonController{
    public function _befor_index(){ 
    
    }
+
+	/**
+	 * 新增收款
+	 */
+	public function add() {
+		if(IS_POST){
+			$data=I('post.');
+			//新增收款记录
+			$ret = D("shou","Logic")->addShouInfoForHt($data);
+			if($ret){
+				$this->mtReturn(200,"新增成功",$_REQUEST['navTabId'],true);
+			}
+			else{
+				$this->mtReturn(300,"操作失败,请确认该笔订单是否收款完成！",$_REQUEST['navTabId'],true);
+			}
+		}
+		if (method_exists($this, '_befor_add')) {
+			$this->_befor_add();
+		}
+		$this->display();
+	}
   
   
   public function _befor_add(){
@@ -116,6 +137,19 @@ class ShouController extends CommonController{
 	
 	public function fenxi(){
 	 $this->display();
+	}
+
+	/**
+	 * 根据订单查询订单收款列表
+	 */
+	public function getlist(){
+		$hid = I("get.hid");
+		if(isset($hid) && is_numeric($hid) && intval($hid) > 0){
+			//根据hid查询订单收款情况
+			$list = D("shou","Logic")->getListByHid($hid);
+			$this->assign('list',$list);
+		}
+		$this->display("list");
 	}
 	
 	

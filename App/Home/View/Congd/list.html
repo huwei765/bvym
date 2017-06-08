@@ -2,7 +2,7 @@
         <div class="bjui-searchBar">
             <span <php>echo display(CONTROLLER_NAME.'/del');</php> style="float:right;" ><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/del',array('navTabId'=>CONTROLLER_NAME))}" class="btn btn-red" data-toggle="doajax" data-confirm-msg="确定要清理吗？" data-icon="remove">清理</a></span>
             <span <php>echo display(CONTROLLER_NAME.'/outxls');</php> style="float:right;margin-right:20px;"><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/outxls')}" class="btn btn-blue" data-toggle="doexport" data-confirm-msg="确定要导出吗？" data-icon="arrow-up">导出</a></span>
-            <span <php>echo display(CONTROLLER_NAME.'/add');</php> style="float:right;margin-right:20px;"><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/add',array('navTabId'=>CONTROLLER_NAME))}" class="btn btn-green" data-toggle="dialog" data-width="900" data-height="500" data-id="dialog-mask" data-mask="true" data-icon="plus">新增</a></span>
+            <span <php>echo display(CONTROLLER_NAME.'/add');</php> style="float:right;margin-right:20px;"><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/add',array('navTabId'=>CONTROLLER_NAME,'uid'=>I('cuid')))}" class="btn btn-green" data-toggle="dialog" data-width="900" data-height="500" data-id="dialog-mask-view-new" data-mask="true" data-icon="plus" data-on-close="dialogCloseFunForCongd">新增</a></span>
         </div>
 </div>
 <div class="bjui-pageContent">
@@ -42,7 +42,7 @@
 
                 <td><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/view',array('id'=>$v['id'],'navTabId'=>CONTROLLER_NAME))}"  data-toggle="dialog" data-width="900" data-height="500" data-id="dialog-mask" data-mask="true" >详细</a></td>
                 <td <php>echo display(CONTROLLER_NAME.'/del');</php> ><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/del',array('id'=>$v['id'],'navTabId'=>CONTROLLER_NAME))}" data-toggle="doajax" data-confirm-msg="确定要操作吗？"><if condition="$v.status EQ 1 "><img src="__PUBLIC__/images/ok.gif" border="0"/><else/><img src="__PUBLIC__/images/locked.gif" border="0"/></if></a></td>
-                <td <php>echo display(CONTROLLER_NAME.'/edit');</php> > <a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/edit',array('id'=>$v['id'],'navTabId'=>CONTROLLER_NAME))}"   class="btn btn-green btn-sm" data-toggle="dialog" data-width="900" data-height="500" data-id="dialog-mask" data-mask="true" >编辑</a></td>
+                <td <php>echo display(CONTROLLER_NAME.'/edit');</php> > <a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/edit',array('id'=>$v['id'],'navTabId'=>CONTROLLER_NAME))}"   class="btn btn-green btn-sm" data-toggle="dialog" data-width="900" data-height="500" data-id="dialog-mask-view-edit" data-mask="true" data-on-close="dialogCloseFunForCongd">编辑</a></td>
                 </td>
             </tr>
         </volist>

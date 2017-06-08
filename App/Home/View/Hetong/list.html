@@ -3,7 +3,7 @@
         <div class="bjui-searchBar">
 			  <span <php>echo display(CONTROLLER_NAME.'/del');</php> style="float:right;" ><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/del',array('navTabId'=>CONTROLLER_NAME))}" class="btn btn-red" data-toggle="doajax" data-confirm-msg="确定要清理吗？" data-icon="remove">清理</a></span>
 			  <span <php>echo display(CONTROLLER_NAME.'/outxls');</php> style="float:right;margin-right:20px;"><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/outxls')}" class="btn btn-blue" data-toggle="doexport" data-confirm-msg="确定要导出吗？" data-icon="arrow-up">导出</a></span>
-			  <span <php>echo display(CONTROLLER_NAME.'/add');</php> style="float:right;margin-right:20px;"><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/add',array('navTabId'=>CONTROLLER_NAME))}" class="btn btn-green" data-toggle="dialog" data-width="900" data-height="640" data-id="dialog-mask" data-mask="true" data-icon="plus">新增</a></span>
+			  <span <php>echo display(CONTROLLER_NAME.'/add');</php> style="float:right;margin-right:20px;"><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/add',array('navTabId'=>CONTROLLER_NAME,'cuid'=>I('cuid')))}" class="btn btn-green" data-toggle="dialog" data-width="900" data-height="640" data-id="dialog-mask-view-new" data-mask="true" data-icon="plus" data-on-close="dialogCloseFunForHT">新增</a></span>
 		</div>
     
 </div>
@@ -43,20 +43,20 @@
                   <if condition="$v.status EQ 1 ">
                       <span>收款完成</span>
                       <else/>
-                      <a href="{:U(MODULE_NAME.'/shou/add',array('navTabId'=>'shou','hid'=>$v['id']))}"  data-toggle="dialog" data-width="900" data-height="560" data-id="dialog-mask" data-mask="true" >去收款</a>
+                      <a href="{:U(MODULE_NAME.'/shou/add',array('navTabId'=>'shou','hid'=>$v['id']))}"  data-toggle="dialog" data-width="900" data-height="560" data-id="dialog-mask-view-shou" data-mask="true" data-on-close="dialogCloseFunForHT">去收款</a>
                   </if>
               </td>
               <td>
                   <if condition="$v.status EQ 1 ">
                       <span>手术完成</span>
                       <else/>
-                      <a href="{:U(MODULE_NAME.'/opsrecord/add',array('navTabId'=>'opsrecord','hid'=>$v['id']))}"  data-toggle="dialog" data-width="800" data-height="600" data-id="dialog-mask" data-mask="true" >待手术</a>
+                      <a href="{:U(MODULE_NAME.'/opsrecord/add',array('navTabId'=>'opsrecord','hid'=>$v['id']))}"  data-toggle="dialog" data-width="800" data-height="600" data-id="dialog-mask-view-ops" data-mask="true" data-on-close="dialogCloseFunForHT">待手术</a>
                   </if>
               </td>
 
 		   <td><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/view',array('id'=>$v['id'],'navTabId'=>CONTROLLER_NAME))}"  data-toggle="dialog" data-width="900" data-height="500" data-id="dialog-mask" data-mask="true" >详细</a>&nbsp;&nbsp;
            </td>
-		   <td <php>echo display(CONTROLLER_NAME.'/edit');</php> > <a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/edit',array('id'=>$v['id'],'navTabId'=>CONTROLLER_NAME))}"   class="btn btn-green btn-sm" data-toggle="dialog" data-width="900" data-height="640" data-id="dialog-mask" data-mask="true" >编辑</a></td>
+		   <td <php>echo display(CONTROLLER_NAME.'/edit');</php> > <a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/edit',array('id'=>$v['id'],'navTabId'=>CONTROLLER_NAME))}"   class="btn btn-green btn-sm" data-toggle="dialog" data-width="900" data-height="640" data-id="dialog-mask-view-edit" data-mask="true" data-on-close="dialogCloseFunForHT">编辑</a></td>
 		   </td>
          </tr> 
           </volist>

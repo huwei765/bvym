@@ -4,12 +4,12 @@
                    <li class="active">
                        <a href="#hetong" role="tab" data-toggle="tab">订单管理</a>
                    </li>
-                      <li><a href='#shou' role='tab' data-toggle='tab'>收款记录</a></li>
-                      <li><a href='#fu' role='tab' data-toggle='tab'>付款记录</a></li>
-                      <li><a href='#piao' role='tab' data-toggle='tab'>开票记录</a></li>
+                      <li><a href="{:U(MODULE_NAME.'/shou/getlist',array('hid'=>I('id'),'navTabId'=>'shou'))}" role='tab' data-toggle="ajaxtab" data-target="#shou" data-reload="true">收款记录</a></li>
+                      <li><a href="{:U(MODULE_NAME.'/piao/getlist',array('hid'=>I('id'),'navTabId'=>'piao'))}" role='tab' data-toggle="ajaxtab" data-target="#piao" data-reload="true">开票记录</a></li>
                   </ul>
 		 <div class="tab-content">
-           <div class="tab-pane fade active in" id="hetong"><table class="table table-bordered table-striped table-hover">
+           <div class="tab-pane fade active in" id="hetong">
+               <table class="table table-bordered table-striped table-hover">
            <tbody>
 		   <tr>
 
@@ -57,67 +57,8 @@
            </tbody>
           </table>
 		  </div>
-             <div class='tab-pane fade' id='shou'><table class='table table-bordered table-striped table-hover'><php>$shoulist=M('shou')->where(array('jhid'=>I('id')))->select();</php> <thead> <tr><th>ID</th>
-<th height=30>关联订单</th>
-<th height=30>单据编号</th>
-<th>收款方式</th>
-<th height=30>收款金额</th>
-<th height=30>经办人</th>
-<th height=30>备注</th>
-<th>添加人</th>
-<th>添加时间</th>
-<th>详细</th></tr></thead><tbody><foreach name='shoulist' item='shouv'><tr><td>{$shouv.id}</td>
-<td>{$shouv.jhname|msubstr=###,0,20}</td>
-<td>{$shouv.bianhao|msubstr=###,0,20}</td>
-<td>{$shouv.type}</td>
-<td>{$shouv.jine|msubstr=###,0,20}</td>
-<td>{$shouv.juname|msubstr=###,0,20}</td>
-<td>{$shouv.beizhu|msubstr=###,0,20}</td>
-<td>{$shouv.uname}</td>
-<td>{$shouv.addtime|substr=###,0,10}</td>
-  <td><a href='__MODULE__/shou/view/id/{$shouv['id']}/navTabId/{:CONTROLLER_NAME}'  data-toggle='dialog' data-width='800' data-height='500' data-id='dialog-maskshou' data-mask='true' >详细</a></td></tr> </foreach> </tbody> </table></div>
-
-             <div class='tab-pane fade' id='fu'><table class='table table-bordered table-striped table-hover'><php>$fulist=M('fu')->where(array('jhid'=>I('id')))->select();</php> <thead> <tr><th>ID</th>
-<th height=30>关联订单</th>
-<th height=30>单据编号</th>
-<th>款项类型</th>
-<th>付款方式</th>
-<th height=30>付款金额</th>
-<th height=30>经办人</th>
-<th height=30>备注</th>
-<th>添加人</th>
-<th>添加时间</th>
-<th>详细</th></tr></thead><tbody><foreach name='fulist' item='fuv'><tr><td>{$fuv.id}</td>
-<td>{$fuv.jhname|msubstr=###,0,20}</td>
-<td>{$fuv.bianhao|msubstr=###,0,20}</td>
-<td>{$fuv.fenlei}</td>
-<td>{$fuv.type}</td>
-<td>{$fuv.jine|msubstr=###,0,20}</td>
-<td>{$fuv.juname|msubstr=###,0,20}</td>
-<td>{$fuv.beizhu|msubstr=###,0,20}</td>
-<td>{$fuv.uname}</td>
-<td>{$fuv.addtime|substr=###,0,10}</td>
-  <td><a href='__MODULE__/fu/view/id/{$fuv['id']}/navTabId/{:CONTROLLER_NAME}'  data-toggle='dialog' data-width='800' data-height='500' data-id='dialog-maskfu' data-mask='true' >详细</a></td></tr> </foreach> </tbody> </table></div>
-
-             <div class='tab-pane fade' id='piao'><table class='table table-bordered table-striped table-hover'><php>$piaolist=M('piao')->where(array('jhid'=>I('id')))->select();</php> <thead> <tr><th>ID</th>
-<th height=30>关联订单</th>
-<th height=30>开票抬头</th>
-<th>开票金额</th>
-<th>开票编号</th>
-<th height=30>备注</th>
-<th height=30>经办人</th>
-<th>添加人</th>
-<th>添加时间</th>
-<th>详细</th></tr></thead><tbody><foreach name='piaolist' item='piaov'><tr><td>{$piaov.id}</td>
-<td>{$piaov.jhname|msubstr=###,0,20}</td>
-<td>{$piaov.title|msubstr=###,0,20}</td>
-<td>{$piaov.jine}</td>
-<td>{$piaov.bianhao}</td>
-<td>{$piaov.beizhu|msubstr=###,0,20}</td>
-<td>{$piaov.juname|msubstr=###,0,20}</td>
-<td>{$piaov.uname}</td>
-<td>{$piaov.addtime|substr=###,0,10}</td>
-  <td><a href='__MODULE__/piao/view/id/{$piaov['id']}/navTabId/{:CONTROLLER_NAME}'  data-toggle='dialog' data-width='800' data-height='500' data-id='dialog-maskpiao' data-mask='true' >详细</a></td></tr> </foreach> </tbody> </table></div>
+             <div class='tab-pane fade' id='shou'></div>
+             <div class='tab-pane fade' id='piao'></div>
 		   
 		 </div>
         </div>
@@ -127,3 +68,18 @@
         </ul>
     </div>
 </div>
+<script type="text/javascript">
+    //注册各种回调事件
+    function dialogCloseFunForShou() {
+        $("a[data-target='#shou']").click();
+        return true;
+    }
+    function dialogCloseFunForFu() {
+        $("a[data-target='#fu']").click();
+        return true;
+    }
+    function dialogCloseFunForPiao() {
+        $("a[data-target='#piao']").click();
+        return true;
+    }
+</script>

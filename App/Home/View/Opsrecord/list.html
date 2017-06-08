@@ -34,7 +34,7 @@
 <td>{$v.juname|msubstr=###,0,20}</td>
 <td>{$v.addtime|date="Y-m-d H:i",###}</td>
 
-		   <td><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/edit',array('id'=>$v['id'],'navTabId'=>CONTROLLER_NAME))}"  data-toggle="dialog" data-width="800" data-height="600" data-id="dialog-mask" data-mask="true" >编辑</a></td>
+		   <td><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/edit',array('id'=>$v['id'],'navTabId'=>CONTROLLER_NAME))}"  data-toggle="dialog" data-width="800" data-height="600" data-id="dialog-mask" data-mask="true" data-on-close="dialogCloseFunForHT">编辑</a></td>
 		   <td>
                <a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/del',array('id'=>$v['id'],'navTabId'=>CONTROLLER_NAME))}" class="btn btn-sm" data-toggle="doajax" data-confirm-msg="确定要删除该行信息吗？">删除</a>
 		   </td>

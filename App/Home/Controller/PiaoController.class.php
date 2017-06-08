@@ -81,7 +81,20 @@ class PiaoController extends CommonController{
 	public function fenxi(){
 	 $this->display();
 	}
-	
-	
+
+	/**
+	 * 查询开票记录
+	 */
+	public function getlist(){
+		$hid = I("get.hid");
+		if(isset($hid) && is_numeric($hid) && intval($hid) > 0){
+			//根据hid查询订单开票情况
+			$list = D("piao","Logic")->getListByHid($hid);
+			$this->assign('list',$list);
+		}
+		$this->display("list");
+	}
+
+
 
 }

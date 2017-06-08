@@ -32,6 +32,14 @@ class CongdController extends CommonController{
   
   
   public function _befor_add(){
+      $uid = I("get.uid");
+      if(isset($uid) && is_numeric($uid) && intval($uid) > 0){
+          //查询客户信息
+          $custcon = D("custcon","Logic")->getCustconInfoById($uid,"id,xingming,phone");
+          if(!empty($custcon)){
+              $this->assign('custom_info', $custcon);
+          }
+      }
   }
 	
    public function _after_add($id){
