@@ -552,7 +552,11 @@ public function qunian(){
 		if(is_numeric($hid)){
 			//查询订单详情
 			$info = D("hetong","Logic")->getHetongInfoById($hid);
-			$this->assign('Rs',$info);
+			if(!empty($info)){
+				$ops_list = D("htops","Logic")->getHtOpsListByHid($info["id"]);
+				$this->assign('Rs',$info);
+				$this->assign('ops_list', $ops_list);
+			}
 		}
 		$this->display("base");
 	}

@@ -89,4 +89,17 @@ class JghtController extends CommonController{
 		$this->display("index");
 	}
 
+    /**
+     * 根据机构ID查询合同信息
+     */
+    public function getbase(){
+        $jcid = I("get.jcid");
+        if(isset($jcid) && is_numeric($jcid) && intval($jcid) > 0){
+            //根据cuid查询
+            $info = D("jght","Logic")->getInfoByCid($jcid);
+            $this->assign('Rs',$info);
+        }
+        $this->display("base");
+    }
+
 }

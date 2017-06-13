@@ -438,7 +438,10 @@ Class CommonController extends Controller{
 				array('name' => '收款记录','id' => 16, 'act'=>'shou', 'op'=>'index'),
 				array('name' => '开票记录','id' => 17, 'act'=>'piao', 'op'=>'index'),
 				array('name' => '手术记录','id' => 18, 'act'=>'opsrecord', 'op'=>'index'),
-				array('name' => '统计分析','id' => 19, 'act'=>'fenxi', 'op'=>'index'),
+				array('name' => '统计分析','id' => 19, 'act'=>'cus_analyse', 'op'=>'index','child' => array(
+					array('name' => '客户分析','id' => 191, 'act'=>'custcon', 'op'=>'fenxi'),
+					array('name' => '需要跟踪的客户','id' => 192, 'act'=>'custcon', 'op'=>'daoqi'),
+				)),
 			)),
 			'cust' => array('name' => '合作机构','sort' => 1,'id' => 2, 'child' => array(
 				array('name' => '机构信息','id' => 21, 'act'=>'cust', 'op'=>'index'),
@@ -453,7 +456,11 @@ Class CommonController extends Controller{
 				)),
 				array('name' => '返现记录','id' => 26, 'act'=>'cus_fan', 'op'=>'index'),
 //				array('name' => '提成设置','id' => 27, 'act'=>'cus_set', 'op'=>'index'),
-				array('name' => '统计分析','id' => 28, 'act'=>'cus_analyse', 'op'=>'index'),
+				array('name' => '统计分析','id' => 28, 'act'=>'cus_analyse', 'op'=>'index','child' => array(
+					array('name' => '机构分析','id' => 281, 'act'=>'cust', 'op'=>'fenxi'),
+					array('name' => '即将到期的合同','id' => 282, 'act'=>'cust', 'op'=>'daoqi'),
+				)),
+
 			)),
 			'weixin' => array('name' => '微信用户','sort' => 2,'id' => 3, 'child' => array(
 				array('name' => '微信用户','id' => 31, 'act'=>'wxuser', 'op'=>'index'),
@@ -522,12 +529,7 @@ Class CommonController extends Controller{
 	public function generateHtSn($suffix,$type=0){
 		$yCode = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J');
 		$index = (intval(date('Y')) - 2011) % 10;
-		if($type == 1){
-			$index = (intval($index) + 1) % 10;
-		}
-		else if($type == 2){
-			$index = (intval($index) + 2) % 10;
-		}
+		$index = (intval($index) + intval($type)) % 10;
 		$orderSn = $yCode[$index];
 		$orderSn = $orderSn . date("YmdHis");
 		if(isset($suffix) && $suffix != ""){

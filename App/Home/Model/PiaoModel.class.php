@@ -26,8 +26,11 @@ class PiaoModel extends Model{
         array('uname','gettruename',1,'function'), 		
 	    array('addtime','getUnixTime',1,'function'),
 		array('uuid','getuserid',2,'function'),
-        array('uuname','gettruename',2,'function'), 		
+        array('uuname','gettruename',2,'function'),
+		array('uuid',0,1),
+		array('uuname','',1),
 	    array('updatetime','getUnixTime',2,'function'),
+		array('updatetime',0,1),
 	);
 
 }

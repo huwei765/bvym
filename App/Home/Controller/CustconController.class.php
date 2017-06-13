@@ -107,4 +107,34 @@ class CustconController extends CommonController{
 		}
 	}
 
+	public function fenxi(){
+		$this->display();
+	}
+
+	/**
+	 * 今年客户数量
+	 */
+	public function jinnian(){
+		$info="";
+		import("Org.Util.Chart");
+		$chart = new \Chart;
+		for($i=1;$i<=12;$i++){
+			$info=$info.",".$i;
+			if($i<10){
+				$co = M($this->dbname)->where(array('addm'=>date("Y",time())."-0".$i))->count('id');
+			}else{
+				$co = M($this->dbname)->where(array('addm'=>date("Y",time())."-".$i))->count('id');
+			}
+			$count=$count.",".$co;
+		}
+		$title = date("Y",time()).'年客户增长趋势';
+		$data = explode(",", substr ($count, 1));
+		$size = 140;
+		$width = 750;
+		$height = 300;
+		$legend = explode(",", substr ($info, 1));
+		ob_end_clean();
+		$chart->createmonthline($title,$data,$size,$height,$width,$legend);
+	}
+
 }

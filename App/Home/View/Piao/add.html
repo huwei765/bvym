@@ -5,8 +5,8 @@
           <table class="table table-condensed table-hover" width="100%">
            <tbody>
 			<tr>
-                <td colspan="2"><label for='jhname_input' class='control-label x85'>关联订单:</label><input type='text' id='jhname' name='jhname'  size='20' data-toggle='lookup' data-url='{:U(MODULE_NAME."/public/htname",array("navTabId"=>CONTROLLER_NAME))}'  value='{$Rs.jhname}'  >
-                    <input type="hidden" name="jhid" id="jhid" value="{$Rs.jhid}">
+                <td colspan="2"><label for='jhname_input' class='control-label x85'>关联订单:</label><input type='text' id='jhname' name='jhname'  size='20' data-toggle='lookup' data-url='{:U(MODULE_NAME."/public/htname",array("navTabId"=>CONTROLLER_NAME))}'  value='{$ht_rs.bianhao}'  >
+                    <input type="hidden" name="jhid" id="jhid" value="{$ht_rs.id}">
                 </td>
             </tr>
             <tr>
@@ -14,7 +14,7 @@
                 <td><label for='jine_input' class='control-label x85'>开票金额:</label><input type='text' id='jine' name='jine'  size='20'   value='{$Rs.jine}'  ></td>
             </tr>
             <tr>
-                <td><label for='bianhao_input' class='control-label x85'>开票编号:</label><input type='text' id='bianhao' name='bianhao' data-rule='required;' size='20'   value='{$Rs.bianhao}'  ></td>
+                <td><label for='bianhao_input' class='control-label x85'>开票编号:</label><input type='text' id='bianhao' name='bianhao' data-rule='required;' size='20'   value='{$bianhao}'  ></td>
                 <td><label for='beizhu_input' class='control-label x85'>备注:</label><input type='text' id='beizhu' name='beizhu'  size='20'   value='{$Rs.beizhu}'  ></td>
             </tr>
             <tr>

@@ -120,5 +120,13 @@ class OpsrecordController extends CommonController{
         }
         $this->display("list");
     }
+    public function getlistbyhid(){
+        $hid = I("get.hid");
+        if(isset($hid) && is_numeric($hid) && intval($hid) > 0){
+            $list = D("opsrecord","Logic")->getListByHid($hid);
+            $this->assign('list',$list);
+        }
+        $this->display("list2");
+    }
 
 }

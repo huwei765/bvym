@@ -32,6 +32,21 @@ class PiaoController extends CommonController{
   
   
   public function _befor_add(){
+	  //自动填充合同
+	  $hid = I("get.hid");
+	  if(!empty($hid) && intval($hid) > 0){
+		  //查询订单信息
+		  $hetong_info = D("hetong","Logic")->getHetongInfoById($hid);
+		  if(!empty($hetong_info)){
+			  //查询订单商品信息
+			  $ops_list = D("htops","Logic")->getHtOpsListByHid($hetong_info["id"]);
+			  $this->assign('ht_rs', $hetong_info);
+			  $this->assign('ops_list', $ops_list);
+		  }
+	  }
+	  //自动生成单据编号
+	  $piaoSn = $this->generateHtSn("",3);
+	  $this->assign('bianhao', $piaoSn);
 	  $attid=time();
 	  $this->assign('attid',$attid);
     

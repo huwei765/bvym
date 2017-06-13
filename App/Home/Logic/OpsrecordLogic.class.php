@@ -6,6 +6,17 @@ use Think\Model;
 class OpsrecordLogic extends Model{
 
 	/**
+	 * 根据合同ID获取手术记录
+	 * @param $hid
+	 * @param string $field
+	 * @param string $order
+	 * @return mixed
+	 */
+	public function getListByHid($hid,$field="*",$order="id desc"){
+		return $this->getList(array("jhid"=>$hid),$order,$field);
+	}
+
+	/**
 	 * 根据用户id查询手术信息列表
 	 * @param $cuid
 	 * @param string $order

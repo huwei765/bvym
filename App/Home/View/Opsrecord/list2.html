@@ -1,7 +1,8 @@
 <div class="bjui-pageHeader">
         <div class="bjui-searchBar">
 			  <span <php>echo display(CONTROLLER_NAME.'/outxls');</php> style="float:right;margin-right:20px;"><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/outxls')}" class="btn btn-blue" data-toggle="doexport" data-confirm-msg="确定要导出吗？" data-icon="arrow-up">导出</a></span>
-		</div>
+            <span style="float:right;margin-right:20px;"><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/add',array('navTabId'=>CONTROLLER_NAME,'hid'=>I('hid')))}" class="btn btn-green" data-toggle="dialog" data-width="900" data-height="640" data-id="dialog-mask-view-new" data-mask="true" data-icon="plus" data-on-close="dialogCloseFunForOps">新增</a></span>
+        </div>
     
 </div>
 <div class="bjui-pageContent">
@@ -34,7 +35,7 @@
 <td>{$v.juname|msubstr=###,0,20}</td>
 <td>{$v.addtime|date="Y-m-d H:i",###}</td>
 
-		   <td><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/edit',array('id'=>$v['id'],'navTabId'=>CONTROLLER_NAME))}"  data-toggle="dialog" data-width="800" data-height="600" data-id="dialog-mask-view-edit" data-mask="true" data-on-close="dialogCloseFunForHT">编辑</a></td>
+		   <td><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/edit',array('id'=>$v['id'],'navTabId'=>CONTROLLER_NAME))}"  data-toggle="dialog" data-width="800" data-height="600" data-id="dialog-mask-view-edit" data-mask="true" data-on-close="dialogCloseFunForOps">编辑</a></td>
 		   <td>
                <a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/del',array('id'=>$v['id'],'navTabId'=>CONTROLLER_NAME))}" class="btn btn-sm" data-toggle="doajax" data-confirm-msg="确定要删除该行信息吗？">删除</a>
 		   </td>
