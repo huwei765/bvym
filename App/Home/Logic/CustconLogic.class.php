@@ -15,6 +15,17 @@ use Think\Model;
 class CustconLogic extends Model{
 
 	/**
+	 * 根据机构ID查询客户列表
+	 * @param $jcid
+	 * @param string $field
+	 * @param string $order
+	 * @return mixed
+	 */
+	public function getListByJCid($jcid,$field="*",$order="id desc"){
+		return $this->getList(array("jcid"=>$jcid),$field,$order);
+	}
+
+	/**
 	 * 根据姓名查询用户
 	 * @param $name
 	 * @param string $field
@@ -51,6 +62,17 @@ class CustconLogic extends Model{
 	 */
 	public function getCustconInfo($condition,$field="*"){
 		return M("custcon")->field($field)->where($condition)->find();
+	}
+
+	/**
+	 * 查询客户列表
+	 * @param $condition
+	 * @param string $field
+	 * @param string $order
+	 * @return mixed
+	 */
+	public function getList($condition,$field="*",$order="id desc"){
+		return M("custcon")->field($field)->where($condition)->order($order)->select();
 	}
 
 }

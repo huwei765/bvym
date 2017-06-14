@@ -4,6 +4,8 @@
                       <li class="active"><a href="#cust" role="tab" data-toggle="tab">机构信息</a></li>
                       <li><a href="{:U(MODULE_NAME.'/custgd/getlist',array('jcid'=>I('id'),'navTabId'=>'custgd'))}" role="tab" data-toggle="ajaxtab" data-target="#custgd" data-reload="true">跟单记录</a></li>
                       <li><a href="{:U(MODULE_NAME.'/jght/getbase',array('jcid'=>I('id'),'navTabId'=>'jght'))}" role="tab" data-toggle="ajaxtab" data-target="#jght" data-reload="true">合同管理</a></li>
+                      <li><a href="{:U(MODULE_NAME.'/custcon/getlist',array('jcid'=>I('id'),'navTabId'=>'custcon'))}" role="tab" data-toggle="ajaxtab" data-target="#custcon" data-reload="true">客户管理</a></li>
+                      <li><a href="{:U(MODULE_NAME.'/cust/getlistbycust',array('jcid'=>I('id'),'navTabId'=>'cust'))}" role="tab" data-toggle="ajaxtab" data-target="#custlist" data-reload="true">机构管理</a></li>
                   </ul>
 		 <div class="tab-content">
              <div class="tab-pane fade active in" id="cust">
@@ -38,6 +40,8 @@
 		  </div>
              <div class='tab-pane fade' id='custgd'></div>
              <div class='tab-pane fade' id='jght'></div>
+             <div class='tab-pane fade' id='custcon'></div>
+             <div class='tab-pane fade' id='custlist'></div>
 		 </div>
         </div>
 		<div class="bjui-footBar">
@@ -46,3 +50,22 @@
         </ul>
     </div>
 </div>
+<script type="text/javascript">
+    //注册各种回调事件
+    function dialogCloseFunForCustgd() {
+        $("a[data-target='#custgd']").click();
+        return true;
+    }
+    function dialogCloseFunForHT() {
+        $("a[data-target='#jght']").click();
+        return true;
+    }
+    function dialogCloseFunForCustcon() {
+        $("a[data-target='#custcon']").click();
+        return true;
+    }
+    function dialogCloseFunForCustlist() {
+        $("a[data-target='#custlist']").click();
+        return true;
+    }
+</script>

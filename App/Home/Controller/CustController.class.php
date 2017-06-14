@@ -102,13 +102,21 @@ public function jinnian(){
 	for($i=1;$i<=12;$i++){ 	
 			$info=$info.",".$i;
 			if($i<10){
-			$co = M($this->dbname)->where(array('addm'=>date("Y",time())."-0".$i))->count('id');
+				$BeginDate = date("Y-0".$i."-01");//获取指定月份的第一天
+				$firstDay = strtotime($BeginDate);//指定月的第一天
+				$endDay = strtotime("$BeginDate +1 month -1 day");
+				$map["addtime"] = array(array('egt',$firstDay),array('elt',$endDay));
+				$co = M($this->dbname)->where($map)->count('id');
 			}else{
-			$co = M($this->dbname)->where(array('addm'=>date("Y",time())."-".$i))->count('id');
+				$BeginDate = date("Y-".$i."-01");//获取指定月份的第一天
+				$firstDay = strtotime($BeginDate);//指定月的第一天
+				$endDay = strtotime("$BeginDate +1 month -1 day");
+				$map["addtime"] = array(array('egt',$firstDay),array('elt',$endDay));
+				$co = M($this->dbname)->where($map)->count('id');
 			}
 			$count=$count.",".$co;
 		}
-    $title = date("Y",time()).'年客户增长趋势'; 
+    $title = date("Y",time()).'年机构(代理商)增长趋势';
     $data = explode(",", substr ($count, 1)); 
     $size = 140; 
     $width = 750; 
@@ -118,26 +126,34 @@ public function jinnian(){
     $chart->createmonthline($title,$data,$size,$height,$width,$legend);
 	}
 
-public function qunian(){
-	import("Org.Util.Chart");
-    $chart = new \Chart;
-	for($i=1;$i<=12;$i++){ 	
-			$info=$info.",".$i;
-			if($i<10){
-			$co = M($this->dbname)->where(array('addm'=>date("Y",strtotime("-1 year"))."-0".$i))->count('id');
-			}else{
-			$co =M($this->dbname)->where(array('addm'=>date("Y",strtotime("-1 year"))."-".$i))->count('id');
-			}
-			$count=$count.",".$co;
+	public function qunian(){
+		import("Org.Util.Chart");
+		$chart = new \Chart;
+		for($i=1;$i<=12;$i++){
+				$info=$info.",".$i;
+				if($i<10){
+					$BeginDate = date("Y-0".$i."-01",strtotime("-1 year"));//获取指定月份的第一天
+					$firstDay = strtotime($BeginDate);//指定月的第一天
+					$endDay = strtotime("$BeginDate +1 month -1 day");
+					$map["addtime"] = array(array('egt',$firstDay),array('elt',$endDay));
+					$co = M($this->dbname)->where($map)->count('id');
+				}else{
+					$BeginDate = date("Y-".$i."-01",strtotime("-1 year"));//获取指定月份的第一天
+					$firstDay = strtotime($BeginDate);//指定月的第一天
+					$endDay = strtotime("$BeginDate +1 month -1 day");
+					$map["addtime"] = array(array('egt',$firstDay),array('elt',$endDay));
+					$co = M($this->dbname)->where($map)->count('id');
+				}
+				$count=$count.",".$co;
 		}
-    $title = date("Y",strtotime("-1 year")).'年客户增长趋势'; 
-    $data = explode(",", substr ($count, 1)); 
-    $size = 140; 
-    $width = 750; 
-    $height = 300; 
-    $legend = explode(",", substr ($info, 1));
-    ob_end_clean();
-    $chart->createmonthline($title,$data,$size,$height,$width,$legend);
+		$title = date("Y",strtotime("-1 year")).'年客户增长趋势';
+		$data = explode(",", substr ($count, 1));
+		$size = 140;
+		$width = 750;
+		$height = 300;
+		$legend = explode(",", substr ($info, 1));
+		ob_end_clean();
+		$chart->createmonthline($title,$data,$size,$height,$width,$legend);
 	}
 
 	public function daoqi() {
@@ -150,6 +166,16 @@ public function qunian(){
 		$list = $model->where($map)->select();
 	    $this->assign('list', $list);
 		$this->display("index");
+	}
+
+	public function getlistbycust(){
+		$jcid = I("get.jcid");
+		if(isset($jcid) && is_numeric($jcid) && intval($jcid) > 0){
+			//根据$jcid查询
+			$list = D("cust","Logic")->getListByCustId($jcid);
+			$this->assign('list',$list);
+		}
+		$this->display("list");
 	}
 
 }

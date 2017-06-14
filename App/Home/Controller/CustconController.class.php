@@ -112,7 +112,7 @@ class CustconController extends CommonController{
 	}
 
 	/**
-	 * 今年客户数量
+	 * 今年客户数量比较
 	 */
 	public function jinnian(){
 		$info="";
@@ -121,9 +121,17 @@ class CustconController extends CommonController{
 		for($i=1;$i<=12;$i++){
 			$info=$info.",".$i;
 			if($i<10){
-				$co = M($this->dbname)->where(array('addm'=>date("Y",time())."-0".$i))->count('id');
+				$BeginDate = date("Y-0".$i."-01");//获取指定月份的第一天
+				$firstDay = strtotime($BeginDate);//指定月的第一天
+				$endDay = strtotime("$BeginDate +1 month -1 day");
+				$map["addtime"] = array(array('egt',$firstDay),array('elt',$endDay));
+				$co = M($this->dbname)->where($map)->count('id');
 			}else{
-				$co = M($this->dbname)->where(array('addm'=>date("Y",time())."-".$i))->count('id');
+				$BeginDate = date("Y-".$i."-01");//获取指定月份的第一天
+				$firstDay = strtotime($BeginDate);//指定月的第一天
+				$endDay = strtotime("$BeginDate +1 month -1 day");
+				$map["addtime"] = array(array('egt',$firstDay),array('elt',$endDay));
+				$co = M($this->dbname)->where($map)->count('id');
 			}
 			$count=$count.",".$co;
 		}
@@ -135,6 +143,53 @@ class CustconController extends CommonController{
 		$legend = explode(",", substr ($info, 1));
 		ob_end_clean();
 		$chart->createmonthline($title,$data,$size,$height,$width,$legend);
+	}
+
+	/**
+	 * 去年客户数量比较
+	 */
+	public function qunian(){
+		import("Org.Util.Chart");
+		$chart = new \Chart;
+		for($i=1;$i<=12;$i++){
+			$info=$info.",".$i;
+			if($i<10){
+				$BeginDate = date("Y-0".$i."-01",strtotime("-1 year"));//获取指定月份的第一天
+				$firstDay = strtotime($BeginDate);//指定月的第一天
+				$endDay = strtotime("$BeginDate +1 month -1 day");
+				$map["addtime"] = array(array('egt',$firstDay),array('elt',$endDay));
+				$co = M($this->dbname)->where($map)->count('id');
+			}else{
+				$BeginDate = date("Y-".$i."-01",strtotime("-1 year"));//获取指定月份的第一天
+				$firstDay = strtotime($BeginDate);//指定月的第一天
+				$endDay = strtotime("$BeginDate +1 month -1 day");
+				$map["addtime"] = array(array('egt',$firstDay),array('elt',$endDay));
+				$co = M($this->dbname)->where($map)->count('id');
+			}
+			$count=$count.",".$co;
+		}
+		$title = date("Y",strtotime("-1 year")).'年客户增长趋势';
+		$data = explode(",", substr ($count, 1));
+		$size = 140;
+		$width = 750;
+		$height = 300;
+		$legend = explode(",", substr ($info, 1));
+		ob_end_clean();
+		$chart->createmonthline($title,$data,$size,$height,$width,$legend);
+	}
+
+	public function getlist(){
+		$jcid = I("get.jcid");
+		if(isset($jcid) && is_numeric($jcid) && intval($jcid) > 0){
+			//根据$jcid查询
+			$list = D("custcon","Logic")->getListByJCid($jcid);
+			$this->assign('list',$list);
+		}
+		$this->display("list");
+	}
+
+	public function fenlei(){
+		$this->_fenxi('fenlei','进展',4);
 	}
 
 }

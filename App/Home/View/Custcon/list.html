@@ -1,0 +1,40 @@
+<div class="bjui-pageHeader">
+        <div class="bjui-searchBar">
+			  <span <php>echo display(CONTROLLER_NAME.'/del');</php> style="float:right;" ><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/del',array('navTabId'=>CONTROLLER_NAME))}" class="btn btn-red" data-toggle="doajax" data-confirm-msg="确定要清理吗？" data-icon="remove">清理</a></span>
+			  <span <php>echo display(CONTROLLER_NAME.'/outxls');</php> style="float:right;margin-right:20px;"><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/outxls')}" class="btn btn-blue" data-toggle="doexport" data-confirm-msg="确定要导出吗？" data-icon="arrow-up">导出</a></span>
+			  <span <php>echo display(CONTROLLER_NAME.'/add');</php> style="float:right;margin-right:20px;"><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/add',array('navTabId'=>CONTROLLER_NAME))}" class="btn btn-green" data-toggle="dialog" data-width="900" data-height="500" data-id="dialog-mask-view-new" data-mask="true" data-icon="plus" data-on-close="dialogCloseFunForCustcon">新增</a></span>
+		</div>
+</div>
+<div class="bjui-pageContent">
+     <table class="table table-bordered table-striped table-hover" data-width="100%" data-layout-h="0" data-nowrap="true">
+        <thead>
+            <tr>
+            <th data-order-direction='desc' data-order-field='xingming'>姓名</th>
+            <th data-order-direction='desc' data-order-field='sex'>性别</th>
+            <th>手机号码</th>
+            <th>微信昵称</th>
+<th data-order-direction='desc' data-order-field='addtime'>添加时间</th>
+		    <th <php>echo display(CONTROLLER_NAME.'/del');</php> >状态</th>
+		    <th <php>echo display(CONTROLLER_NAME.'/edit');</php> >编辑</th>
+            </tr>
+        </thead>
+        <tbody>
+
+          <volist id="v" name="list">
+          <tr>
+<td><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/view',array('id'=>$v['id'],'navTabId'=>CONTROLLER_NAME))}"  data-toggle="dialog" data-width="900" data-height="500" data-id="dialog-mask" data-mask="true" >{$v.xingming}</a></td>
+<td>{$v.sex|getSex=###}</td>
+<td>{$v.phone|msubstr=###,0,20}</td>
+<td>{$v.nickname|msubstr=###,0,20}</td>
+<td>{$v.addtime|date="Y-m-d H:i",###}</td>
+		   <td <php>echo display(CONTROLLER_NAME.'/del');</php> ><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/del',array('id'=>$v['id'],'navTabId'=>CONTROLLER_NAME))}" data-toggle="doajax" data-confirm-msg="确定要操作吗？"><if condition="$v.status EQ 1 "><img src="__PUBLIC__/images/ok.gif" border="0"/><else/><img src="__PUBLIC__/images/locked.gif" border="0"/></if></a></td>
+		   <td <php>echo display(CONTROLLER_NAME.'/edit');</php> >
+              <a href="{:U(MODULE_NAME.'/congd/add',array('uid'=>$v['id'],'navTabId'=>CONTROLLER_NAME))}"   class="btn btn-green btn-sm" data-toggle="dialog" data-width="900" data-height="500" data-id="dialog-mask-view-gd" data-mask="true" data-on-close="dialogCloseFunForCustcon">跟单</a>
+              <a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/edit',array('id'=>$v['id'],'navTabId'=>CONTROLLER_NAME))}"   class="btn btn-green btn-sm" data-toggle="dialog" data-width="900" data-height="500" data-id="dialog-mask-view-edit" data-mask="true" data-on-close="dialogCloseFunForCustcon">编辑</a>
+              </td>
+		   </td>
+         </tr> 
+          </volist>
+        </tbody>
+    </table>
+</div>
