@@ -246,276 +246,6 @@ class HetongController extends CommonController{
 	public function fenxi(){
 	 $this->display();
 	}
-	
-
-
-public function name(){
-	$user=I('get.user');
-	import("Org.Util.Chart");
-    $chart = new \Chart;
-	for($i=1;$i<=12;$i++){ 	
-			$info=$info.",".$i;
-			if($i<10){
-			$co =M($this->dbname)->where(array('name'=>$user))->where(array('addm'=>date("Y",time())."-0".$i))->SUM('jine');
-			}else{
-			$co =M($this->dbname)->where(array('name'=>$user))->where(array('addm'=>date("Y",time())."-".$i))->SUM('jine');
-			}
-			$count=$count.",".$co;
-		}
-    $title = $user.date("Y",time()).'年合同总金额'; 
-    $data = explode(",", substr ($count, 1)); 
-    $size = 140; 
-    $width = 750; 
-    $height = 300; 
-    $legend = explode(",", substr ($info, 1));
-    ob_end_clean();
-    $chart->createcolumnar($title,$data,$size,$height,$width,$legend);
-	}
-
-	public function names(){
-	$user=I('get.user');
-	import("Org.Util.Chart");
-    $chart = new \Chart;
-	for($i=1;$i<=12;$i++){ 	
-			$info=$info.",".$i;
-			if($i<10){
-			$co =M($this->dbname)->where(array('name'=>$user))->where(array('addm'=>date("Y",time())."-0".$i))->SUM('yishou');
-			}else{
-			$co =M($this->dbname)->where(array('name'=>$user))->where(array('addm'=>date("Y",time())."-".$i))->SUM('yishou');
-			}
-			$count=$count.",".$co;
-		}
-    $title = $user.date("Y",time()).'年合同已收款'; 
-    $data = explode(",", substr ($count, 1)); 
-    $size = 140; 
-    $width = 750; 
-    $height = 300; 
-    $legend = explode(",", substr ($info, 1));
-    ob_end_clean();
-    $chart->createcolumnar($title,$data,$size,$height,$width,$legend);
-	}
-	
-	public function namew(){
-	$user=I('get.user');
-	import("Org.Util.Chart");
-    $chart = new \Chart;
-	for($i=1;$i<=12;$i++){ 	
-			$info=$info.",".$i;
-			if($i<10){
-			$co =M($this->dbname)->where(array('name'=>$user))->where(array('addm'=>date("Y",time())."-0".$i))->SUM('weishou');
-			}else{
-			$co =M($this->dbname)->where(array('name'=>$user))->where(array('addm'=>date("Y",time())."-".$i))->SUM('weishou');
-			}
-			$count=$count.",".$co;
-		}
-    $title = $user.date("Y",time()).'年合同未收款'; 
-    $data = explode(",", substr ($count, 1)); 
-    $size = 140; 
-    $width = 750; 
-    $height = 300; 
-    $legend = explode(",", substr ($info, 1));
-    ob_end_clean();
-    $chart->createcolumnar($title,$data,$size,$height,$width,$legend);
-	}
-	
-	public function namef(){
-	$user=I('get.user');
-	import("Org.Util.Chart");
-    $chart = new \Chart;
-	for($i=1;$i<=12;$i++){ 	
-			$info=$info.",".$i;
-			if($i<10){
-			$co =M($this->dbname)->where(array('name'=>$user))->where(array('addm'=>date("Y",time())."-0".$i))->SUM('fukuan');
-			}else{
-			$co =M($this->dbname)->where(array('name'=>$user))->where(array('addm'=>date("Y",time())."-".$i))->SUM('fukuan');
-			}
-			$count=$count.",".$co;
-		}
-    $title = $user.date("Y",time()).'年合同已付款'; 
-    $data = explode(",", substr ($count, 1)); 
-    $size = 140; 
-    $width = 750; 
-    $height = 300; 
-    $legend = explode(",", substr ($info, 1));
-    ob_end_clean();
-    $chart->createcolumnar($title,$data,$size,$height,$width,$legend);
-	}
-	
-public function jinnian(){
-	import("Org.Util.Chart");
-    $chart = new \Chart;
-	for($i=1;$i<=12;$i++){ 	
-			$info=$info.",".$i;
-			if($i<10){
-			$co =M($this->dbname)->where(array('addm'=>date("Y",time())."-0".$i))->SUM('jine');
-			}else{
-			$co =M($this->dbname)->where(array('addm'=>date("Y",time())."-".$i))->SUM('jine');
-			}
-			$count=$count.",".$co;
-		}
-    $title = date("Y",time()).'年合同金额'; 
-    $data = explode(",", substr ($count, 1)); 
-    $size = 140; 
-    $width = 750; 
-    $height = 300; 
-    $legend = explode(",", substr ($info, 1));
-    ob_end_clean();
-    $chart->createcolumnar($title,$data,$size,$height,$width,$legend);
-	}
-	
-	public function jinnians(){
-	import("Org.Util.Chart");
-    $chart = new \Chart;
-	for($i=1;$i<=12;$i++){ 	
-			$info=$info.",".$i;
-			if($i<10){
-			$co =M($this->dbname)->where(array('addm'=>date("Y",time())."-0".$i))->SUM('yishou');
-			}else{
-			$co =M($this->dbname)->where(array('addm'=>date("Y",time())."-".$i))->SUM('yishou');
-			}
-			$count=$count.",".$co;
-		}
-    $title = date("Y",time()).'年合同已收款'; 
-    $data = explode(",", substr ($count, 1)); 
-    $size = 140; 
-    $width = 750; 
-    $height = 300; 
-    $legend = explode(",", substr ($info, 1));
-    ob_end_clean();
-    $chart->createcolumnar($title,$data,$size,$height,$width,$legend);
-	}
-	
-	public function jinnianw(){
-	import("Org.Util.Chart");
-    $chart = new \Chart;
-	for($i=1;$i<=12;$i++){ 	
-			$info=$info.",".$i;
-			if($i<10){
-			$co =M($this->dbname)->where(array('addm'=>date("Y",time())."-0".$i))->SUM('weishou');
-			}else{
-			$co =M($this->dbname)->where(array('addm'=>date("Y",time())."-".$i))->SUM('weishou');
-			}
-			$count=$count.",".$co;
-		}
-    $title = date("Y",time()).'年合同未收款'; 
-    $data = explode(",", substr ($count, 1)); 
-    $size = 140; 
-    $width = 750; 
-    $height = 300; 
-    $legend = explode(",", substr ($info, 1));
-    ob_end_clean();
-    $chart->createcolumnar($title,$data,$size,$height,$width,$legend);
-	}
-	
-	public function jinnianf(){
-	import("Org.Util.Chart");
-    $chart = new \Chart;
-	for($i=1;$i<=12;$i++){ 	
-			$info=$info.",".$i;
-			if($i<10){
-			$co =M($this->dbname)->where(array('addm'=>date("Y",time())."-0".$i))->SUM('fukuan');
-			}else{
-			$co =M($this->dbname)->where(array('addm'=>date("Y",time())."-".$i))->SUM('fukuan');
-			}
-			$count=$count.",".$co;
-		}
-    $title = date("Y",time()).'年合同已付款'; 
-    $data = explode(",", substr ($count, 1)); 
-    $size = 140; 
-    $width = 750; 
-    $height = 300; 
-    $legend = explode(",", substr ($info, 1));
-    ob_end_clean();
-    $chart->createcolumnar($title,$data,$size,$height,$width,$legend);
-	}
-
-public function qunian(){
-	import("Org.Util.Chart");
-    $chart = new \Chart;
-	for($i=1;$i<=12;$i++){ 	
-			$info=$info.",".$i;
-			if($i<10){
-			$co = M($this->dbname)->where(array('addm'=>date("Y",strtotime("-1 year"))."-0".$i))->sum('jine');
-			}else{
-			$co = M($this->dbname)->where(array('addm'=>date("Y",strtotime("-1 year"))."-".$i))->sum('jine');
-			}
-			$count=$count.",".$co;
-		}
-    $title = date("Y",strtotime("-1 year")).'年合同金额'; 
-    $data = explode(",", substr ($count, 1)); 
-    $size = 140; 
-    $width = 750; 
-    $height = 300; 
-    $legend = explode(",", substr ($info, 1));
-    ob_end_clean();
-    $chart->createcolumnar($title,$data,$size,$height,$width,$legend);
-	}
-
-	public function qunians(){
-	import("Org.Util.Chart");
-    $chart = new \Chart;
-	for($i=1;$i<=12;$i++){ 	
-			$info=$info.",".$i;
-			if($i<10){
-			$co = M($this->dbname)->where(array('addm'=>date("Y",strtotime("-1 year"))."-0".$i))->sum('yishou');
-			}else{
-			$co = M($this->dbname)->where(array('addm'=>date("Y",strtotime("-1 year"))."-".$i))->sum('yishou');
-			}
-			$count=$count.",".$co;
-		}
-    $title = date("Y",strtotime("-1 year")).'年合同已收款'; 
-    $data = explode(",", substr ($count, 1)); 
-    $size = 140; 
-    $width = 750; 
-    $height = 300; 
-    $legend = explode(",", substr ($info, 1));
-    ob_end_clean();
-    $chart->createcolumnar($title,$data,$size,$height,$width,$legend);
-	}
-	
-	public function qunianw(){
-	import("Org.Util.Chart");
-    $chart = new \Chart;
-	for($i=1;$i<=12;$i++){ 	
-			$info=$info.",".$i;
-			if($i<10){
-			$co = M($this->dbname)->where(array('addm'=>date("Y",strtotime("-1 year"))."-0".$i))->sum('weishou');
-			}else{
-			$co = M($this->dbname)->where(array('addm'=>date("Y",strtotime("-1 year"))."-".$i))->sum('weishou');
-			}
-			$count=$count.",".$co;
-		}
-    $title = date("Y",strtotime("-1 year")).'年合同未收款'; 
-    $data = explode(",", substr ($count, 1)); 
-    $size = 140; 
-    $width = 750; 
-    $height = 300; 
-    $legend = explode(",", substr ($info, 1));
-    ob_end_clean();
-    $chart->createcolumnar($title,$data,$size,$height,$width,$legend);
-	}
-	
-	public function qunianf(){
-	import("Org.Util.Chart");
-    $chart = new \Chart;
-	for($i=1;$i<=12;$i++){ 	
-			$info=$info.",".$i;
-			if($i<10){
-			$co = M($this->dbname)->where(array('addm'=>date("Y",strtotime("-1 year"))."-0".$i))->sum('fukuan');
-			}else{
-			$co = M($this->dbname)->where(array('addm'=>date("Y",strtotime("-1 year"))."-".$i))->sum('fukuan');
-			}
-			$count=$count.",".$co;
-		}
-    $title = date("Y",strtotime("-1 year")).'年合同已付款'; 
-    $data = explode(",", substr ($count, 1)); 
-    $size = 140; 
-    $width = 750; 
-    $height = 300; 
-    $legend = explode(",", substr ($info, 1));
-    ob_end_clean();
-    $chart->createcolumnar($title,$data,$size,$height,$width,$legend);
-	}
 
 	/**
 	 * 查询所有的合同相关项目列表
@@ -564,7 +294,7 @@ public function qunian(){
 	/**
 	 * 订单年度增长统计分析
 	 */
-	public function getchartdatabyyear(){
+	public function getnumforchartbyyear(){
 		$currentYear_customer_sum = array();
 		$lastYear_customer_sum = array();
 		//查询今年的12个月份的值
@@ -602,25 +332,28 @@ public function qunian(){
 			$lastYear_customer_sum[$i-1] = intval($co);
 		}
 		$chart_data = array(
-			"title"=>array("text" => "年度订单增长比较","x" => -20),
+			"title"=>array("text" => "最近两年订单增长比较","x" => -20),
 			"xAxis" => array("categories" => array("1","2","3","4","5","6","7","8","9","10","11","12")),
 			"yAxis" => array("title" => array("text"=>"数量"),	"plotLines" => array(array("value" => 0,"width" => 1,"color" => "#808080"))),
 			"tooltip" => array("valueSuffix" => "单"),
 			"legend" => array("align"  => "left","verticalAlign" => "top","borderWidth" => 0,"y"=> 0,"floating"=>true));
 		$chart_data["series"] = array(
 			array(
-				"name"=>"今年",
+				"name"=>date("Y",time())."年",
 				"data" =>$currentYear_customer_sum
 			),
 			array(
-				"name"=>"去年",
+				"name"=>date("Y",strtotime("-1 year"))."年",
 				"data" =>$lastYear_customer_sum
 			)
 		);
 		echo json_encode($chart_data);
 	}
 
-	public function getdatabystatus(){
+	/**
+	 * 按订单状态获取订单总数统计
+	 */
+	public function getnumforchartbystatus(){
 		//统计今年订单总数、已收款完成数、未收款订单总数
 		$order_count_num = $this->countOrderNumByStatus();
 		$chart_data = array(
@@ -642,6 +375,35 @@ public function qunian(){
 			array(
 				"name"=>"完成订单",
 				"data" =>$order_count_num["order_over_num"]
+			)
+		);
+		echo json_encode($chart_data);
+	}
+
+	/**
+	 * 图表数据：统计订单金额
+	 */
+	public function getmoneyforchartbystatus(){
+		$order_count_money = $this->countOrderMoneyByStatus();
+		$chart_data = array(
+			"chart" => array("type"=>"column"),
+			"title"=>array("text" => date("Y",time())."年度订单对账统计","x" => -20),
+			"xAxis" => array("categories" => array("一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"),"crosshair"=>true),
+			"yAxis" => array("title" => array("text"=>"数量"),	"plotLines" => array(array("value" => 0,"width" => 1,"color" => "#808080"))),
+			"tooltip" => array("valueSuffix" => "元"),
+			"legend" => array("align"  => "left","verticalAlign" => "top","borderWidth" => 0,"y"=> 0,"floating"=>true));
+		$chart_data["series"] = array(
+			array(
+				"name"=>"订单总额",
+				"data" =>$order_count_money["order_total_sum"]
+			),
+			array(
+				"name"=>"未收金额",
+				"data" =>$order_count_money["order_wei_sum"]
+			),
+			array(
+				"name"=>"已收金额",
+				"data" =>$order_count_money["order_over_sum"]
 			)
 		);
 		echo json_encode($chart_data);
@@ -673,6 +435,33 @@ public function qunian(){
 			$order_over_num[$i-1] = intval($co) - intval($wei);
 		}
 		return array("order_total_num"=>$order_total_num,"order_wei_num"=>$order_wei_num,"order_over_num"=>$order_over_num);
+	}
+
+	/**
+	 * 计算订单金额
+	 * @return array
+	 */
+	private function countOrderMoneyByStatus(){
+		$order_total_sum = array();
+		$order_wei_sum = array();
+		$order_over_sum = array();
+		for($i=1;$i<=12;$i++){
+			if($i<10){
+				$BeginDate = date("Y-0".$i."-01");//获取指定月份的第一天
+			}else{
+				$BeginDate = date("Y-".$i."-01");//获取指定月份的第一天
+			}
+			$firstDay = strtotime($BeginDate);//指定月的第一天
+			$endDay = strtotime("$BeginDate +1 month -1 day");
+			$map["addtime"] = array(array('egt',$firstDay),array('elt',$endDay));
+			$tmp_total_sum = M($this->dbname)->where($map)->sum('jine');
+			$tmp_wei_sum = M($this->dbname)->where($map)->sum('weishou');
+			$tmp_yi_sum = M($this->dbname)->where($map)->sum('yishou');
+			$order_total_sum[$i-1] = intval($tmp_total_sum);
+			$order_wei_sum[$i-1] = intval($tmp_wei_sum);
+			$order_over_sum[$i-1] = intval($tmp_yi_sum);
+		}
+		return array("order_total_sum"=>$order_total_sum,"order_wei_sum"=>$order_wei_sum,"order_over_sum"=>$order_over_sum);
 	}
 
 }
