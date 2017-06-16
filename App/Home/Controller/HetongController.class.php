@@ -561,6 +561,118 @@ public function qunian(){
 		$this->display("base");
 	}
 
+	/**
+	 * 订单年度增长统计分析
+	 */
+	public function getchartdatabyyear(){
+		$currentYear_customer_sum = array();
+		$lastYear_customer_sum = array();
+		//查询今年的12个月份的值
+		for($i=1;$i<=12;$i++){
+			if($i<10){
+				$BeginDate = date("Y-0".$i."-01");//获取指定月份的第一天
+				$firstDay = strtotime($BeginDate);//指定月的第一天
+				$endDay = strtotime("$BeginDate +1 month -1 day");
+				$map["addtime"] = array(array('egt',$firstDay),array('elt',$endDay));
+				$co = M($this->dbname)->where($map)->count('id');
+			}else{
+				$BeginDate = date("Y-".$i."-01");//获取指定月份的第一天
+				$firstDay = strtotime($BeginDate);//指定月的第一天
+				$endDay = strtotime("$BeginDate +1 month -1 day");
+				$map["addtime"] = array(array('egt',$firstDay),array('elt',$endDay));
+				$co = M($this->dbname)->where($map)->count('id');
+			}
+			$currentYear_customer_sum[$i-1] = intval($co);
+		}
+		//查询去年的12个月份的值
+		for($i=1;$i<=12;$i++){
+			if($i<10){
+				$BeginDate = date("Y-0".$i."-01",strtotime("-1 year"));//获取指定月份的第一天
+				$firstDay = strtotime($BeginDate);//指定月的第一天
+				$endDay = strtotime("$BeginDate +1 month -1 day");
+				$map["addtime"] = array(array('egt',$firstDay),array('elt',$endDay));
+				$co = M($this->dbname)->where($map)->count('id');
+			}else{
+				$BeginDate = date("Y-".$i."-01",strtotime("-1 year"));//获取指定月份的第一天
+				$firstDay = strtotime($BeginDate);//指定月的第一天
+				$endDay = strtotime("$BeginDate +1 month -1 day");
+				$map["addtime"] = array(array('egt',$firstDay),array('elt',$endDay));
+				$co = M($this->dbname)->where($map)->count('id');
+			}
+			$lastYear_customer_sum[$i-1] = intval($co);
+		}
+		$chart_data = array(
+			"title"=>array("text" => "年度订单增长比较","x" => -20),
+			"xAxis" => array("categories" => array("1","2","3","4","5","6","7","8","9","10","11","12")),
+			"yAxis" => array("title" => array("text"=>"数量"),	"plotLines" => array(array("value" => 0,"width" => 1,"color" => "#808080"))),
+			"tooltip" => array("valueSuffix" => "单"),
+			"legend" => array("align"  => "left","verticalAlign" => "top","borderWidth" => 0,"y"=> 0,"floating"=>true));
+		$chart_data["series"] = array(
+			array(
+				"name"=>"今年",
+				"data" =>$currentYear_customer_sum
+			),
+			array(
+				"name"=>"去年",
+				"data" =>$lastYear_customer_sum
+			)
+		);
+		echo json_encode($chart_data);
+	}
 
+	public function getdatabystatus(){
+		//统计今年订单总数、已收款完成数、未收款订单总数
+		$order_count_num = $this->countOrderNumByStatus();
+		$chart_data = array(
+			"chart" => array("type"=>"column"),
+			"title"=>array("text" => date("Y",time())."年度订单数量统计","x" => -20),
+			"xAxis" => array("categories" => array("一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"),"crosshair"=>true),
+			"yAxis" => array("title" => array("text"=>"数量"),	"plotLines" => array(array("value" => 0,"width" => 1,"color" => "#808080"))),
+			"tooltip" => array("valueSuffix" => "单"),
+			"legend" => array("align"  => "left","verticalAlign" => "top","borderWidth" => 0,"y"=> 0,"floating"=>true));
+		$chart_data["series"] = array(
+			array(
+				"name"=>"订单总数",
+				"data" =>$order_count_num["order_total_num"]
+			),
+			array(
+				"name"=>"欠款订单",
+				"data" =>$order_count_num["order_wei_num"]
+			),
+			array(
+				"name"=>"完成订单",
+				"data" =>$order_count_num["order_over_num"]
+			)
+		);
+		echo json_encode($chart_data);
+	}
+
+	/**
+	 * 按状态统计订单数量
+	 * @return array
+	 */
+	private function countOrderNumByStatus(){
+		$order_total_num = array();
+		$order_wei_num = array();
+		$order_over_num = array();
+		for($i=1;$i<=12;$i++){
+			if($i<10){
+				$BeginDate = date("Y-0".$i."-01");//获取指定月份的第一天
+			}else{
+				$BeginDate = date("Y-".$i."-01");//获取指定月份的第一天
+			}
+			$firstDay = strtotime($BeginDate);//指定月的第一天
+			$endDay = strtotime("$BeginDate +1 month -1 day");
+			$map["addtime"] = array(array('egt',$firstDay),array('elt',$endDay));
+			$map_wei["addtime"] = array(array('egt',$firstDay),array('elt',$endDay));
+			$map_wei["status"] = 0;
+			$co = M($this->dbname)->where($map)->count('id');
+			$wei = M($this->dbname)->where($map_wei)->count('id');
+			$order_total_num[$i-1] = intval($co);
+			$order_wei_num[$i-1] = intval($wei);
+			$order_over_num[$i-1] = intval($co) - intval($wei);
+		}
+		return array("order_total_num"=>$order_total_num,"order_wei_num"=>$order_wei_num,"order_over_num"=>$order_over_num);
+	}
 
 }

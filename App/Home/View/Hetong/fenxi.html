@@ -7,6 +7,16 @@
             </tr>
         </thead>
         <tbody>
+		<tr>
+			<td>
+				<div style="min-width:400px;height:350px" data-toggle="highcharts" data-url="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/getchartdatabyyear')}"></div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div style="min-width:400px;height:350px" data-toggle="highcharts" data-url="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/getdatabystatus')}"></div>
+			</td>
+		</tr>
 
           <tr>
 		   <td>
@@ -18,13 +28,6 @@
 		   <img src='__URL__/qunianw'>
 		   <img src='__URL__/jinnianf'>
 		   <img src='__URL__/qunianf'>
-            <php>$list = M('hetong')->distinct('name')->field('name')->select();</php>
-			<volist id="v" name="list">
-            <img src='__URL__/name/user/{$v.name}'> 
-			<img src='__URL__/names/user/{$v.name}'> 
-			<img src='__URL__/namew/user/{$v.name}'> 
-			<img src='__URL__/namef/user/{$v.name}'> 
-		   </volist>
 </td>
          </tr> 
 

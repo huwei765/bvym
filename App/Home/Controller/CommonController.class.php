@@ -440,7 +440,8 @@ Class CommonController extends Controller{
 				array('name' => '手术记录','id' => 18, 'act'=>'opsrecord', 'op'=>'index'),
 				array('name' => '统计分析','id' => 19, 'act'=>'cus_analyse', 'op'=>'index','child' => array(
 					array('name' => '客户分析','id' => 191, 'act'=>'custcon', 'op'=>'fenxi'),
-					array('name' => '需要跟踪的客户','id' => 192, 'act'=>'custcon', 'op'=>'daoqi'),
+					array('name' => '订单分析','id' => 192, 'act'=>'hetong', 'op'=>'fenxi'),
+					array('name' => '需要跟踪的客户','id' => 193, 'act'=>'custcon', 'op'=>'daoqi'),
 				)),
 			)),
 			'cust' => array('name' => '合作机构','sort' => 1,'id' => 2, 'child' => array(

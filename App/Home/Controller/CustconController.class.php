@@ -192,4 +192,59 @@ class CustconController extends CommonController{
 		$this->_fenxi('fenlei','进展',4);
 	}
 
+	public function getchartdatabyyear(){
+		$currentYear_customer_sum = array();
+		$lastYear_customer_sum = array();
+		//查询今年的12个月份的值
+		for($i=1;$i<=12;$i++){
+			if($i<10){
+				$BeginDate = date("Y-0".$i."-01");//获取指定月份的第一天
+				$firstDay = strtotime($BeginDate);//指定月的第一天
+				$endDay = strtotime("$BeginDate +1 month -1 day");
+				$map["addtime"] = array(array('egt',$firstDay),array('elt',$endDay));
+				$co = M($this->dbname)->where($map)->count('id');
+			}else{
+				$BeginDate = date("Y-".$i."-01");//获取指定月份的第一天
+				$firstDay = strtotime($BeginDate);//指定月的第一天
+				$endDay = strtotime("$BeginDate +1 month -1 day");
+				$map["addtime"] = array(array('egt',$firstDay),array('elt',$endDay));
+				$co = M($this->dbname)->where($map)->count('id');
+			}
+			$currentYear_customer_sum[$i-1] = intval($co);
+		}
+		//查询去年的12个月份的值
+		for($i=1;$i<=12;$i++){
+			if($i<10){
+				$BeginDate = date("Y-0".$i."-01",strtotime("-1 year"));//获取指定月份的第一天
+				$firstDay = strtotime($BeginDate);//指定月的第一天
+				$endDay = strtotime("$BeginDate +1 month -1 day");
+				$map["addtime"] = array(array('egt',$firstDay),array('elt',$endDay));
+				$co = M($this->dbname)->where($map)->count('id');
+			}else{
+				$BeginDate = date("Y-".$i."-01",strtotime("-1 year"));//获取指定月份的第一天
+				$firstDay = strtotime($BeginDate);//指定月的第一天
+				$endDay = strtotime("$BeginDate +1 month -1 day");
+				$map["addtime"] = array(array('egt',$firstDay),array('elt',$endDay));
+				$co = M($this->dbname)->where($map)->count('id');
+			}
+			$lastYear_customer_sum[$i-1] = intval($co);
+		}
+		$chart_data = array(
+			"title"=>array("text" => "客户年度增长比较","x" => -20),
+			"xAxis" => array("categories" => array("1","2","3","4","5","6","7","8","9","10","11","12")),
+			"yAxis" => array("title" => "数量",	"plotLines" => array(array("value" => 0,"width" => 1,"color" => "#808080"))),
+			"tooltip" => array("valueSuffix" => "人"),
+			"legend" => array("align"  => "left","verticalAlign" => "top","borderWidth" => 0,"y"=> 0,"floating"=>true));
+		$chart_data["series"] = array(
+			array(
+				"name"=>"今年",
+				"data" =>$currentYear_customer_sum
+			),
+			array(
+				"name"=>"去年",
+				"data" =>$lastYear_customer_sum
+			)
+		);
+		echo json_encode($chart_data);
+	}
 }
