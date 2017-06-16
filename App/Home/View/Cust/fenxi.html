@@ -7,11 +7,16 @@
             </tr>
         </thead>
         <tbody>
-          <tr>
+        <tr>
 		   <td>
-               <div><img src="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/jinnian')}"><img src="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/qunian')}"></div>
+               <div style="min-width:400px;height:350px" data-toggle="highcharts" data-url="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/getnumforchartbyyear')}"></div>
            </td>
-         </tr> 
+        </tr>
+        <tr>
+            <td>
+                <div style="min-width:400px;height:350px" data-toggle="highcharts" data-url="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/getnumforchartbycate')}"></div>
+            </td>
+        </tr>
 
         </tbody>
     </table>

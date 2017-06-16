@@ -441,7 +441,7 @@ Class CommonController extends Controller{
 				array('name' => '统计分析','id' => 19, 'act'=>'cus_analyse', 'op'=>'index','child' => array(
 					array('name' => '客户分析','id' => 191, 'act'=>'custcon', 'op'=>'fenxi'),
 					array('name' => '订单分析','id' => 192, 'act'=>'hetong', 'op'=>'fenxi'),
-					array('name' => '需要跟踪的客户','id' => 193, 'act'=>'custcon', 'op'=>'daoqi'),
+					array('name' => '收款分析','id' => 193, 'act'=>'shou', 'op'=>'fenxi'),
 				)),
 			)),
 			'cust' => array('name' => '合作机构','sort' => 1,'id' => 2, 'child' => array(
@@ -458,8 +458,7 @@ Class CommonController extends Controller{
 				array('name' => '返现记录','id' => 26, 'act'=>'cus_fan', 'op'=>'index'),
 //				array('name' => '提成设置','id' => 27, 'act'=>'cus_set', 'op'=>'index'),
 				array('name' => '统计分析','id' => 28, 'act'=>'cus_analyse', 'op'=>'index','child' => array(
-					array('name' => '机构分析','id' => 281, 'act'=>'cust', 'op'=>'fenxi'),
-					array('name' => '即将到期的合同','id' => 282, 'act'=>'cust', 'op'=>'daoqi'),
+					array('name' => '机构分析','id' => 281, 'act'=>'cust', 'op'=>'fenxi')
 				)),
 
 			)),

@@ -107,75 +107,11 @@ class CustconController extends CommonController{
 		}
 	}
 
+	/**
+	 * 客户统计分析
+	 */
 	public function fenxi(){
 		$this->display();
-	}
-
-	/**
-	 * 今年客户数量比较
-	 */
-	public function jinnian(){
-		$info="";
-		import("Org.Util.Chart");
-		$chart = new \Chart;
-		for($i=1;$i<=12;$i++){
-			$info=$info.",".$i;
-			if($i<10){
-				$BeginDate = date("Y-0".$i."-01");//获取指定月份的第一天
-				$firstDay = strtotime($BeginDate);//指定月的第一天
-				$endDay = strtotime("$BeginDate +1 month -1 day");
-				$map["addtime"] = array(array('egt',$firstDay),array('elt',$endDay));
-				$co = M($this->dbname)->where($map)->count('id');
-			}else{
-				$BeginDate = date("Y-".$i."-01");//获取指定月份的第一天
-				$firstDay = strtotime($BeginDate);//指定月的第一天
-				$endDay = strtotime("$BeginDate +1 month -1 day");
-				$map["addtime"] = array(array('egt',$firstDay),array('elt',$endDay));
-				$co = M($this->dbname)->where($map)->count('id');
-			}
-			$count=$count.",".$co;
-		}
-		$title = date("Y",time()).'年客户增长趋势';
-		$data = explode(",", substr ($count, 1));
-		$size = 140;
-		$width = 750;
-		$height = 300;
-		$legend = explode(",", substr ($info, 1));
-		ob_end_clean();
-		$chart->createmonthline($title,$data,$size,$height,$width,$legend);
-	}
-
-	/**
-	 * 去年客户数量比较
-	 */
-	public function qunian(){
-		import("Org.Util.Chart");
-		$chart = new \Chart;
-		for($i=1;$i<=12;$i++){
-			$info=$info.",".$i;
-			if($i<10){
-				$BeginDate = date("Y-0".$i."-01",strtotime("-1 year"));//获取指定月份的第一天
-				$firstDay = strtotime($BeginDate);//指定月的第一天
-				$endDay = strtotime("$BeginDate +1 month -1 day");
-				$map["addtime"] = array(array('egt',$firstDay),array('elt',$endDay));
-				$co = M($this->dbname)->where($map)->count('id');
-			}else{
-				$BeginDate = date("Y-".$i."-01",strtotime("-1 year"));//获取指定月份的第一天
-				$firstDay = strtotime($BeginDate);//指定月的第一天
-				$endDay = strtotime("$BeginDate +1 month -1 day");
-				$map["addtime"] = array(array('egt',$firstDay),array('elt',$endDay));
-				$co = M($this->dbname)->where($map)->count('id');
-			}
-			$count=$count.",".$co;
-		}
-		$title = date("Y",strtotime("-1 year")).'年客户增长趋势';
-		$data = explode(",", substr ($count, 1));
-		$size = 140;
-		$width = 750;
-		$height = 300;
-		$legend = explode(",", substr ($info, 1));
-		ob_end_clean();
-		$chart->createmonthline($title,$data,$size,$height,$width,$legend);
 	}
 
 	public function getlist(){
@@ -192,7 +128,10 @@ class CustconController extends CommonController{
 		$this->_fenxi('fenlei','进展',4);
 	}
 
-	public function getchartdatabyyear(){
+	/**
+	 * 图表：统计最近两年的客户增长数据
+	 */
+	public function getnumforchartbyyear(){
 		$currentYear_customer_sum = array();
 		$lastYear_customer_sum = array();
 		//查询今年的12个月份的值
@@ -230,21 +169,92 @@ class CustconController extends CommonController{
 			$lastYear_customer_sum[$i-1] = intval($co);
 		}
 		$chart_data = array(
-			"title"=>array("text" => "客户年度增长比较","x" => -20),
+			"title"=>array("text" => "最近两年客户增长比较","x" => -20),
 			"xAxis" => array("categories" => array("1","2","3","4","5","6","7","8","9","10","11","12")),
-			"yAxis" => array("title" => "数量",	"plotLines" => array(array("value" => 0,"width" => 1,"color" => "#808080"))),
+			"yAxis" => array("title" => array("text"=>"数量"),	"plotLines" => array(array("value" => 0,"width" => 1,"color" => "#808080"))),
 			"tooltip" => array("valueSuffix" => "人"),
 			"legend" => array("align"  => "left","verticalAlign" => "top","borderWidth" => 0,"y"=> 0,"floating"=>true));
 		$chart_data["series"] = array(
 			array(
-				"name"=>"今年",
+				"name"=>date("Y",time())."年",
 				"data" =>$currentYear_customer_sum
 			),
 			array(
-				"name"=>"去年",
+				"name"=>date("Y",strtotime("-1 year"))."年",
 				"data" =>$lastYear_customer_sum
 			)
 		);
 		echo json_encode($chart_data);
+	}
+
+	/**
+	 * 图表数据：按性别统计月度客户增长数据
+	 */
+	public function getnumforchartbysex(){
+		$customer_count_num = $this->countcustomernumbysex();
+		$chart_data = array(
+			"chart" => array("type"=>"column"),
+			"title"=>array("text" => date("Y",time())."年度客户增长统计","x" => -20),
+			"xAxis" => array("categories" => array("一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"),"crosshair"=>true),
+			"yAxis" => array("title" => array("text"=>"数量"),	"plotLines" => array(array("value" => 0,"width" => 1,"color" => "#808080"))),
+			"tooltip" => array("valueSuffix" => "人"),
+			"legend" => array("align"  => "left","verticalAlign" => "top","borderWidth" => 0,"y"=> 0,"floating"=>true));
+		$chart_data["series"] = array(
+			array(
+				"name"=>"总人数",
+				"data" =>$customer_count_num["customer_total_num"]
+			),
+			array(
+				"name"=>"男性",
+				"data" =>$customer_count_num["customer_sex1_num"]
+			),
+			array(
+				"name"=>"女性",
+				"data" =>$customer_count_num["customer_sex2_num"]
+			),
+			array(
+				"name"=>"未知",
+				"data" =>$customer_count_num["customer_sex0_num"]
+			)
+		);
+		echo json_encode($chart_data);
+	}
+
+	/**
+	 * 按性别统计当年内月度客户增长数量
+	 * @return array
+	 */
+	public function countcustomernumbysex(){
+		$customer_total_num = array();
+		$customer_sex0_num = array();
+		$customer_sex1_num = array();
+		$customer_sex2_num = array();
+		for($i=1;$i<=12;$i++){
+			if($i<10){
+				$BeginDate = date("Y-0".$i."-01");//获取指定月份的第一天
+			}else{
+				$BeginDate = date("Y-".$i."-01");//获取指定月份的第一天
+			}
+			$firstDay = strtotime($BeginDate);//指定月的第一天
+			$endDay = strtotime("$BeginDate +1 month -1 day");
+			$map["addtime"] = array(array('egt',$firstDay),array('elt',$endDay));
+			$map["status"] = 1;//启用的用户
+
+			$map = array("addtime"=>array(array('egt',$firstDay),array('elt',$endDay)),"status"=>1);
+			$map0 = array("addtime"=>array(array('egt',$firstDay),array('elt',$endDay)),"status"=>0);
+			$map1 = array("addtime"=>array(array('egt',$firstDay),array('elt',$endDay)),"status"=>1);
+			$map2 = array("addtime"=>array(array('egt',$firstDay),array('elt',$endDay)),"status"=>2);
+
+			$tmp_total_num = M($this->dbname)->where($map)->count('id');
+			$tmp_sex0_num = M($this->dbname)->where($map0)->count('id');
+			$tmp_sex1_num = M($this->dbname)->where($map1)->count('id');
+			$tmp_sex2_num = M($this->dbname)->where($map2)->count('id');
+
+			$customer_total_num[$i-1] = intval($tmp_total_num);
+			$customer_sex0_num[$i-1] = intval($tmp_sex0_num);
+			$customer_sex1_num[$i-1] = intval($tmp_sex1_num);
+			$customer_sex2_num[$i-1] = intval($tmp_sex2_num);
+		}
+		return array("customer_total_num"=>$customer_total_num,"customer_sex0_num"=>$customer_sex0_num,"customer_sex1_num"=>$customer_sex1_num,"customer_sex2_num"=>$customer_sex2_num);
 	}
 }
