@@ -5,6 +5,7 @@
  */
 
 namespace Home\Logic;
+use Think\Model;
 
 class MessagebaseLogic extends BaseLogic{
 
@@ -76,8 +77,11 @@ class MessagebaseLogic extends BaseLogic{
 	 */
 	public function sendMsgForCustomerNewByAgent($param){
 		//参数检测
-		if(empty($param) || !isset($param["customer_name"]) || !isset($param["agent_openid"]) || !isset($param["agent_name"]) || !isset($param["customer_from"]) || !isset($param["customer_level"])){
-			return $this->callback(false,"sendMsgForSignInByCustomer param valid");
+		if(empty($param) || !isset($param["customer_name"]) || !isset($param["agent_openid"]) || !isset($param["agent_name"]) || !isset($param["agent_child"]) || !isset($param["child_level"])){
+			return $this->callback(false,"sendMsgForCustomerNewByAgent param valid");
+		}
+		if(!isset($param["customer_phone"]) || !isset($param["customer_addtime"])){
+			return $this->callback(false,"sendMsgForCustomerNewByAgent param valid");
 		}
 		//从配置文件中读取消息模板
 		$msg_tpl = $this->getMsgTpl($this->code["customer_new_agent"]);
@@ -85,8 +89,20 @@ class MessagebaseLogic extends BaseLogic{
 			return $this->callback(false,"tpl not found");
 		}
 		//填充数据模板
-		$msg_tpl["touser"] = $param["agent_openid"];
-		$msg_tpl["data"]["keyword1"]["value"] = sprintf($msg_tpl["data"]["keyword1"]["value"],$param["agent_name"]);
+		if(intval($param["child_level"]) == 1){
+			$msg_tpl["touser"] = $param["agent_openid"];
+			$msg_tpl["data"]["first"]["value"] = sprintf($msg_tpl["data"]["first"]["value"],$param["agent_child"]);
+			$msg_tpl["data"]["keyword1"]["value"] = sprintf($msg_tpl["data"]["keyword1"]["value"],$param["customer_name"]);
+			$msg_tpl["data"]["keyword2"]["value"] = sprintf($msg_tpl["data"]["keyword2"]["value"],$param["customer_phone"]);
+			$msg_tpl["data"]["keyword3"]["value"] = sprintf($msg_tpl["data"]["keyword3"]["value"],Date("Y-m-d",$param["customer_addtime"]));
+		}
+		else{
+			$msg_tpl["touser"] = $param["agent_openid"];
+			$msg_tpl["data"]["first"]["value"] = sprintf($msg_tpl["data"]["first"]["value"],$param["agent_name"]);
+			$msg_tpl["data"]["keyword1"]["value"] = sprintf($msg_tpl["data"]["keyword1"]["value"],$param["customer_name"]);
+			$msg_tpl["data"]["keyword2"]["value"] = sprintf($msg_tpl["data"]["keyword2"]["value"],$param["customer_phone"]);
+			$msg_tpl["data"]["keyword3"]["value"] = sprintf($msg_tpl["data"]["keyword3"]["value"],Date("Y-m-d",$param["customer_addtime"]));
+		}
 		//发送模板消息
 		D("wechat","Logic")->sendTemplateMessage($msg_tpl);
 		return $this->callback(true);
@@ -122,7 +138,7 @@ class MessagebaseLogic extends BaseLogic{
 	 */
 	public function sendMsgForSignInByAgent($param){
 		//参数检测
-		if(empty($param) || !isset($param["customer_name"]) || !isset($param["agent_openid"]) || !isset($param["agent_name"]) || !isset($param["customer_from"]) || !isset($param["customer_level"])){
+		if(empty($param) || !isset($param["customer_name"]) || !isset($param["agent_openid"]) || !isset($param["agent_name"]) || !isset($param["agent_child"]) || !isset($param["child_level"])){
 			return $this->callback(false,"sendMsgForSignInByCustomer param valid");
 		}
 		//从配置文件中读取消息模板
@@ -131,8 +147,16 @@ class MessagebaseLogic extends BaseLogic{
 			return $this->callback(false,"tpl not found");
 		}
 		//填充数据模板
-		$msg_tpl["touser"] = $param["agent_openid"];
-		$msg_tpl["data"]["keyword1"]["value"] = sprintf($msg_tpl["data"]["keyword1"]["value"],$param["agent_name"]);
+		if(intval($param["child_level"]) == 1){
+			$msg_tpl["touser"] = $param["agent_openid"];
+			$msg_tpl["data"]["first"]["value"] = sprintf($msg_tpl["data"]["first"]["value"],$param["agent_child"]);
+			$msg_tpl["data"]["keyword1"]["value"] = sprintf($msg_tpl["data"]["keyword1"]["value"],$param["customer_name"]);
+		}
+		else{
+			$msg_tpl["touser"] = $param["agent_openid"];
+			$msg_tpl["data"]["first"]["value"] = sprintf($msg_tpl["data"]["first"]["value"],$param["agent_name"]);
+			$msg_tpl["data"]["keyword1"]["value"] = sprintf($msg_tpl["data"]["keyword1"]["value"],$param["customer_name"]);
+		}
 		//发送模板消息
 		D("wechat","Logic")->sendTemplateMessage($msg_tpl);
 		return $this->callback(true);
@@ -169,7 +193,7 @@ class MessagebaseLogic extends BaseLogic{
 	 * @return array
 	 */
 	public function sendMsgForHtNewByAgent($param){
-		if(empty($param) || !isset($param["customer_name"]) || !isset($param["agent_openid"]) || !isset($param["agent_name"]) || !isset($param["customer_from"]) || !isset($param["customer_level"])){
+		if(empty($param) || !isset($param["customer_name"]) || !isset($param["agent_openid"]) || !isset($param["agent_name"]) || !isset($param["agent_child"]) || !isset($param["child_level"])){
 			return $this->callback(false,"sendMsgForHtNewByAgent param valid");
 		}
 		if(!isset($param["order_bianhao"]) || !isset($param["order_summoney"]) || !isset($param["order_jine"]) || !isset($param["order_yishou"]) || !isset($param["order_weishou"]) || !isset($param["order_addtime"])){
@@ -181,8 +205,18 @@ class MessagebaseLogic extends BaseLogic{
 			return $this->callback(false,"tpl not found");
 		}
 		//填充数据模板
-		$msg_tpl["touser"] = $param["agent_openid"];
-		$msg_tpl["data"]["keyword1"]["value"] = sprintf($msg_tpl["data"]["keyword1"]["value"],$param["agent_name"]);
+		if(intval($param["child_level"]) == 1){
+			$msg_tpl["touser"] = $param["agent_openid"];
+			$msg_tpl["data"]["first"]["value"] = sprintf($msg_tpl["data"]["first"]["value"],$param["agent_child"],$param["customer_name"]);
+			$msg_tpl["data"]["keyword1"]["value"] = sprintf($msg_tpl["data"]["keyword1"]["value"],$param["customer_name"]);
+			$msg_tpl["data"]["remark"]["value"] = sprintf($msg_tpl["data"]["remark"]["value"],$param["order_bianhao"],$param["order_jine"]);
+		}
+		else{
+			$msg_tpl["touser"] = $param["agent_openid"];
+			$msg_tpl["data"]["first"]["value"] = sprintf($msg_tpl["data"]["first"]["value"],$param["agent_name"],$param["customer_name"]);
+			$msg_tpl["data"]["keyword1"]["value"] = sprintf($msg_tpl["data"]["keyword1"]["value"],$param["customer_name"]);
+			$msg_tpl["data"]["remark"]["value"] = sprintf($msg_tpl["data"]["remark"]["value"],$param["order_bianhao"],$param["order_jine"]);
+		}
 		//发送模板消息
 		D("wechat","Logic")->sendTemplateMessage($msg_tpl);
 		return $this->callback(true);
@@ -222,7 +256,7 @@ class MessagebaseLogic extends BaseLogic{
 	 * @return array
 	 */
 	public function sendMsgForPayByAgent($param){
-		if(empty($param) || !isset($param["customer_name"]) || !isset($param["agent_openid"]) || !isset($param["agent_name"]) || !isset($param["customer_from"]) || !isset($param["customer_level"])){
+		if(empty($param) || !isset($param["customer_name"]) || !isset($param["agent_openid"]) || !isset($param["agent_name"]) || !isset($param["agent_child"]) || !isset($param["child_level"])){
 			return $this->callback(false,"sendMsgForPayByAgent param valid");
 		}
 		if(!isset($param["order_bianhao"]) || !isset($param["order_summoney"]) || !isset($param["order_jine"]) || !isset($param["order_yishou"]) || !isset($param["order_weishou"]) || !isset($param["order_addtime"])){
@@ -237,8 +271,20 @@ class MessagebaseLogic extends BaseLogic{
 			return $this->callback(false,"tpl not found");
 		}
 		//填充数据模板
-		$msg_tpl["touser"] = $param["agent_openid"];
-		$msg_tpl["data"]["keyword1"]["value"] = sprintf($msg_tpl["data"]["keyword1"]["value"],$param["agent_name"]);
+		if(intval($param["child_level"]) == 1){
+			$msg_tpl["touser"] = $param["agent_openid"];
+			$msg_tpl["data"]["first"]["value"] = sprintf($msg_tpl["data"]["first"]["value"],$param["agent_child"],$param["customer_name"]);
+			$msg_tpl["data"]["keyword1"]["value"] = sprintf($msg_tpl["data"]["keyword1"]["value"],$param["pay_money"]);
+			$msg_tpl["data"]["keyword2"]["value"] = sprintf($msg_tpl["data"]["keyword2"]["value"],$param["order_bianhao"]);
+			$msg_tpl["data"]["remark"]["value"] = sprintf($msg_tpl["data"]["remark"]["value"],$param["order_jine"],$param["order_yishou"],$param["order_weishou"]);
+		}
+		else{
+			$msg_tpl["touser"] = $param["agent_openid"];
+			$msg_tpl["data"]["first"]["value"] = sprintf($msg_tpl["data"]["first"]["value"],$param["agent_name"],$param["customer_name"]);
+			$msg_tpl["data"]["keyword1"]["value"] = sprintf($msg_tpl["data"]["keyword1"]["value"],$param["pay_money"]);
+			$msg_tpl["data"]["keyword2"]["value"] = sprintf($msg_tpl["data"]["keyword2"]["value"],$param["order_bianhao"]);
+			$msg_tpl["data"]["remark"]["value"] = sprintf($msg_tpl["data"]["remark"]["value"],$param["order_jine"],$param["order_yishou"],$param["order_weishou"]);
+		}
 		//发送模板消息
 		D("wechat","Logic")->sendTemplateMessage($msg_tpl);
 		return $this->callback(true);
@@ -275,7 +321,7 @@ class MessagebaseLogic extends BaseLogic{
 	 * @return array
 	 */
 	public function sendMsgForOverPayByAgent($param){
-		if(empty($param) || !isset($param["customer_name"]) || !isset($param["agent_openid"]) || !isset($param["agent_name"]) || !isset($param["customer_from"]) || !isset($param["customer_level"])){
+		if(empty($param) || !isset($param["customer_name"]) || !isset($param["agent_openid"]) || !isset($param["agent_name"]) || !isset($param["agent_child"]) || !isset($param["child_level"])){
 			return $this->callback(false,"sendMsgForHtNewByAgent param valid");
 		}
 		if(!isset($param["order_bianhao"]) || !isset($param["order_summoney"]) || !isset($param["order_jine"]) || !isset($param["order_yishou"]) || !isset($param["order_weishou"]) || !isset($param["order_addtime"])){
@@ -325,7 +371,7 @@ class MessagebaseLogic extends BaseLogic{
 	 * @return array
 	 */
 	public function sendMsgForOprNewByAgent($param){
-		if(empty($param) || !isset($param["customer_name"]) || !isset($param["agent_openid"]) || !isset($param["agent_name"]) || !isset($param["customer_from"]) || !isset($param["customer_level"])){
+		if(empty($param) || !isset($param["customer_name"]) || !isset($param["agent_openid"]) || !isset($param["agent_name"]) || !isset($param["agent_child"]) || !isset($param["child_level"])){
 			return $this->callback(false,"sendMsgForHtNewByAgent param valid");
 		}
 		if(!isset($param["order_bianhao"]) || !isset($param["order_summoney"]) || !isset($param["order_jine"]) || !isset($param["order_yishou"]) || !isset($param["order_weishou"]) || !isset($param["order_addtime"])){
@@ -337,8 +383,14 @@ class MessagebaseLogic extends BaseLogic{
 			return $this->callback(false,"tpl not found");
 		}
 		//填充数据模板
-		$msg_tpl["touser"] = $param["agent_openid"];
-		$msg_tpl["data"]["keyword1"]["value"] = sprintf($msg_tpl["data"]["keyword1"]["value"],$param["agent_name"]);
+		if(intval($param["child_level"]) == 1){
+			$msg_tpl["touser"] = $param["agent_openid"];
+			$msg_tpl["data"]["keyword1"]["value"] = sprintf($msg_tpl["data"]["keyword1"]["value"],$param["agent_name"],$param["customer_name"]);
+		}
+		else{
+			$msg_tpl["touser"] = $param["agent_openid"];
+			$msg_tpl["data"]["keyword1"]["value"] = sprintf($msg_tpl["data"]["keyword1"]["value"],$param["agent_name"],$param["customer_name"]);
+		}
 		//发送模板消息
 		D("wechat","Logic")->sendTemplateMessage($msg_tpl);
 		return $this->callback(true);

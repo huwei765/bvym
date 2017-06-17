@@ -36,7 +36,11 @@ class OpsrecordController extends CommonController{
   }
 	
    public function _after_add($id){
-    
+       //发送消息
+       $tmp_hid = D("opsrecord","Logic")->getInfoById($id,"jhid");
+       if(!empty($tmp_hid)){
+           D("message","Logic")->sendMsgForOprNew(array("hid"=>$tmp_hid["jhid"]));
+       }
    }
 
   public function _befor_insert($data){

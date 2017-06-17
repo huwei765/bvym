@@ -60,6 +60,8 @@ class HetongController extends CommonController{
 						D("htops","Logic")->addHtOpsInfo($tmp_data);
 					}
 				}
+				//发送消息
+				D("message","Logic")->sendMsgForHtNew(array("hid"=>$id));
 				$skip = array(
 					"url"=>"/index.php?m=Home&c=shou&a=add&navTabId=shou&hid=".$id,
 					"title"=>"新增收款",

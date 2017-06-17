@@ -26,6 +26,8 @@ class ShouLogic extends Model{
 				$jhid = $newData["jhid"];
 				$jine = $newData["jine"];
 				$this->modifyHtJineByShou($jhid,$jine);
+				//发送支付消息
+				D("message","Logic")->sendMsgForPay(array("hid"=>$newData["jhid"],"pay_money"=>$newData["jine"]));
 			}
 		}
 		return $result;

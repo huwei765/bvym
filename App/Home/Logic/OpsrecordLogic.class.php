@@ -6,6 +6,16 @@ use Think\Model;
 class OpsrecordLogic extends Model{
 
 	/**
+	 * 根据id查询基本手术信息
+	 * @param $id
+	 * @param string $filed
+	 * @return mixed
+	 */
+	public function getInfoById($id,$filed = "*"){
+		return $this->getInfo(array("id"=>$id),$filed);
+	}
+
+	/**
 	 * 根据合同ID获取手术记录
 	 * @param $hid
 	 * @param string $field
@@ -25,6 +35,16 @@ class OpsrecordLogic extends Model{
 	 */
 	public function getListByCUid($cuid,$order="id desc",$field="*"){
 		return $this->getList(array("cuid"=>$cuid),$order,$field);
+	}
+
+	/**
+	 * 查询基本信息
+	 * @param $condition
+	 * @param $field
+	 * @return mixed
+	 */
+	public function getInfo($condition,$field = "*"){
+		return M("opsrecord")->field($field)->where($condition)->find();
 	}
 
 	/**

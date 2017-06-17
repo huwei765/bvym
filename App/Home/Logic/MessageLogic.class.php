@@ -5,6 +5,7 @@
  */
 
 namespace Home\Logic;
+use Think\Model;
 
 class MessageLogic extends MessagebaseLogic{
 
@@ -94,6 +95,8 @@ class MessageLogic extends MessagebaseLogic{
 				$param1["customer_openid"] = $customer_wxinfo["openid"];
 				$param1["customer_name"] = $customer_info["xingming"];
 				$param1["customer_id"] = $customer_info["id"];
+				$param1["customer_phone"] = $customer_info["phone"];
+				$param1["customer_addtime"] = $customer_info["addtime"];
 				$_api = $this->getFunNameByApiKey($api_key);
 				//给客户发送签到消息
 				$this->$_api($param1);
@@ -104,6 +107,8 @@ class MessageLogic extends MessagebaseLogic{
 			$param2["jcid"] = $customer_info["jcid"];
 			$param2["customer_name"] = $customer_info["xingming"];
 			$param2["customer_id"] = $customer_info["id"];
+			$param2["customer_phone"] = $customer_info["phone"];
+			$param2["customer_addtime"] = $customer_info["addtime"];
 			$param2["agent_child"] = "";
 			$param2["child_level"] = 0;
 			$this->sendMsgByAgent($api_key,$param2);
