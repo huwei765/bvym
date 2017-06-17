@@ -44,7 +44,8 @@ class CustconController extends CommonController{
   }
 	
    public function _after_add($id){
-    
+	   //新增客户后发送消息
+	   D("message","Logic")->sendMsgForCustomerNew(array("customer_id"=>$id));
    }
 
   public function _befor_insert($data){

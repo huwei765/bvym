@@ -9,6 +9,24 @@ namespace Home\Logic;
 class MessageLogic extends MessagebaseLogic{
 
 	/**
+	 * 新增机构时发送的消息
+	 * @param $param
+	 * @return array
+	 */
+	public function sendMsgForAgentNew($param){
+		return $this->sendMsgByAgent("sendMsgForAgentNew",$param);
+	}
+
+	/**
+	 * 新增客户时发送消息
+	 * @param $param
+	 * @return array
+	 */
+	public function sendMsgForCustomerNew($param){
+		return $this->sendMsgByCustomer("sendMsgForCustomerNew",$param);
+	}
+
+	/**
 	 * 增加手术记录后发送消息
 	 * @param $param
 	 * @return array
@@ -86,8 +104,8 @@ class MessageLogic extends MessagebaseLogic{
 			$param2["jcid"] = $customer_info["jcid"];
 			$param2["customer_name"] = $customer_info["xingming"];
 			$param2["customer_id"] = $customer_info["id"];
-			$param2["customer_from"] = "";
-			$param2["customer_level"] = 0;
+			$param2["agent_child"] = "";
+			$param2["child_level"] = 0;
 			$this->sendMsgByAgent($api_key,$param2);
 		}
 		return $this->callback(true);
@@ -101,7 +119,7 @@ class MessageLogic extends MessagebaseLogic{
 	 * @return array
 	 */
 	public function sendMsgByAgent($api_key,$param,$forward=true){
-		if(empty($param) || !isset($param["jcid"]) || !is_numeric($param["jcid"]) || !isset($param["customer_id"])){
+		if(empty($param) || !isset($param["jcid"]) || !is_numeric($param["jcid"])){
 			return $this->callback(true,"sendMsgByAgent param valid");
 		}
 		//查询机构/代理商信息
@@ -121,8 +139,8 @@ class MessageLogic extends MessagebaseLogic{
 		if($forward && is_numeric($agent_info["jcid"]) && intval($agent_info["jcid"]) > 0){
 			$param2 = $param;
 			$param2["jcid"] = $agent_info["jcid"];
-			$param2["customer_from"] = $agent_info["title"];
-			$param2["customer_level"] = 1;
+			$param2["agent_child"] = $agent_info["title"];
+			$param2["child_level"] = 1;
 			$this->sendMsgByAgent($api_key,$param2,false);
 		}
 		return $this->callback(true);

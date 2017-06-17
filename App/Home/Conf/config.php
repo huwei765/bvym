@@ -1,7 +1,7 @@
 <?php
 return array(
 	//'配置项'=>'配置值'
-    'debug' =>  false,
+    'debug' =>  true,
     'wx_msg_data_tpl' => array(
         'ht_new_customer'=> array(
             'touser'=>'%s',

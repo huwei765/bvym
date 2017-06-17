@@ -19,7 +19,69 @@ class MessagebaseLogic extends BaseLogic{
 		"pay_over_agent"=>"wx_msg_data_tpl.sign_in_customer",
 		"opr_new_customer"=>"wx_msg_data_tpl.sign_in_customer",
 		"opr_new_agent"=>"wx_msg_data_tpl.sign_in_customer",
+		"customer_new_customer"=>"wx_msg_data_tpl.sign_in_customer",//新增客户时发给客户自己的消息
+		"customer_new_agent"=>"wx_msg_data_tpl.sign_in_customer",//新增客户时发给代理商的消息
+		"cust_new_agent"=>"wx_msg_data_tpl.sign_in_customer"//新增机构时发给机构的消息
 	);
+
+	/**
+	 * 新增机构时发给机构的消息
+	 * @param $param
+	 * @return array
+	 */
+	public function sendMsgForAgentNewByAgent($param){
+		//参数检测
+		if(empty($param) || !isset($param["agent_openid"]) || !isset($param["agent_name"]) || !isset($param["agent_child"]) || !isset($param["child_level"])){
+			return $this->callback(false,"sendMsgForAgentNewByAgent param valid");
+		}
+		//从配置文件中读取消息模板
+		$msg_tpl = $this->getMsgTpl($this->code["customer_new_agent"]);
+		//填充数据模板
+		$msg_tpl["touser"] = $param["agent_openid"];
+		$msg_tpl["data"]["keyword1"]["value"] = sprintf($msg_tpl["data"]["keyword1"]["value"],$param["agent_name"]);
+		//发送模板消息
+		D("wechat","Logic")->sendTemplateMessage($msg_tpl);
+		return $this->callback(true);
+	}
+
+	/**
+	 * 新增客户时发给客户自己的消息
+	 * @param $param
+	 * @return array
+	 */
+	public function sendMsgForCustomerNewByCustomer($param){
+		if(empty($param) || !isset($param["customer_id"]) || !is_numeric($param["customer_id"]) || intval($param["customer_id"]) <= 0 || !isset($param["customer_openid"]) || !isset($param["customer_name"])){
+			return $this->callback(false,"sendMsgForSignInByCustomer param valid");
+		}
+		//从配置文件中读取消息模板
+		$msg_tpl = $this->getMsgTpl($this->code["customer_new_customer"]);
+		//填充数据模板
+		$msg_tpl["touser"] = $param["customer_openid"];
+		$msg_tpl["data"]["keyword1"]["value"] = sprintf($msg_tpl["data"]["keyword1"]["value"],$param["customer_name"]);
+		//发送模板消息
+		D("wechat","Logic")->sendTemplateMessage($msg_tpl);
+		return $this->callback(true);
+	}
+
+	/**
+	 * 新增客户时发给代理商的消息
+	 * @param $param
+	 * @return array
+	 */
+	public function sendMsgForCustomerNewByAgent($param){
+		//参数检测
+		if(empty($param) || !isset($param["customer_name"]) || !isset($param["agent_openid"]) || !isset($param["agent_name"]) || !isset($param["customer_from"]) || !isset($param["customer_level"])){
+			return $this->callback(false,"sendMsgForSignInByCustomer param valid");
+		}
+		//从配置文件中读取消息模板
+		$msg_tpl = $this->getMsgTpl($this->code["customer_new_agent"]);
+		//填充数据模板
+		$msg_tpl["touser"] = $param["agent_openid"];
+		$msg_tpl["data"]["keyword1"]["value"] = sprintf($msg_tpl["data"]["keyword1"]["value"],$param["agent_name"]);
+		//发送模板消息
+		D("wechat","Logic")->sendTemplateMessage($msg_tpl);
+		return $this->callback(true);
+	}
 
 	/**
 	 * 签到时发给客户的消息

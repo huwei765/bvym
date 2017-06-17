@@ -26,7 +26,7 @@ class SigninController extends CommonController{
 		if(IS_POST){
 			$isTrue = true;
 			$data=I('post.');
-			$isTrue = D("signin","Logic")->signInByUid($data["cuid"],$data["stype"],$data["beizhu"]);
+			$isTrue = D("signin","Logic")->signInByDirect($data["cuid"],$data["stype"],$data["beizhu"]);
 			if($isTrue){
 				$this->mtReturn(200,"新增成功",$_REQUEST['navTabId'],true);
 			}

@@ -50,16 +50,17 @@ class SigninLogic extends Model{
 		}
 		//签到
 		$ret = $this->signInLogicByUid($custcon_data["id"],1,"微信签到");
-		$SignInData = array(
-			"nickname" => $wxUserData["nickname"],
-			"xingming"=> $custcon_data["xingming"],
-			"wxid" => $wxUserData["id"],
-			"openid" => $wxUserData["openid"],
-			"custid" => $custcon_data["jcid"]
-		);
 		if($ret){
-			$this->sendSignInMsg($SignInData);
+			return $this->sendSignInMsg(array("customer_id"=>$custcon_data["id"]));
 		}
+	}
+
+	public function signInByDirect($cuid,$stype = 0,$memo = ""){
+		$ret = $this->signInLogicByUid($cuid,$stype,$memo);
+		if($ret){
+			return $this->sendSignInMsg(array("customer_id"=>$cuid));
+		}
+		return true;
 	}
 
 	/**
@@ -167,17 +168,7 @@ class SigninLogic extends Model{
 	 * @param $signData
 	 */
 	public function sendSignInMsg($signData){
-		if(!empty($signData)){
-			if(isset($signData["custid"])){
-				$this->sendSignMsgToCust($signData);
-			}
-			if(isset($signData["wxid"])){
-				$this->sendSignMsgToWxUser($signData);
-			}
-			if(isset($signData["openid"])){
-				$this->sendSignMsgToSelf($signData);
-			}
-		}
+		return D("message","Logic")->sendMsgForSignIn(array("customer_id"=>$signData["customer_id"]));
 	}
 
 	/**
