@@ -10,18 +10,18 @@ class MessagebaseLogic extends BaseLogic{
 
 	private $code = array(
 		"ht_new_customer"=>"wx_msg_data_tpl.ht_new_customer",//新增订单发给客户的消息模板
-		"ht_new_agent"=>"wx_msg_data_tpl.ht_new_cus",//新增订单发给代理商的消息模板
+		"ht_new_agent"=>"wx_msg_data_tpl.ht_new_agent",//新增订单发给代理商的消息模板
 		"sign_in_customer"=>"wx_msg_data_tpl.sign_in_customer",//签到时发给客户的消息模板
-		"sign_in_agent"=>"wx_msg_data_tpl.sign_in_customer",
-		"pay_customer"=>"wx_msg_data_tpl.sign_in_customer",
-		"pay_agent"=>"wx_msg_data_tpl.sign_in_customer",
-		"pay_over_customer"=>"wx_msg_data_tpl.sign_in_customer",
-		"pay_over_agent"=>"wx_msg_data_tpl.sign_in_customer",
-		"opr_new_customer"=>"wx_msg_data_tpl.sign_in_customer",
-		"opr_new_agent"=>"wx_msg_data_tpl.sign_in_customer",
-		"customer_new_customer"=>"wx_msg_data_tpl.sign_in_customer",//新增客户时发给客户自己的消息
-		"customer_new_agent"=>"wx_msg_data_tpl.sign_in_customer",//新增客户时发给代理商的消息
-		"cust_new_agent"=>"wx_msg_data_tpl.sign_in_customer"//新增机构时发给机构的消息
+		"sign_in_agent"=>"wx_msg_data_tpl.sign_in_agent",
+		"pay_customer"=>"wx_msg_data_tpl.pay_customer",
+		"pay_agent"=>"wx_msg_data_tpl.pay_agent",
+		"pay_over_customer"=>"wx_msg_data_tpl.pay_over_customer",
+		"pay_over_agent"=>"wx_msg_data_tpl.pay_over_agent",
+		"opr_new_customer"=>"wx_msg_data_tpl.opr_new_customer",
+		"opr_new_agent"=>"wx_msg_data_tpl.opr_new_agent",
+		"customer_new_customer"=>"wx_msg_data_tpl.customer_new_customer",//新增客户时发给客户自己的消息
+		"customer_new_agent"=>"wx_msg_data_tpl.customer_new_agent",//新增客户时发给代理商的消息
+		"cust_new_agent"=>"wx_msg_data_tpl.cust_new_agent"//新增机构时发给机构的消息
 	);
 
 	/**
@@ -36,6 +36,9 @@ class MessagebaseLogic extends BaseLogic{
 		}
 		//从配置文件中读取消息模板
 		$msg_tpl = $this->getMsgTpl($this->code["customer_new_agent"]);
+		if(empty($msg_tpl)){
+			return $this->callback(false,"tpl not found");
+		}
 		//填充数据模板
 		$msg_tpl["touser"] = $param["agent_openid"];
 		$msg_tpl["data"]["keyword1"]["value"] = sprintf($msg_tpl["data"]["keyword1"]["value"],$param["agent_name"]);
@@ -55,6 +58,9 @@ class MessagebaseLogic extends BaseLogic{
 		}
 		//从配置文件中读取消息模板
 		$msg_tpl = $this->getMsgTpl($this->code["customer_new_customer"]);
+		if(empty($msg_tpl)){
+			return $this->callback(false,"tpl not found");
+		}
 		//填充数据模板
 		$msg_tpl["touser"] = $param["customer_openid"];
 		$msg_tpl["data"]["keyword1"]["value"] = sprintf($msg_tpl["data"]["keyword1"]["value"],$param["customer_name"]);
@@ -75,6 +81,9 @@ class MessagebaseLogic extends BaseLogic{
 		}
 		//从配置文件中读取消息模板
 		$msg_tpl = $this->getMsgTpl($this->code["customer_new_agent"]);
+		if(empty($msg_tpl)){
+			return $this->callback(false,"tpl not found");
+		}
 		//填充数据模板
 		$msg_tpl["touser"] = $param["agent_openid"];
 		$msg_tpl["data"]["keyword1"]["value"] = sprintf($msg_tpl["data"]["keyword1"]["value"],$param["agent_name"]);
@@ -94,6 +103,9 @@ class MessagebaseLogic extends BaseLogic{
 		}
 		//从配置文件中读取消息模板
 		$msg_tpl = $this->getMsgTpl($this->code["sign_in_customer"]);
+		if(empty($msg_tpl)){
+			return $this->callback(false,"tpl not found");
+		}
 		//填充数据模板
 		$msg_tpl["touser"] = $param["customer_openid"];
 		$msg_tpl["data"]["keyword1"]["value"] = sprintf($msg_tpl["data"]["keyword1"]["value"],$param["customer_name"]);
@@ -115,6 +127,9 @@ class MessagebaseLogic extends BaseLogic{
 		}
 		//从配置文件中读取消息模板
 		$msg_tpl = $this->getMsgTpl($this->code["sign_in_agent"]);
+		if(empty($msg_tpl)){
+			return $this->callback(false,"tpl not found");
+		}
 		//填充数据模板
 		$msg_tpl["touser"] = $param["agent_openid"];
 		$msg_tpl["data"]["keyword1"]["value"] = sprintf($msg_tpl["data"]["keyword1"]["value"],$param["agent_name"]);
@@ -137,6 +152,9 @@ class MessagebaseLogic extends BaseLogic{
 		}
 		//从配置文件中读取消息模板
 		$msg_tpl = $this->getMsgTpl($this->code["ht_new_customer"]);
+		if(empty($msg_tpl)){
+			return $this->callback(false,"tpl not found");
+		}
 		//填充数据模板
 		$msg_tpl["touser"] = $param["customer_openid"];
 		$msg_tpl["data"]["keyword1"]["value"] = sprintf($msg_tpl["data"]["keyword1"]["value"],$param["customer_name"]);
@@ -159,6 +177,9 @@ class MessagebaseLogic extends BaseLogic{
 		}
 		//从配置文件中读取消息模板
 		$msg_tpl = $this->getMsgTpl($this->code["ht_new_agent"]);
+		if(empty($msg_tpl)){
+			return $this->callback(false,"tpl not found");
+		}
 		//填充数据模板
 		$msg_tpl["touser"] = $param["agent_openid"];
 		$msg_tpl["data"]["keyword1"]["value"] = sprintf($msg_tpl["data"]["keyword1"]["value"],$param["agent_name"]);
@@ -184,6 +205,9 @@ class MessagebaseLogic extends BaseLogic{
 		}
 		//从配置文件中读取消息模板
 		$msg_tpl = $this->getMsgTpl($this->code["pay_customer"]);
+		if(empty($msg_tpl)){
+			return $this->callback(false,"tpl not found");
+		}
 		//填充数据模板
 		$msg_tpl["touser"] = $param["customer_openid"];
 		$msg_tpl["data"]["keyword1"]["value"] = sprintf($msg_tpl["data"]["keyword1"]["value"],$param["customer_name"]);
@@ -209,6 +233,9 @@ class MessagebaseLogic extends BaseLogic{
 		}
 		//从配置文件中读取消息模板
 		$msg_tpl = $this->getMsgTpl($this->code["pay_agent"]);
+		if(empty($msg_tpl)){
+			return $this->callback(false,"tpl not found");
+		}
 		//填充数据模板
 		$msg_tpl["touser"] = $param["agent_openid"];
 		$msg_tpl["data"]["keyword1"]["value"] = sprintf($msg_tpl["data"]["keyword1"]["value"],$param["agent_name"]);
@@ -231,6 +258,9 @@ class MessagebaseLogic extends BaseLogic{
 		}
 		//从配置文件中读取消息模板
 		$msg_tpl = $this->getMsgTpl($this->code["pay_over_customer"]);
+		if(empty($msg_tpl)){
+			return $this->callback(false,"tpl not found");
+		}
 		//填充数据模板
 		$msg_tpl["touser"] = $param["customer_openid"];
 		$msg_tpl["data"]["keyword1"]["value"] = sprintf($msg_tpl["data"]["keyword1"]["value"],$param["customer_name"]);
@@ -253,6 +283,9 @@ class MessagebaseLogic extends BaseLogic{
 		}
 		//从配置文件中读取消息模板
 		$msg_tpl = $this->getMsgTpl($this->code["pay_over_agent"]);
+		if(empty($msg_tpl)){
+			return $this->callback(false,"tpl not found");
+		}
 		//填充数据模板
 		$msg_tpl["touser"] = $param["agent_openid"];
 		$msg_tpl["data"]["keyword1"]["value"] = sprintf($msg_tpl["data"]["keyword1"]["value"],$param["agent_name"]);
@@ -275,6 +308,9 @@ class MessagebaseLogic extends BaseLogic{
 		}
 		//从配置文件中读取消息模板
 		$msg_tpl = $this->getMsgTpl($this->code["opr_new_customer"]);
+		if(empty($msg_tpl)){
+			return $this->callback(false,"tpl not found");
+		}
 		//填充数据模板
 		$msg_tpl["touser"] = $param["customer_openid"];
 		$msg_tpl["data"]["keyword1"]["value"] = sprintf($msg_tpl["data"]["keyword1"]["value"],$param["customer_name"]);
@@ -297,6 +333,9 @@ class MessagebaseLogic extends BaseLogic{
 		}
 		//从配置文件中读取消息模板
 		$msg_tpl = $this->getMsgTpl($this->code["opr_new_agent"]);
+		if(empty($msg_tpl)){
+			return $this->callback(false,"tpl not found");
+		}
 		//填充数据模板
 		$msg_tpl["touser"] = $param["agent_openid"];
 		$msg_tpl["data"]["keyword1"]["value"] = sprintf($msg_tpl["data"]["keyword1"]["value"],$param["agent_name"]);

@@ -12,7 +12,7 @@ class SigninModel extends Model{
     
 		// 自动完成规则
 	protected $_auto = array (
-		array('addtime','getUnixTime',1,'function'),
+		array('addtime','getUnixTime',1,'function')
 	);
 
 }
