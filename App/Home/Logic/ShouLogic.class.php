@@ -46,11 +46,11 @@ class ShouLogic extends Model{
 			return 0;
 		}
 		//查询订单收款是否完成
-		if(D("hetong","Logic")->checkShouIsOver($newData["jhid"])){
-			return 0;
+		if(D("hetong","Logic")->checkShouValid($newData["jhid"],$newData["jine"])){
+			return $this->addInfo($newData);
 		}
 		else{
-			return $this->addInfo($newData);
+			return 0;
 		}
 	}
 

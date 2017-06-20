@@ -47,7 +47,7 @@
                   </if>
               </td>
               <td>
-                  <if condition="$v.status EQ 1 ">
+                  <if condition="$v.opstatus EQ 1 ">
                       <span>手术完成</span>
                       <else/>
                       <a href="{:U(MODULE_NAME.'/opsrecord/add',array('navTabId'=>'opsrecord','hid'=>$v['id']))}"  data-toggle="dialog" data-width="800" data-height="600" data-id="dialog-mask-view-ops" data-mask="true" data-on-close="dialogCloseFunForHT">待手术</a>

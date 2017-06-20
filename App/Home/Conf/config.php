@@ -58,7 +58,7 @@ return array(
             'touser'=>'%s',
             'template_id'=>"6QXWf-xJ4fhfMneMOCwzeXDQr51GPhglqDlulzI7W_k",
             'data'=> array(
-                'first'=> array('value'=>'您好，有新会员成为【%s】的客户','color'=>'#173177'),
+                'first'=> array('value'=>'您好，【%s】顾客%s已成功录入碧薇医美管理系统，请及时关注跟进！','color'=>'#173177'),
                 "keyword1"=>array("value"=>'%s',"color"=>"#173177"),//姓名
                 "keyword2"=>array("value"=>'%s'),//手机
                 "keyword3"=>array("value"=>"%s","color"=>"#173177"),//登记时间

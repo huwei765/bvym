@@ -41,7 +41,13 @@
 		   <td>{$v.id}</td>
 <td>{$v.cuname|msubstr=###,0,20}</td>
 <td>{$v.wxuname|msubstr=###,0,20}</td>
-<td>{$v.stype|msubstr=###,0,20}</td>
+<td>
+    <if condition="$v.stype EQ 0 ">
+        人工签到
+    <else/>
+        微信签到
+    </if>
+</td>
 <td>{$v.beizhu|msubstr=###,0,20}</td>
 <td>{$v.addtime|date="Y-m-d H:i",###}</td>
 		   <td <php>echo display(CONTROLLER_NAME.'/edit');</php> >

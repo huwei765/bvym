@@ -40,7 +40,7 @@ class ShouController extends CommonController{
 			if(!isset($data["jine"]) || !is_numeric($data["jine"])){
 				$this->mtReturn(300,"操作失败,金额数据不符合！",$_REQUEST['navTabId'],true);
 			}
-			if(intval($data["jine"]) < 100 || intval($data["jine"]) > 1000000){
+			if(intval($data["jine"]) < 10 || intval($data["jine"]) > 10000000){
 				$this->mtReturn(300,"操作失败,单笔支付额度必须在100到10000000之内！",$_REQUEST['navTabId'],true);
 			}
 			//新增收款记录

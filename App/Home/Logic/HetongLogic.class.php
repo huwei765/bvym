@@ -15,6 +15,32 @@ use Think\Model;
 class HetongLogic extends Model{
 
 	/**
+	 * 检查即将要收的款是否正常
+	 * @param $jhid
+	 * @param $shou
+	 * @return bool
+	 */
+	public function checkShouValid($jhid,$shou){
+		$ret = true;
+		$data = $this->getHetongInfoById($jhid);
+		if(!empty($data)){
+			if(intval($data["status"]) == 1){
+				$ret = false;
+			}
+			else if(intval($data["yishou"]) - intval($data["jine"]) >= 0 || intval($data["weishou"]) <= 0){
+				$ret = false;
+			}
+			else if(intval($data["weishou"]) - intval($shou) < 0 || intval($data["yishou"]) + intval($shou) > intval($data["jine"])){
+				$ret = false;
+			}
+		}
+		else{
+			$ret = false;
+		}
+		return $ret;
+	}
+
+	/**
 	 * 检测合同是否收款完成
 	 * @param $jhid
 	 * @return bool

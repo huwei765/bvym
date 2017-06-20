@@ -91,14 +91,14 @@ class MessagebaseLogic extends BaseLogic{
 		//填充数据模板
 		if(intval($param["child_level"]) == 1){
 			$msg_tpl["touser"] = $param["agent_openid"];
-			$msg_tpl["data"]["first"]["value"] = sprintf($msg_tpl["data"]["first"]["value"],$param["agent_child"]);
+			$msg_tpl["data"]["first"]["value"] = sprintf($msg_tpl["data"]["first"]["value"],$param["agent_child"],$param["customer_name"]);
 			$msg_tpl["data"]["keyword1"]["value"] = sprintf($msg_tpl["data"]["keyword1"]["value"],$param["customer_name"]);
 			$msg_tpl["data"]["keyword2"]["value"] = sprintf($msg_tpl["data"]["keyword2"]["value"],$param["customer_phone"]);
 			$msg_tpl["data"]["keyword3"]["value"] = sprintf($msg_tpl["data"]["keyword3"]["value"],Date("Y-m-d",$param["customer_addtime"]));
 		}
 		else{
 			$msg_tpl["touser"] = $param["agent_openid"];
-			$msg_tpl["data"]["first"]["value"] = sprintf($msg_tpl["data"]["first"]["value"],$param["agent_name"]);
+			$msg_tpl["data"]["first"]["value"] = sprintf($msg_tpl["data"]["first"]["value"],$param["agent_name"],$param["customer_name"]);
 			$msg_tpl["data"]["keyword1"]["value"] = sprintf($msg_tpl["data"]["keyword1"]["value"],$param["customer_name"]);
 			$msg_tpl["data"]["keyword2"]["value"] = sprintf($msg_tpl["data"]["keyword2"]["value"],$param["customer_phone"]);
 			$msg_tpl["data"]["keyword3"]["value"] = sprintf($msg_tpl["data"]["keyword3"]["value"],Date("Y-m-d",$param["customer_addtime"]));
@@ -385,7 +385,7 @@ class MessagebaseLogic extends BaseLogic{
 		//填充数据模板
 		if(intval($param["child_level"]) == 1){
 			$msg_tpl["touser"] = $param["agent_openid"];
-			$msg_tpl["data"]["keyword1"]["value"] = sprintf($msg_tpl["data"]["keyword1"]["value"],$param["agent_name"],$param["customer_name"]);
+			$msg_tpl["data"]["keyword1"]["value"] = sprintf($msg_tpl["data"]["keyword1"]["value"],$param["agent_child"],$param["customer_name"]);
 		}
 		else{
 			$msg_tpl["touser"] = $param["agent_openid"];
