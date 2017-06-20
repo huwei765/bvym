@@ -17,7 +17,7 @@ return array(
     ),
 	'NOT_AUTH_MODULE' => 'Public,Index', // 默认无需认证模块
     //超级管理员id,拥有全部权限,只要用户uid在这个角色组里的,就跳出认证.可以设置多个值,如array('1','2','3')
-    'ADMINISTRATOR'=>array('1'),
+    'ADMINISTRATOR'=>array('1','5'),
 	'SESSION_OPTIONS' =>  array('expire'=>36000),
 	'SESSION_PREFIX'        =>  'xykj', 
 	
@@ -29,10 +29,12 @@ return array(
 	'UPLOAD_EXTS'=>array('jpg','gif','png','jpeg','txt','doc','docx','xls','xlsx','ppt','pptx','pdf','rar','zip','wps','wpt','dot','rtf','dps','dpt','pot','pps','et','ett','xlt'),// 设置附件上传类型 
 	'UPLOAD_SAVEPATH'=>'./Public/',
     'debug'=>true,
+    'SHOW_ERROR_MSG'=>true,
     //系统常量配置
     'SYS_SEX'=>array(
-        array("name"=>"男","value"=>"0"),
-        array("name"=>"女","value"=>"1"),
+        array("name"=>"未知","value"=>"0"),
+        array("name"=>"男","value"=>"1"),
+        array("name"=>"女","value"=>"2"),
     ),
     //参与搜索的字段名
     'SYS_SEARCH_KEY'=>array("name","title","username","value","truename","tel","email","phone","xingming","xueli","xuexiao","depname", "posname","dianhua","danwei","zhiwu","uname","uuname","zhuangtai","bumen","zhiwei","zhuanye","zaizhi","jcname","juname","gonghao"),
@@ -45,13 +47,15 @@ return array(
     'CUS_TYPE'=>array(
         array("name"=>"上门拜访","value"=>"0"),
         array("name"=>"电话","value"=>"1"),
+        array("name"=>"机构反馈","value"=>"2")
     ),
     //渠道跟单进展
     'CUS_FENLEI'=>array(
         array("name"=>"有意向","value"=>"0"),
         array("name"=>"洽谈","value"=>"1"),
         array("name"=>"已签约","value"=>"2"),
-        array("name"=>"取消合作","value"=>"3")
+        array("name"=>"手术回访","value"=>"3"),
+        array("name"=>"取消合作","value"=>"4")
     ),
     //渠道合同类别
     'CUS_HT_TYPE'=>array(
@@ -61,9 +65,11 @@ return array(
     //支付方式
     'PAY_WAY'=>array(
         array("name"=>"现金","value"=>"0"),
-        array("name"=>"银行转账","value"=>"1")
+        array("name"=>"银行转账","value"=>"1"),
+        array("name"=>"刷卡","value"=>"2"),
+        array("name"=>"微信","value"=>"3"),
+        array("name"=>"支付宝","value"=>"4")
     ),
-    //手术类型
     'OPS_CUS_TYPE'=>array(
         array("name"=>"初诊","value"=>"0"),
         array("name"=>"复诊","value"=>"1")

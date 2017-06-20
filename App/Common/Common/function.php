@@ -324,6 +324,9 @@ function getCustFenlei($fenlei){
             $fenlei_name = iconv('GB2312', 'UTF-8', "已签约");
             break;
         case "3":
+            $fenlei_name = iconv('GB2312', 'UTF-8', "手术回访");
+            break;
+        case "4":
             $fenlei_name = iconv('GB2312', 'UTF-8', "取消合作");
             break;
     }
@@ -362,6 +365,9 @@ function getCustType($type){
         case "1":
             $type_name = iconv('GB2312', 'UTF-8', "电话");
             break;
+        case "2":
+            $type_name = iconv('GB2312', 'UTF-8', "机构反馈");
+            break;
     }
     return $type_name;
 }
@@ -397,6 +403,15 @@ function getPayWay($type){
             break;
         case "1":
             $type_name = iconv('GB2312', 'UTF-8', "银行转账");
+            break;
+        case "2":
+            $type_name = iconv('GB2312', 'UTF-8', "刷卡");
+            break;
+        case "3":
+            $type_name = iconv('GB2312', 'UTF-8', "微信");
+            break;
+        case "4":
+            $type_name = iconv('GB2312', 'UTF-8', "支付宝");
             break;
     }
     return $type_name;
