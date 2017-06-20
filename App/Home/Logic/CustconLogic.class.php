@@ -15,6 +15,28 @@ use Think\Model;
 class CustconLogic extends Model{
 
 	/**
+	 * 查询美容院的顾客及下级代理商的顾客
+	 * @param $jcid
+	 * @param string $field
+	 * @param string $order
+	 * @return mixed
+	 */
+	public function getListForAgentByJCid($jcid,$field="*",$order="id desc"){
+		$condition["jcid"] = array(array("EQ",$jcid));
+		//查询上级
+		$custList = D("cust","Logic")->getListByCustId($jcid,"id");
+		if(!empty($custList)){
+			foreach ($custList as $val) {
+				if(isset($val["id"]) && is_numeric($val["id"])){
+					array_push($condition["jcid"],array("EQ",$val["id"]));
+				}
+			}
+			array_push($condition["jcid"],"or");
+		}
+		return $this->getList($condition,$field,$order);
+	}
+
+	/**
 	 * 根据机构ID查询客户列表
 	 * @param $jcid
 	 * @param string $field

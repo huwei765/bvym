@@ -13,9 +13,10 @@
             <th data-order-direction='desc' data-order-field='sex'>性别</th>
             <th>手机号码</th>
             <th>微信昵称</th>
-<th data-order-direction='desc' data-order-field='addtime'>添加时间</th>
-		    <th <php>echo display(CONTROLLER_NAME.'/del');</php> >状态</th>
-		    <th <php>echo display(CONTROLLER_NAME.'/edit');</php> >编辑</th>
+            <th>机构</th>
+            <th>添加时间</th>
+		    <th>状态</th>
+		    <th>编辑</th>
             </tr>
         </thead>
         <tbody>
@@ -26,6 +27,7 @@
 <td>{$v.sex|getSex=###}</td>
 <td>{$v.phone|msubstr=###,0,20}</td>
 <td>{$v.nickname|msubstr=###,0,20}</td>
+<td>{$v.jcname|msubstr=###,0,20}</td>
 <td>{$v.addtime|date="Y-m-d H:i",###}</td>
 		   <td <php>echo display(CONTROLLER_NAME.'/del');</php> ><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/del',array('id'=>$v['id'],'navTabId'=>CONTROLLER_NAME))}" data-toggle="doajax" data-confirm-msg="确定要操作吗？"><if condition="$v.status EQ 1 "><img src="__PUBLIC__/images/ok.gif" border="0"/><else/><img src="__PUBLIC__/images/locked.gif" border="0"/></if></a></td>
 		   <td <php>echo display(CONTROLLER_NAME.'/edit');</php> >

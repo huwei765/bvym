@@ -1,5 +1,5 @@
 <div class="bjui-pageContent">
-    <form action="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/add',array('navTabId'=>CONTROLLER_NAME))}" class="pageForm" data-toggle="validate">
+    <form action="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/add',array('navTabId'=>I('navTabId')))}" class="pageForm" data-toggle="validate">
 		<input type="hidden" name="id" value="{$id}">
         <div class="pageFormContent" data-layout-h="0">
           <table class="table table-condensed tableNoRow" width="100%">

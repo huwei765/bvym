@@ -119,7 +119,7 @@ class CustconController extends CommonController{
 		$jcid = I("get.jcid");
 		if(isset($jcid) && is_numeric($jcid) && intval($jcid) > 0){
 			//根据$jcid查询
-			$list = D("custcon","Logic")->getListByJCid($jcid);
+			$list = D("custcon","Logic")->getListForAgentByJCid($jcid);
 			$this->assign('list',$list);
 		}
 		$this->display("list");
