@@ -28,6 +28,20 @@ class CusprofitController extends CommonController{
 	
    public function _befor_index(){
    }
+
+	public function add(){
+		if(IS_POST){
+			//判断时间是否到了晚上12点
+			$BeginTime = strtotime(date("Y-m-d 23:01:00"));//获取指定月份的第一天
+			$endTime = $BeginTime + 1 * 60 * 60;
+			$curTime = time();
+			if($curTime > $endTime || $curTime < $BeginTime){
+				$this->mtReturn(200,'xx',$_REQUEST['navTabId'],true);
+			}
+			//开始自动生成提成明细
+		}
+		$this->display();
+	}
   
   
   public function _befor_add(){
@@ -89,6 +103,7 @@ class CusprofitController extends CommonController{
 	    $filename='跟单记录';
 		$this->xlsout($filename,$headArr,$list);
 	}
+
 
 	/**
 	 * 待审核的提成
