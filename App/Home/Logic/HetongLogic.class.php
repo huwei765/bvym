@@ -117,11 +117,6 @@ class HetongLogic extends Model{
 		if(empty($custcon_info)){
 			return false;
 		}
-		$HetongModel = M("hetong");
-		//开启事务处理
-		$HetongModel->startTrans();
-		//改变收款合同状态
-		$ret1 = $HetongModel->where("id=".$jhid)->save(array("status"=>1));
 		//增加机构推广提成
 		$tmpdata["jhid"] = $data["id"];//合同id
 		$tmpdata["jhname"] = $data["title"];//合同名称
@@ -136,26 +131,7 @@ class HetongLogic extends Model{
 		$tmpdata["jcname"] = $custcon_info["jcname"];//机构名称
 		$tmpdata["level"] = $custcon_info["level"];//机构推广层级
 
-		//计算利润提成
-		$cusProfit_Logic = D("cusprofit","Logic");
-		$cusProfit_data = $cusProfit_Logic->calculateProfitBySpread($tmpdata["level"],$tmpdata["profit"]);
-		$tmpdata["commission"] = $cusProfit_data["profit"];//提成额度
-		$tmpdata["rate"] = $cusProfit_data["rate"];//提成比例
-		$tmpdata["beizhu"] = $cusProfit_data["formula"];//提成说明
-		//新增推广提成记录
-		$ret2 = $cusProfit_Logic->addProfit($tmpdata);
-
-		//增加微信用户推广提成
-		//
-
-		if($ret1 && $ret2){
-			$HetongModel->commit();
-			return true;
-		}
-		else{
-			$HetongModel->rollback();
-			return false;
-		}
+		return D("cusprofit","Logic")->doOrderProfit($tmpdata);
 	}
 
 	/**
