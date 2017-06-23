@@ -23,7 +23,7 @@ class CusprofitModel extends Model{
 	    array('status',0,1), // 对status字段在新增的时候赋值0
 	    array('addtime','getUnixTime',1,'function'),
 		array('uuid','getuserid',2,'function'),
-        array('uuname','gettruename',2,'function'), 		
+        array('uuname','gettruename',2,'function'),
 	    array('updatetime','getUnixTime',2,'function'),
 	);
 

@@ -450,12 +450,13 @@ Class CommonController extends Controller{
 //				array('name' => '合同管理','id' => 23, 'act'=>'jght', 'op'=>'index'),
 //				array('name' => '推广客户','id' => 24, 'act'=>'cus_invite', 'op'=>'index'),
 				array('name' => '推广提成','id' => 25, 'act'=>'cus_profit', 'op'=>'index','child' => array(
-					array('name' => '待审核','id' => 251, 'act'=>'cusprofit', 'op'=>'index'),
-					array('name' => '未付款','id' => 252, 'act'=>'cusprofit', 'op'=>'no_pay'),
-					array('name' => '已完成','id' => 253, 'act'=>'cusprofit', 'op'=>'over'),
-					array('name' => '未通过','id' => 254, 'act'=>'cusprofit', 'op'=>'fail')
+					array('name' => '待审核','id' => 251, 'act'=>'cusprofit', 'op'=>'no_verify'),
+					array('name' => '待确认','id' => 252, 'act'=>'cusprofit', 'op'=>'no_confirm'),
+					array('name' => '待付款','id' => 253, 'act'=>'cusprofit', 'op'=>'no_pay'),
+					array('name' => '已完成','id' => 254, 'act'=>'cusprofit', 'op'=>'over'),
+					array('name' => '未通过','id' => 255, 'act'=>'cusprofit', 'op'=>'fail')
 				)),
-				array('name' => '返现记录','id' => 26, 'act'=>'cus_fan', 'op'=>'index'),
+				array('name' => '返现记录','id' => 26, 'act'=>'fu', 'op'=>'index'),
 //				array('name' => '提成设置','id' => 27, 'act'=>'cus_set', 'op'=>'index'),
 				array('name' => '统计分析','id' => 28, 'act'=>'cus_analyse', 'op'=>'index','child' => array(
 					array('name' => '机构分析','id' => 281, 'act'=>'cust', 'op'=>'fenxi')

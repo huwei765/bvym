@@ -24,10 +24,7 @@ class FuModel extends Model{
 	    array('status',1,1), // 对status字段在新增的时候赋值0
 		array('uid','getuserid',1,'function'),
         array('uname','gettruename',1,'function'), 		
-	    array('addtime','gettime',1,'function'), 
-		array('uuid','getuserid',2,'function'),
-        array('uuname','gettruename',2,'function'), 		
-	    array('updatetime','gettime',2,'function'), 
+	    array('addtime','getUnixTime',1,'function')
 	);
 
 }

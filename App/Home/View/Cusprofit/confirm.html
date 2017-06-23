@@ -1,0 +1,122 @@
+<div class="bjui-pageContent">
+    <form action="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/confirm',array('navTabId'=>CONTROLLER_NAME))}" class="pageForm" data-toggle="validate">
+        <input type="hidden" name="id" value="{$id}">
+        <div class="pageFormContent" data-layout-h="0">
+            <table style="width:100%;" class="table table-condensed tableNoRow">
+                <tbody>
+                <tr>
+                    <td colspan="3">
+                        <h4 class="text-center">订单佣金确认</h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for='jhname_input' class='control-label x85'>机构:</label><input type='text' id='jcname' name='jcname'  size='16'   value='{$ht_rs.jcname}'></td>
+                    <td><label for='jhname_input' class='control-label x85'>经办人:</label><input type='text' id='juname' name='juname'  size='16' data-toggle='lookup' data-url='{:U(MODULE_NAME."/public/user",array("navTabId"=>CONTROLLER_NAME))}'  readonly>
+                        <input type="hidden" name="juid" id="juid" >
+                    </td>
+                    <td colspan="2"><label for='status_input' class='control-label x85'>确认:</label>
+                        <input type='checkbox'  name='status' id="status" data-toggle='icheck'  data-label='我已确认并通过' value='2' checked>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3"><label for='value_input' class='control-label x85'>备注:</label><textarea name='content'  cols='67' rows='2' >{$Rs.content}</textarea></td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for='jhname_input' class='control-label x85'>订单编号:</label><input type='text' id='jhname' name='jhname'  size='16'   value='{$ht_rs.jhcode}' readonly>
+                        <input type="hidden" name="jhid" id="jhid" value="{$ht_rs.id}">
+                    </td>
+                    <td colspan="2"><label for='jhname_input' class='control-label x85'>客户姓名:</label><input type='text' id='cuname' name='cuname'  size='16'   value='{$ht_rs.cuname}' readonly>
+                        <input type="hidden" id="cuid" name="cuid" value="{$ht_rs.cuid}">
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for='jhname_input' class='control-label x85'>成交金额:</label></label><input type='text' id='order_jine' name='order_jine'  size='16'   value='{$ht_rs.jine}' readonly></td>
+                    <td><label for='jhname_input' class='control-label x85'>佣金比率:</label></label><input type='text' id='order_rate' name='order_jine'  size='16'   value='{$ht_rs.rate}' readonly></td>
+                    <td><label for='jhname_input' class='control-label x85'>佣金金额:</label><input type='text' id='order_commission' name='order_commission'  size='16'   value='{$ht_rs.commission}' readonly></td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <div class="datagrid-box-b" style="">
+                            <div class="datagrid-wrap-b" style="height: 100px;">
+                                <table class="table table-bordered table-striped table-top" data-toggle="tablefixed" data-nowrap="true">
+                                    <thead>
+                                    <tr>
+                                        <th>编号</th>
+                                        <th>项目名称</th>
+                                        <th>类型</th>
+                                        <th>数量</th>
+                                        <th>单价</th>
+                                        <th>总价</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <volist id="v" name="ops_list" key="k">
+                                        <tr data-id="{$v.id}">
+                                            <td>{$k}</td>
+                                            <td>{$v.oname}</td>
+                                            <td>{$v.ocname}</td>
+                                            <td>{$v.num}</td>
+                                            <td>{$v.price}</td>
+                                            <td>{$v.money}</td>
+                                        </tr>
+                                    </volist>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="bjui-footBar">
+            <ul>
+                <li><button type="button" class="btn-close" data-icon="close">取消</button></li>
+                <li><button type="submit" class="btn-default" data-icon="save">保存</button></li>
+            </ul>
+        </div>
+    </form>
+</div>
+<style type="text/css">
+    table.tableNoRow{width: 100%;}
+    .tableNoRow > tbody > tr td{
+        border:0 none;
+        width: 25%;
+        padding: 6px 3px;
+    }
+    .tableNoRow .form-control{
+        background-color: #f8f6fa;
+        background-image: none;
+        border-width: 0 0 1px 0;
+        border-bottom: 1px solid #cccccc;
+        border-radius: 0px;
+        box-shadow: 0 0 0px rgba(0, 0, 0, 0.075) inset;
+        color: #0f4c0f;
+        width:100px;
+        font-size: 12px;
+    }
+    div.datagrid-box-b{
+        position:relative;padding: 10px 20px;height: 150px;;
+    }
+    div.datagrid-wrap-b{
+        position:relative;overflow:auto;height: 140px;background: no-repeat 0 0 scroll #ffffff;border:1px solid #cccccc;
+    }
+    .bjui-dialog > .dialogContent .bjui-pageContent{
+        background: #f8f6fa none repeat scroll 0 0;
+    }
+    .table > thead > tr > th{
+        background: #eae7ef none repeat scroll 0 0;
+    }
+    .table-striped > tbody > tr:nth-child(2n) > td, .table-striped > tbody > tr:nth-child(2n) > th{
+        background-color: #ffffff;
+    }
+    .tableNoRow .tableSum{
+        background: no-repeat 0 0 scroll #f8f6fa;
+        margin-top: 20px;
+    }
+    .tableNoRow textarea.form-control{
+        background: no-repeat 0 0 scroll #fff;
+        border-width:1px;
+    }
+</style>

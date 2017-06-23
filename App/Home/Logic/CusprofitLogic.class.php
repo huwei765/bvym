@@ -15,9 +15,10 @@ use Think\Model;
 class CusprofitLogic extends Model{
 
 	const STATE0 = 0;       // 待审核
-	const STATE1 = 1;       // 审核通过未付款
-	const STATE2 = 2;       // 已完成
-	const STATE3 = 3;       // 审核不通过
+	const STATE1 = 1;       // 待确认
+	const STATE2 = 2;       // 待付款
+	const STATE3 = 3;       // 已完成
+	const STATE4 = 4;       // 不通过
 
 	/**
 	 * 计算利润提成的明细
@@ -50,7 +51,7 @@ class CusprofitLogic extends Model{
 		//计算佣金
 		$tmpData["commission"] = floatval(intval($tmpData["profit"]) * intval($tmpData["rate"]) / 100);
 		//保存数据
-		$cusprofit_model = M("cusprofit");
+		$cusprofit_model = D("cusprofit");
 		$cusprofit_model->startTrans();
 		try{
 			if($cusprofit_model->create($tmpData)){
@@ -166,23 +167,87 @@ class CusprofitLogic extends Model{
 	 * @return mixed
 	 */
 	public function GetProfitList($condition, $field = '*', $group = '',$order = '', $limit = 0, $page = 0, $lock = false, $count = 0){
-		return M('cusprofit')->field($field)->where($condition)->group($group)->order($order)->limit($limit)->page($page, $count)->lock($lock)->select();
+		return M('cusprofit')->field($field)->where($condition)->order($order)->select();
 	}
 	public function GetNoVerifyProfitList($field = '*', $group = '',$order = '', $limit = 0, $page = 0, $lock = false, $count = 0){
-		$condition["status"] = STATE0;
+		$condition["status"] = 0;
 		return $this->GetProfitList($condition, $field, $group,$order, $limit, $page, $lock, $count);
 	}
+	public function GetNoConfirmProfitList($field = '*', $group = '',$order = '', $limit = 0, $page = 0, $lock = false, $count = 0){
+		$condition["status"] = 1;
+		return $this->GetProfitList($condition, $field, $group,$order, $limit, $page, $lock, $count);
+	}
+
 	public function GetNoPayProfitList($field = '*', $group = '',$order = '', $limit = 0, $page = 0, $lock = false, $count = 0){
-		$condition["status"] = STATE1;
+		$condition["status"] = 2;
 		return $this->GetProfitList($condition, $field, $group,$order, $limit, $page, $lock, $count);
 	}
 	public function GetOverProfitList($field = '*', $group = '',$order = '', $limit = 0, $page = 0, $lock = false, $count = 0){
-		$condition["status"] = STATE2;
+		$condition["status"] = 3;
 		return $this->GetProfitList($condition, $field, $group,$order, $limit, $page, $lock, $count);
 	}
 	public function GetFailProfitList($field = '*', $group = '',$order = '', $limit = 0, $page = 0, $lock = false, $count = 0){
-		$condition["status"] = STATE3;
+		$condition["status"] = 4;
 		return $this->GetProfitList($condition, $field, $group,$order, $limit, $page, $lock, $count);
+	}
+
+	/**
+	 * 设置佣金付款完成
+	 * @param $id
+	 * @return bool
+	 */
+	public function setStatusToOver($id){
+		return $this->updateStatusById($id,3);
+	}
+
+	/**
+	 * 根据ID更新状态
+	 * @param $id
+	 * @param int $status
+	 * @return bool
+	 */
+	public function updateStatusById($id,$status = 0){
+		return $this->updateInfo(array("id"=>$id),array("status"=>$status));
+	}
+
+	/**
+	 * 更新用户信息
+	 * @param $condition
+	 * @param $data
+	 * @return bool
+	 */
+	public function updateInfo($condition,$data){
+		return M("cusprofit")->where($condition)->save($data);
+	}
+
+	/**
+	 * 获取待付款的记录信息
+	 * @param $id
+	 * @param $field
+	 * @return mixed
+	 */
+	public function getNoPayInfoById($id,$field){
+		return $this->getInfo(array("id"=>$id,"status"=>2),$field);
+	}
+
+	/**
+	 * 通过ID查询基本信息
+	 * @param $id
+	 * @param $field
+	 * @return mixed
+	 */
+	public function getInfoById($id,$field){
+		return $this->getInfo(array("id"=>$id),$field);
+	}
+
+	/**
+	 * 读取基本信息
+	 * @param $condition
+	 * @param string $field
+	 * @return mixed
+	 */
+	public function getInfo($condition,$field="*"){
+		return M("cusprofit")->field($field)->where($condition)->find();
 	}
 
 }

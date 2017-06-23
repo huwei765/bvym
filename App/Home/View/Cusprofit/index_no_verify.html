@@ -11,7 +11,7 @@
               <a class="btn btn-orange" href="javascript:;" onclick="$(this).navtab('reloadForm', true);" data-icon="undo">清空查询</a>
 			  <span <php>echo display(CONTROLLER_NAME.'/del');</php> style="float:right;" ><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/del',array('navTabId'=>CONTROLLER_NAME))}" class="btn btn-red" data-toggle="doajax" data-confirm-msg="确定要清理吗？" data-icon="remove">清理</a></span>
 			  <span <php>echo display(CONTROLLER_NAME.'/outxls');</php> style="float:right;margin-right:20px;"><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/outxls')}" class="btn btn-blue" data-toggle="doexport" data-confirm-msg="确定要导出吗？" data-icon="arrow-up">导出</a></span>
-			  <span <php>echo display(CONTROLLER_NAME.'/add');</php> style="float:right;margin-right:20px;"><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/add',array('navTabId'=>CONTROLLER_NAME))}" class="btn btn-green" data-toggle="dialog" data-width="900" data-height="500" data-id="dialog-mask" data-mask="true" data-icon="plus">今日出账</a></span>
+			  <span <php>echo display(CONTROLLER_NAME.'/add');</php> style="float:right;margin-right:20px;"><a href="javascript:;" class="btn btn-green" data-icon="plus">审核通过</a></span>
 		</div> 
 </form>
     
@@ -22,17 +22,16 @@
             <tr>
             <th width="10" height="30"></th>
             <th data-order-direction='desc' data-order-field='id'>ID</th>
+                <th>订单编号</th>
+                <th>合同金额</th>
+                <th>利润基数</th>
+                <th>佣金比例</th>
+                <th>佣金金额</th>
+                <th>客户名称</th>
                 <th>机构名称</th>
-                <th>合同名称</th>
-                <th>合同编号</th>
-                <th>提成金额</th>
-                <th>备注</th>
                 <th>经办人</th>
                 <th data-order-direction='desc' data-order-field='addtime'>生成时间</th>
-                <th data-order-direction='desc' data-order-field='updatetime'>更新时间</th>
-                <th>详细</th>
-                <th <php>echo display(CONTROLLER_NAME.'/del');</php> >状态</th>
-                <th <php>echo display(CONTROLLER_NAME.'/edit');</php> >编辑</th>
+                <th>状态</th>
             </tr>
         </thead>
         <tbody>
@@ -41,21 +40,18 @@
           <tr>
 		   <td></td>
 		   <td>{$v.id}</td>
-<td>{$v.jcname|msubstr=###,0,20}</td>
-<td>{$v.jhname|msubstr=###,0,20}</td>
-<td>{$v.jhcode}</td>
-<td>{$v.commission}</td>
-<td>{$v.beizhu|msubstr=###,0,50}</td>
-<td>{$v.juname}</td>
-<td>{$v.addtime|date="Y-m-d H:i",###}</td>
-<td>{$v.updatetime|date="Y-m-d H:i",###}</td>
-
-		   <td><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/view',array('id'=>$v['id'],'navTabId'=>CONTROLLER_NAME))}"  data-toggle="dialog" data-width="900" data-height="500" data-id="dialog-mask" data-mask="true" >详细</a></td>
-		   <td <php>echo display(CONTROLLER_NAME.'/del');</php> ><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/del',array('id'=>$v['id'],'navTabId'=>CONTROLLER_NAME))}" data-toggle="doajax" data-confirm-msg="确定要操作吗？"><if condition="$v.status EQ 1 "><img src="__PUBLIC__/images/ok.gif" border="0"/><else/><img src="__PUBLIC__/images/locked.gif" border="0"/></if></a></td>
-		   <td <php>echo display(CONTROLLER_NAME.'/edit');</php> >
-		   <a href="__MODULE__/custgd/add/cid/{$v['id']}/navTabId/{:CONTROLLER_NAME}"   class="btn btn-green btn-sm" data-toggle="dialog" data-width="900" data-height="500" data-id="dialog-mask" data-mask="true">进展</a>
-		   <a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/edit',array('id'=>$v['id'],'navTabId'=>CONTROLLER_NAME))}"   class="btn btn-green btn-sm" data-toggle="dialog" data-width="900" data-height="500" data-id="dialog-mask" data-mask="true" >编辑</a>
-		   </td>
+              <td>{$v.jhcode}</td>
+              <td>{$v.jine}</td>
+              <td>{$v.profit}</td>
+              <td>{$v.rate}%</td>
+              <td>{$v.commission}</td>
+              <td>{$v.cuname}</td>
+              <td>{$v.jcname}</td>
+              <td>{$v.juname}</td>
+              <td>{$v.addtime|date="Y-m-d H:i",###}</td>
+              <td>
+                  <a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/verify',array('id'=>$v['id'],'navTabId'=>CONTROLLER_NAME))}"   class="btn btn-green btn-sm" data-toggle="dialog" data-width="900" data-height="500" data-id="dialog-mask" data-mask="true" >待审核</a>
+              </td>
 		   </td>
          </tr> 
           </volist>
