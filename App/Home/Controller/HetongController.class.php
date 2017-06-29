@@ -62,6 +62,9 @@ class HetongController extends CommonController{
 				}
 				//发送消息
 				D("message","Logic")->sendMsgForHtNew(array("hid"=>$id));
+				//订单生成时，生成提成信息
+				D("hetong","Logic")->afterOrderAdd($id);
+				//返回
 				$skip = array(
 					"url"=>"/index.php?m=Home&c=shou&a=add&navTabId=shou&hid=".$id,
 					"title"=>"新增收款",
@@ -247,6 +250,33 @@ class HetongController extends CommonController{
 	
 	public function fenxi(){
 	 $this->display();
+	}
+
+	/**
+	 * 查询提成待审核订单
+	 */
+	public function fu_index(){
+		$list = D("hetong","Logic")->getListByFuStatusForNoVerify();
+		$this->assign('list',$list);
+		$this->display("index_no_verify");
+	}
+
+	/**
+	 * 查询待支付提成订单
+	 */
+	public function fu_no_pay(){
+		$list = D("hetong","Logic")->getListByFuStatusForNoPay();
+		$this->assign('list',$list);
+		$this->display("index_no_pay");
+	}
+
+	/**
+	 * 查询提成结束的订单
+	 */
+	public function fu_over(){
+		$list = D("hetong","Logic")->getListByFuStatusForOver();
+		$this->assign('list',$list);
+		$this->display("index_over");
 	}
 
 	/**

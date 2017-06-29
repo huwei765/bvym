@@ -446,7 +446,7 @@ Class CommonController extends Controller{
 			)),
 			'cust' => array('name' => '合作机构','sort' => 1,'id' => 2, 'child' => array(
 				array('name' => '机构信息','id' => 21, 'act'=>'cust', 'op'=>'index'),
-				array('name' => '跟单记录','id' => 22, 'act'=>'custgd', 'op'=>'index'),
+//				array('name' => '跟单记录','id' => 22, 'act'=>'custgd', 'op'=>'index'),
 //				array('name' => '合同管理','id' => 23, 'act'=>'jght', 'op'=>'index'),
 //				array('name' => '推广客户','id' => 24, 'act'=>'cus_invite', 'op'=>'index'),
 				array('name' => '推广提成','id' => 25, 'act'=>'cus_profit', 'op'=>'index','child' => array(

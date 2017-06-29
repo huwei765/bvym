@@ -15,67 +15,72 @@ use Think\Model;
 class FuLogic extends Model{
 
 	/**
-	 * 付款流程
-	 * @param $newData
-	 * @return int|mixed
-	 */
-	public function doFuForAgentByProfit($newData){
-		if(empty($newData)){
-			return 0;
-		}
-		if(!isset($newData["profit_id"]) || !is_numeric($newData["profit_id"]) || !isset($newData["jine"]) || !is_numeric($newData["jine"]) || !isset($newData["bianhao"]) || !isset($newData["type"]) || !is_numeric($newData["type"])){
-			return 0;
-		}
-		//查询cusprofit
-		$info = D("cusprofit","Logic")->getNoPayInfoById($newData["profit_id"]);
-		if(empty($info)){
-			return 0;
-		}
-		//组装新数据
-		$tmpData["bianhao"] = $newData["bianhao"];
-		$tmpData["jine"] = $newData["jine"];
-		$tmpData["type"] = $newData["type"];
-		$tmpData["jhid"] = $info["jhid"];
-		$tmpData["jhname"] = $info["jhcode"];
-		$tmpData["jcid"] = $info["jcid"];
-		$tmpData["jcname"] = $info["jcname"];
-		$tmpData["juid"] = $info["juid"];
-		$tmpData["juname"] = $info["juname"];
-		if(isset($newData["beizhu"])){
-			$tmpData["beizhu"] =$newData["beizhu"];
-		}
-		$ret = $this->addFuInfo($tmpData);
-		if($ret){
-			//修改佣金状态
-			D("cusprofit","Logic")->setStatusToOver($newData["profit_id"]);
-		}
-		return $ret;
-	}
-
-	/**
-	 * 付款流程
+	 * 返现操作
 	 * @param $newData
 	 * @return int|mixed
 	 */
 	public function doFuForAgent($newData){
-		$ret = $this->addFuInfo($newData);
+		if(empty($newData)){
+			return 0;
+		}
+		if(!isset($newData["profitid"]) || !is_numeric($newData["profitid"]) || !isset($newData["jine"]) || !is_numeric($newData["jine"]) || !isset($newData["bianhao"]) || !isset($newData["type"]) || !is_numeric($newData["type"])){
+			return 0;
+		}
+		//查询cusprofit状态是否为待返现状态
+		$info = D("cusprofit","Logic")->getNoPayInfoById($newData["profitid"],"id");
+		if(empty($info)){
+			return 0;
+		}
+		//查询收款是否是未返现状态
+		$shouData = D("shou","Logic")->getInfoByIdForNoFu($newData["shouid"],"id");
+		if(empty($shouData)){
+			return 0;
+		}
+		//组装新收据
+		$tmpData["bianhao"] = $newData["bianhao"];//付款单据编号
+		$tmpData["shouid"] = $newData["shouid"];//收款单ID
+		$tmpData["sbianhao"] = $newData["sbianhao"];//收款单编号
+		$tmpData["shou"] = $newData["shou"];//收款单金额
+		$tmpData["profitid"] = $newData["profitid"];//提成明细ID
+		$tmpData["jhid"] = $newData["jhid"];//订单ID
+		$tmpData["jhname"] = $newData["jhname"];//订单编号
+		$tmpData["rate"] = $newData["rate"];//佣金比率
+		$tmpData["pay"] = $newData["pay"];//应付佣金
+		$tmpData["type"] = $newData["type"];//付款方式
+		$tmpData["jine"] = $newData["jine"];//实付佣金
+		$tmpData["jcid"] = $newData["jcid"];//机构ID
+		$tmpData["jcname"] = $newData["jcname"];//机构名称
+		if(isset($newData["juid"])){
+			$tmpData["juid"] = $newData["juid"];//经办人ID
+			$tmpData["juname"] = $newData["juname"];//经办人名称
+		}
+		if(isset($newData["beizhu"])){
+			$tmpData["beizhu"] =$newData["beizhu"];//备注
+		}
+		$ret = $this->addFuInfoForAgent($tmpData);
+		if($ret){
+			//修改收款状态为已返现
+			D("shou","Logic")->setFanOverById($tmpData["shouid"]);
+			//更新提成明细中的已付款
+			D("cusprofit","Logic")->doFuForAgent($tmpData["profitid"],$ret,$tmpData["shouid"],$tmpData["jine"]);
+		}
 		return $ret;
 	}
 
 	/**
-	 * 添加付款记录
+	 * 添加返现佣金
 	 * @param $newData
 	 * @return int|mixed
 	 */
-	public function addFuInfo($newData){
+	public function addFuInfoForAgent($newData){
 		if(empty($newData)){
 			return 0;
 		}
-		if(!isset($newData["jhid"]) || !is_numeric($newData["jhid"]) || !isset($newData["jhname"]) || !isset($newData["bianhao"]) || !isset($newData["jine"]) || !is_numeric($newData["jine"]) || !isset($newData["jcid"]) || !is_numeric($newData["jcid"])){
+		if(!isset($newData["profitid"]) || !is_numeric($newData["profitid"]) || !isset($newData["jine"]) || !is_numeric($newData["jine"]) || !isset($newData["bianhao"]) || !isset($newData["type"]) || !is_numeric($newData["type"])){
 			return 0;
 		}
 		//查询订单是否已经付款
-		$count = $this->getCountByHidAndAgentId($newData["jhid"],$newData["jcid"]);
+		$count = $this->getCountByPidAndSid($newData["profitid"],$newData["shouid"]);
 		if(intval($count) > 0){
 			return 0;
 		}
@@ -87,6 +92,17 @@ class FuLogic extends Model{
 		else{
 			return 0;
 		}
+	}
+
+	/**
+	 * 根据提成明细ID和收款ID查询响应的付款记录条数
+	 * @param $pid
+	 * @param $sid
+	 * @param string $field
+	 * @return mixed
+	 */
+	public function getCountByPidAndSid($pid,$sid,$field = "*"){
+		return $this->getCount(array("profitid"=>$pid,"shouid"=>$sid),$field);
 	}
 
 	/**

@@ -26,7 +26,10 @@
                            </td>
                        </tr>
                        <tr>
-                           <td><label for='jhname_input' class='control-label x70'>客户姓名:</label><input type='text' id='order_cuname' name='order_cuname'  size='13'   value='{$ht_rs.cuname}' readonly></td>
+                           <td>
+                               <label for='jhname_input' class='control-label x70'>客户姓名:</label><input type='text' id='cuname' name='cuname'  size='13'   value='{$ht_rs.cuname}' readonly>
+                               <input type="hidden" name="cuid" id="cuid" value="{$ht_rs.cuid}">
+                           </td>
                            <td colspan="2"><label for='jhname_input' class='control-label x70'>设计师:</label><input type='text' id='order_juname' name='order_juname'  size='13'   value='{$ht_rs.juname}' readonly></td>
                        </tr>
                        <tr>

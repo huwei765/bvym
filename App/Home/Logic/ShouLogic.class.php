@@ -15,6 +15,14 @@ use Think\Model;
 class ShouLogic extends Model{
 
 	/**
+	 * 设置收款为已返现状态
+	 * @param $id
+	 */
+	public function setFanOverById($id){
+		M("shou")->where('id='.$id)->setField("status",1);
+	}
+
+	/**
 	 * 订单添加收款逻辑，同时改变订单收款值
 	 * @param $newData
 	 * @return int|mixed
@@ -63,7 +71,7 @@ class ShouLogic extends Model{
 		if(empty($newData)){
 			return 0;
 		}
-		if(!isset($newData["jhid"]) || !is_numeric($newData["jhid"]) || !isset($newData["bianhao"])){
+		if(!isset($newData["jhid"]) || !is_numeric($newData["jhid"]) || !isset($newData["bianhao"]) || !isset($newData["cuid"]) || !is_numeric($newData["cuid"]) || !isset($newData["cuname"])){
 			return 0;
 		}
 		$newData["addtime"] = time();
@@ -89,6 +97,17 @@ class ShouLogic extends Model{
 	}
 
 	/**
+	 * 根据订单ID查询该订单的所有未返现的收款记录
+	 * @param $hid
+	 * @param string $field
+	 * @param string $order
+	 * @return mixed
+	 */
+	public function getListByHidForNoFu($hid,$field="*",$order="id desc"){
+		return $this->getList(array("jhid"=>$hid,"status"=>0),$field,$order);
+	}
+
+	/**
 	 * 根据订单ID查询该订单的所有收款记录
 	 * @param $hid
 	 * @param string $field
@@ -108,6 +127,48 @@ class ShouLogic extends Model{
 	 */
 	public function getList($condition,$field="*",$order="id desc"){
 		return M("shou")->field($field)->where($condition)->order($order)->select();
+	}
+
+	/**
+	 * 查询未返现的收款信息
+	 * @param $id
+	 * @param string $field
+	 * @return mixed
+	 */
+	public function getInfoByIdForNoFu($id,$field="*"){
+		return $this->getInfo(array("id"=>$id,"status"=>0),$field);
+	}
+
+	/**
+	 * 根据ID查询收款信息
+	 * @param $id
+	 * @param string $field
+	 * @return mixed
+	 */
+	public function getInfoById($id,$field="*"){
+		return $this->getInfo(array("id"=>$id),$field);
+	}
+
+	/**
+	 * 查询
+	 * @param $id
+	 * @param $hid
+	 * @param $code
+	 * @param string $field
+	 * @return mixed
+	 */
+	public function getInfoByIdAndHidAndCode($id,$hid,$code,$field = "*"){
+		return $this->getInfo(array("id"=>$id,"hid"=>$hid,"bianhao"=>$code),$field);
+	}
+
+	/**
+	 * 查询基本信息
+	 * @param $condition
+	 * @param string $field
+	 * @return mixed
+	 */
+	public function getInfo($condition,$field="*"){
+		return M("shou")->field($field)->where($condition)->find();
 	}
 
 }

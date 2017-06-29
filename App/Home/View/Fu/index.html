@@ -20,10 +20,14 @@
             <th width="10" height="30"></th>
             <th data-order-direction='desc' data-order-field='id'>ID</th>
                 <th>单据编号</th>
-                <th>订单编号</th>
-                <th>收款方</th>
-                <th>付款金额</th>
-                <th data-order-direction='desc' data-order-field='type'>付款方式</th>
+                <th>提现机构</th>
+                <th>提现金额</th>
+                <th>提现方式</th>
+                <th>关联收款单</th>
+                <th>关联收款单金额</th>
+                <th>关联订单</th>
+                <th>关联订单总佣金</th>
+                <th>关联订单佣金比率</th>
                 <th>经办人</th>
                 <th data-order-direction='desc' data-order-field='addtime'>添加时间</th>
             </tr>
@@ -35,10 +39,14 @@
 		   <td></td>
 		   <td>{$v.id}</td>
               <td>{$v.bianhao|msubstr=###,0,20}</td>
-              <td>{$v.jhname|msubstr=###,0,20}</td>
               <td>{$v.jcname|msubstr=###,0,20}</td>
               <td>{$v.jine}</td>
               <td>{$v.type|getPayWay=###}</td>
+              <td>{$v.sbianhao}</td>
+              <td>{$v.shou}</td>
+              <td>{$v.jhname|msubstr=###,0,20}</td>
+              <td>{$v.pay}</td>
+              <td>{$v.rate}</td>
               <td>{$v.juname|msubstr=###,0,20}</td>
               <td>{$v.addtime|date="Y-m-d H:i",###}</td>
          </tr> 

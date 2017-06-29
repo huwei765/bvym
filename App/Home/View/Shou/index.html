@@ -23,6 +23,7 @@
 <th>关联订单</th>
 <th>收款金额</th>
 <th data-order-direction='desc' data-order-field='type'>收款方式</th>
+<th>客户</th>
 <th>经办人</th>
 <th>备注</th>
 <th data-order-direction='desc' data-order-field='uname'>添加人</th>
@@ -42,6 +43,7 @@
 <td>{$v.jhname|msubstr=###,0,20}</td>
 <td>{$v.jine|msubstr=###,0,20}</td>
 <td>{$v.stype|getPayWay=###}</td>
+<td>{$v.cuname}</td>
 <td>{$v.juname}</td>
 <td>{$v.beizhu|msubstr=###,0,20}</td>
 <td>{$v.uname}</td>

@@ -81,6 +81,16 @@ class FuController extends CommonController{
 	public function fenxi(){
 	 $this->display();
 	}
+
+	public function getlistbyprofit(){
+		$cpid = I("get.cpid");
+		if(isset($cuid) && is_numeric($cuid) && intval($cuid) > 0){
+			//根据cuid查询
+			$list = D("hetong","Logic")->getListByCUid($cuid);
+			$this->assign('list',$list);
+		}
+		$this->display("list");
+	}
 	
 	
 

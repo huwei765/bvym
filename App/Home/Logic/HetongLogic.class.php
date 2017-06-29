@@ -15,6 +15,46 @@ use Think\Model;
 class HetongLogic extends Model{
 
 	/**
+	 * 新增订单后开始计算提成信息
+	 * @param $jhid
+	 * @return bool
+	 */
+	public function afterOrderAdd($jhid){
+		$data = $this->getHetongInfoById($jhid);
+		if(empty($data)){
+			return false;
+		}
+		if(intval($data["yishou"])!= 0){
+			return false;
+		}
+		//查询该笔订单是否已经生成提成明细
+		$count = D("cusprofit","Logic")->GetCount(array("jhid"=>$data["id"]));
+		if(intval($count) > 0){
+			return false;
+		}
+		//根据客户id查询客户信息
+		$custcon_info = D("custcon","Logic")->getCustconInfoById($data["cuid"],"jcid,jcname,level");
+		if(empty($custcon_info)){
+			return false;
+		}
+		//增加机构推广提成
+		$tmpdata["jhid"] = $data["id"];//合同id
+		$tmpdata["jhname"] = $data["title"];//合同名称
+		$tmpdata["jhcode"] = $data["bianhao"];//合同编号
+		$tmpdata["jine"] = $data["jine"];//合同金额
+		$tmpdata["base_jine"] = $data["base_jine"];//合同成本
+		$tmpdata["profit"] = $data["profit"];//提成利润基数
+		$tmpdata["cuid"] = $data["cuid"];//客户id
+		$tmpdata["cuname"] = $data["cuname"];//客户姓名
+
+		$tmpdata["jcid"] = $custcon_info["jcid"];//机构id
+		$tmpdata["jcname"] = $custcon_info["jcname"];//机构名称
+		$tmpdata["level"] = $custcon_info["level"];//机构推广层级
+
+		return D("cusprofit","Logic")->doOrderProfit($tmpdata);
+	}
+
+	/**
 	 * 检查即将要收的款是否正常
 	 * @param $jhid
 	 * @param $shou
@@ -104,34 +144,7 @@ class HetongLogic extends Model{
 	 * 完成两个动作：1.修改合同状态为收款完成  2.增加推广提成
 	 */
 	public function doShouOver($jhid){
-		//检测合同是否收款完成
-		$data = $this->getHetongInfoById($jhid);
-		if(empty($data)){
-			return false;
-		}
-		if(intval($data["yishou"]) - intval($data["jine"]) != 0 || intval($data["weishou"]) != 0){
-			return false;
-		}
-		//根据客户id查询客户信息
-		$custcon_info = D("custcon","Logic")->getCustconInfoById($data["cuid"],"jcid,jcname,level");
-		if(empty($custcon_info)){
-			return false;
-		}
-		//增加机构推广提成
-		$tmpdata["jhid"] = $data["id"];//合同id
-		$tmpdata["jhname"] = $data["title"];//合同名称
-		$tmpdata["jhcode"] = $data["bianhao"];//合同编号
-		$tmpdata["jine"] = $data["jine"];//合同金额
-		$tmpdata["base_jine"] = $data["base_jine"];//合同成本
-		$tmpdata["profit"] = $data["profit"];//提成利润基数
-		$tmpdata["cuid"] = $data["cuid"];//客户id
-		$tmpdata["cuname"] = $data["cuname"];//客户姓名
-
-		$tmpdata["jcid"] = $custcon_info["jcid"];//机构id
-		$tmpdata["jcname"] = $custcon_info["jcname"];//机构名称
-		$tmpdata["level"] = $custcon_info["level"];//机构推广层级
-
-		return D("cusprofit","Logic")->doOrderProfit($tmpdata);
+		return true;
 	}
 
 	/**
@@ -152,6 +165,42 @@ class HetongLogic extends Model{
 	 */
 	public function getHetongInfo($condition,$field="*"){
 		return M("hetong")->field($field)->where($condition)->find();
+	}
+
+	/**
+	 * 根据返现状态查询待审核的订单
+	 * @param $condition
+	 * @param string $field
+	 * @param string $order
+	 * @return mixed
+	 */
+	public function getListByFuStatusForNoVerify($condition = array(),$field="*",$order="id desc"){
+		$condition["fstatus"] = 0;
+		return $this->getList($condition,$order,$field);
+	}
+
+	/**
+	 * 查询待付款订单
+	 * @param $condition
+	 * @param string $field
+	 * @param string $order
+	 * @return mixed
+	 */
+	public function getListByFuStatusForNoPay($condition = array(),$field="*",$order="id desc"){
+		$condition["fstatus"] = 1;
+		return $this->getList($condition,$order,$field);
+	}
+
+	/**
+	 * 查询完成订单
+	 * @param $condition
+	 * @param string $field
+	 * @param string $order
+	 * @return mixed
+	 */
+	public function getListByFuStatusForOver($condition = array(),$field="*",$order="id desc"){
+		$condition["fstatus"] = 2;
+		return $this->getList($condition,$order,$field);
 	}
 
 	/**

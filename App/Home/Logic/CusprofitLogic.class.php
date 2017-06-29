@@ -21,6 +21,31 @@ class CusprofitLogic extends Model{
 	const STATE4 = 4;       // 不通过
 
 	/**
+	 * 更新已付款金额并检测该笔订单佣金是否完成
+	 * @param $id
+	 * @param $fuId
+	 * @param $shouId
+	 * @param $jine
+	 * @return int
+	 */
+	public function doFuForAgent($id,$fuId,$shouId,$jine){
+		//查询提成明细
+		$cusprofitData = $this->getNoPayInfoById($id);
+		if(empty($cusprofitData)){
+			return 0;
+		}
+		//更新已付款记录
+		if(intval($cusprofitData["yifu"]) + intval($jine) - intval($cusprofitData["commission"]) <= 0){
+			M("cusprofit")->where('id='.$id)->setInc('yifu',$jine);
+		}
+		//检测该笔提成是否完成
+		if(intval($cusprofitData["yifu"]) + intval($jine) - intval($cusprofitData["commission"]) == 0){
+			//设置该笔提成完成
+			$this->updateStatusById($id,3);
+		}
+	}
+
+	/**
 	 * 计算利润提成的明细
 	 * @param $data
 	 * @return array
@@ -189,15 +214,6 @@ class CusprofitLogic extends Model{
 	public function GetFailProfitList($field = '*', $group = '',$order = '', $limit = 0, $page = 0, $lock = false, $count = 0){
 		$condition["status"] = 4;
 		return $this->GetProfitList($condition, $field, $group,$order, $limit, $page, $lock, $count);
-	}
-
-	/**
-	 * 设置佣金付款完成
-	 * @param $id
-	 * @return bool
-	 */
-	public function setStatusToOver($id){
-		return $this->updateStatusById($id,3);
 	}
 
 	/**

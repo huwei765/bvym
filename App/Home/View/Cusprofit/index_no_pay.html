@@ -27,6 +27,7 @@
             <th>利润基数</th>
             <th>佣金比例</th>
             <th>佣金金额</th>
+            <th>已返佣金</th>
             <th>客户名称</th>
             <th>机构名称</th>
             <th>经办人</th>
@@ -45,12 +46,13 @@
                 <td>{$v.profit}</td>
                 <td>{$v.rate}%</td>
                 <td>{$v.commission}</td>
+                <td>{$v.yifu}</td>
                 <td>{$v.cuname}</td>
                 <td>{$v.jcname}</td>
                 <td>{$v.juname}</td>
                 <td>{$v.addtime|date="Y-m-d H:i",###}</td>
                 <td>
-                    <a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/pay',array('id'=>$v['id'],'navTabId'=>CONTROLLER_NAME))}"   class="btn btn-green btn-sm" data-toggle="dialog" data-width="900" data-height="500" data-id="dialog-mask" data-mask="true" >待付款</a>
+                    <a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/wait_fanxian',array('id'=>$v['id'],'hid'=>$v['jhid'],'navTabId'=>CONTROLLER_NAME))}"   class="btn btn-green btn-sm" data-toggle="dialog" data-width="900" data-height="500" data-id="dialog-mask" data-mask="true" >待付款</a>
                 </td>
                 </td>
             </tr>

@@ -129,7 +129,7 @@ function MainMenuClick(event, treeId, treeNode) {
     if (treeNode.target && treeNode.target == 'dialog')
         $(event.target).dialog({id:treeNode.tabid, url:treeNode.url, title:treeNode.name})
     else
-        $(event.target).navtab({id:treeNode.tabid, url:treeNode.url, title:treeNode.name, fresh:treeNode.fresh, external:treeNode.external})
+        $(event.target).navtab({id:treeNode.tabid, url:treeNode.url, title:treeNode.name, fresh:treeNode.fresh, external:treeNode.external,reloadFlag:true,reload:true})
     event.preventDefault()
 }
 </script>
@@ -195,10 +195,10 @@ function MainMenuClick(event, treeId, treeNode) {
                                             <if condition="$v.child NEQ null ">
                                                 <li data-id="{$v.id}" data-pid="{$c.id}" >{$v.name}</li>
                                                 <foreach name="v.child" item="vv">
-                                                    <li data-id="{$vv.id}" data-pid="{$v.id}" data-url="{:U($vv['act'].'/'.$vv['op'])}" data-tabid="{$vv['act']}/{$vv['op']}" data-fresh="true" data-reload="true">{$vv.name}</li>
+                                                    <li data-id="{$vv.id}" data-pid="{$v.id}" data-url="{:U($vv['act'].'/'.$vv['op'])}" data-tabid="{$vv['act']}/{$vv['op']}" data-fresh="true" data-reloadFlag="true">{$vv.name}</li>
                                                 </foreach>
                                             <else/>
-                                                <li data-id="{$v.id}" data-pid="{$c.id}" data-url="{:U($v['act'].'/'.$v['op'])}" data-tabid="{$v['act']}/{$v['op']}" data-fresh="true" data-reload="true">{$v.name}</li>
+                                                <li data-id="{$v.id}" data-pid="{$c.id}" data-url="{:U($v['act'].'/'.$v['op'])}" data-tabid="{$v['act']}/{$v['op']}" data-fresh="true" data-reloadFlag="true">{$v.name}</li>
                                             </if>
                                         </foreach>
                                     </if>
@@ -383,7 +383,7 @@ function MainMenuClick(event, treeId, treeNode) {
     <footer id="bjui-footer" style="text-align:left">
 	您好！{$Think.session.depname} {$Think.session.posname} {$Think.session.truename} ({$Think.session.username}) 您的IP:{$Think.session.loginip}   登录时间:{$Think.session.logintime}
 
-	<span style="float:right">Power by <a href="http://www.xinyou88.com" target=_blank>碧薇医美</a> </span> <div style="display:none"></div>
+	<span style="float:right">Power by <a href="http://www.biweiyimei.com" target=_blank>碧薇医美</a> </span> <div style="display:none"></div>
     </footer>
 </body>
 </html>

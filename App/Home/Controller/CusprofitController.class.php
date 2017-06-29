@@ -225,12 +225,46 @@ class CusprofitController extends CommonController{
 			if(intval($data["jine"]) < 0 || intval($data["jine"]) > 10000000){
 				$this->mtReturn(300,"操作失败,单笔支付额度必须在0到10000000之内！",$_REQUEST['navTabId'],true);
 			}
-			$tmpData["profit_id"] = $data["id"];
-			$tmpData["jine"] = $data["jine"];
-			$tmpData["bianhao"] = $data["bianhao"];
-			$tmpData["type"] = $data["type"];
-			$tmpData["beizhu"] = $data["beizhu"];
-			$ret = D("fu","Logic")->doFuForAgentByProfit($tmpData);
+			//组装数据
+			$tmpData["profitid"] = $data["profitid"];//提成明细ID
+			$tmpData["shouid"] = $data["id"];//收款单ID
+			$tmpData["pay"] = $data["yingfu"];//应付佣金
+			$tmpData["jine"] = $data["jine"];//实付佣金
+			$tmpData["bianhao"] = $data["bianhao"];//付款单据编号
+			$tmpData["type"] = $data["type"];//付款方式
+			$tmpData["beizhu"] = $data["beizhu"];//备注
+			$tmpData["juid"] = $data["juid"];//经办人ID
+			$tmpData["juname"] = $data["juname"];//经办人名称
+			//查询提成明细信息
+			$cusprofitData = D("cusprofit","Logic")->getNoPayInfoById($tmpData["profitid"]);
+			if(empty($cusprofitData)){
+				$this->mtReturn(300,"操作失败，请检查该订单返现是否已完成！",$_REQUEST['navTabId'],true);
+			}
+			//组装提成明细数据
+			$tmpData["jhid"] = $cusprofitData["jhid"];//订单ID
+			$tmpData["jhname"] = $cusprofitData["jhcode"];//订单编号
+			$tmpData["rate"] = $cusprofitData["rate"];//佣金比率
+			$tmpData["jcid"] = $cusprofitData["jcid"];//机构ID
+			$tmpData["jcname"] = $cusprofitData["jcname"];//机构名称
+
+			//查询收款单信息
+			$shouData = D("shou","Logic")->getInfoByIdForNoFu($tmpData["shouid"]);
+			if(empty($shouData)){
+				$this->mtReturn(300,"操作失败，该收款已经返现，请不要重复返现！",$_REQUEST['navTabId'],true);
+			}
+			//组装收款单数据
+			$tmpData["sbianhao"] = $shouData["bianhao"];//收款单编号
+			$tmpData["shou"] = $shouData["jine"];//收款单金额
+			//计算应付佣金
+			$tmp_should_pay = intval(intval($tmpData["shou"]) * intval($tmpData["rate"]) / 100);
+			if($tmp_should_pay - intval($tmpData["pay"]) != 0){
+				$this->mtReturn(300,"操作失败，计算应付佣金错误！",$_REQUEST['navTabId'],true);
+			}
+			if(intval($tmpData["pay"]) - intval($tmpData["jine"]) != 0){
+				$this->mtReturn(300,"操作失败，实付佣金不等于应付佣金！",$_REQUEST['navTabId'],true);
+			}
+			//提交
+			$ret = D("fu","Logic")->doFuForAgent($tmpData);
 			if($ret){
 				$this->mtReturn(200,"新增成功",$_REQUEST['navTabId'],true);
 			}
@@ -239,20 +273,54 @@ class CusprofitController extends CommonController{
 			}
 		}
 		else{
-			$id = $_REQUEST ["id"];
-			//查询订单佣金记录
-			$profitData = D("cusprofit","Logic")->getInfoById($id);
-			if(!empty($profitData)){
+			$cpid = I("get.cpid");//提成明细id
+			$id = I("get.id");//收款单ID
+			$bianhao = I("get.bianhao");//收款单单据编号
+			$hid = I("get.hid");//收款单关联的订单ID
+			//查询提成明细信息
+			$cusprofit_Data = D("cusprofit","Logic")->getInfoById($cpid);
+			if(!empty($cusprofit_Data)){
+				//查询收款单信息
+				$shouInfo = D("shou","Logic")->getInfoByIdAndHidAndCode($id,$hid,$bianhao);
+				//计算应付佣金
+				if(!empty($shouInfo) && isset($shouInfo["jine"])){
+					$should_pay = intval($shouInfo["jine"]) * intval($cusprofit_Data["rate"]) / 100;
+					$this->assign('should_pay', $should_pay);
+				}
 				//查询订单明细项目
-				$ops_list = D("htops","Logic")->getHtOpsListByHid($profitData["jhid"]);
-				$this->assign('ht_rs', $profitData);
+				$ops_list = D("htops","Logic")->getHtOpsListByHid($cusprofit_Data["jhid"]);
+				$this->assign('ht_rs', $cusprofit_Data);
 				$this->assign('ops_list', $ops_list);
+				$this->assign('shouRs', $shouInfo);
+
 			}
-			$this->assign('id',$id);
+			$this->assign('id',$id);//收款单ID
+			$this->assign('profitid',$cpid);//提成明细ID
 			//自动生成单据编号
 			$fuSn = $this->generateHtSn("",3);
 			$this->assign('bianhao', $fuSn);
 		}
+		$this->display();
+	}
+
+	/**
+	 * 查询等待返现的收款记录
+	 */
+	public function wait_fanxian(){
+		$id = I("get.id");
+		$hid = I("get.hid");
+		if(isset($id) && is_numeric($id) && intval($id) > 0 && isset($hid) && is_numeric($hid) && intval($hid) > 0){
+			//根据id查询详情
+			$info = D("cusprofit","Logic")->getInfoById($id);
+			if(!empty($info) && isset($info["jhid"])){
+				if(intval($info["jhid"]) == intval($hid)){
+					//根据cuid查询
+					$list = D("shou","Logic")->getListByHid($hid);
+					$this->assign('list',$list);
+				}
+			}
+		}
+		$this->assign('cpid',$id);
 		$this->display();
 	}
 }
