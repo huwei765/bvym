@@ -437,7 +437,7 @@ Class CommonController extends Controller{
 				array('name' => '订单管理','id' => 15, 'act'=>'hetong', 'op'=>'index'),
 				array('name' => '收款记录','id' => 16, 'act'=>'shou', 'op'=>'index'),
 				array('name' => '开票记录','id' => 17, 'act'=>'piao', 'op'=>'index'),
-				array('name' => '手术记录','id' => 18, 'act'=>'opsrecord', 'op'=>'index'),
+				array('name' => '整形记录','id' => 18, 'act'=>'opsrecord', 'op'=>'index'),
 				array('name' => '统计分析','id' => 19, 'act'=>'cus_analyse', 'op'=>'index','child' => array(
 					array('name' => '客户分析','id' => 191, 'act'=>'custcon', 'op'=>'fenxi'),
 					array('name' => '订单分析','id' => 192, 'act'=>'hetong', 'op'=>'fenxi'),
@@ -449,12 +449,12 @@ Class CommonController extends Controller{
 //				array('name' => '跟单记录','id' => 22, 'act'=>'custgd', 'op'=>'index'),
 //				array('name' => '合同管理','id' => 23, 'act'=>'jght', 'op'=>'index'),
 //				array('name' => '推广客户','id' => 24, 'act'=>'cus_invite', 'op'=>'index'),
-				array('name' => '推广提成','id' => 25, 'act'=>'cus_profit', 'op'=>'index','child' => array(
-					array('name' => '待审核','id' => 251, 'act'=>'cusprofit', 'op'=>'no_verify'),
-					array('name' => '待确认','id' => 252, 'act'=>'cusprofit', 'op'=>'no_confirm'),
-					array('name' => '待付款','id' => 253, 'act'=>'cusprofit', 'op'=>'no_pay'),
-					array('name' => '已完成','id' => 254, 'act'=>'cusprofit', 'op'=>'over'),
-					array('name' => '未通过','id' => 255, 'act'=>'cusprofit', 'op'=>'fail')
+				array('name' => '佣金返现','id' => 25, 'act'=>'cus_profit', 'op'=>'index','child' => array(
+//					array('name' => '待审核','id' => 251, 'act'=>'cusprofit', 'op'=>'no_verify'),
+//					array('name' => '待确认','id' => 252, 'act'=>'cusprofit', 'op'=>'no_confirm'),
+					array('name' => '待返现','id' => 253, 'act'=>'cusprofit', 'op'=>'no_pay'),
+					array('name' => '返现完成','id' => 254, 'act'=>'cusprofit', 'op'=>'over'),
+//					array('name' => '未通过','id' => 255, 'act'=>'cusprofit', 'op'=>'fail')
 				)),
 				array('name' => '返现记录','id' => 26, 'act'=>'fu', 'op'=>'index'),
 //				array('name' => '提成设置','id' => 27, 'act'=>'cus_set', 'op'=>'index'),
@@ -499,7 +499,10 @@ Class CommonController extends Controller{
 			'finance' => array('name' => '财务管理','sort' => 5,'id' => 6, 'child' => array(
 				array('name' => '收款记录','id' => 61, 'act'=>'shou', 'op'=>'index'),
 				array('name' => '付款记录','id' => 62, 'act'=>'fu', 'op'=>'index'),
-				array('name' => '开票记录','id' => 63, 'act'=>'piao', 'op'=>'index')
+				array('name' => '开票记录','id' => 63, 'act'=>'piao', 'op'=>'index'),
+				array('name' => '统计分析','id' => 19, 'act'=>'finance_analyse', 'op'=>'index','child' => array(
+					array('name' => '订单对账统计','id' => 191, 'act'=>'hetong', 'op'=>'reportmoney')
+				)),
 			)),
 			'system' => array('name' => '系统管理','sort' => 6,'id' => 7, 'child' => array(
 				array('name' => '组织机构','id' => 71, 'act'=>'org', 'op'=>'index','child' => array(

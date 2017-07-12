@@ -22,16 +22,11 @@
         <tr>
             <th width="10" height="30"></th>
             <th data-order-direction='desc' data-order-field='id'>ID</th>
-            <th>订单编号</th>
-            <th>合同金额</th>
-            <th>利润基数</th>
-            <th>佣金比例</th>
-            <th>佣金金额</th>
-            <th>已返佣金</th>
-            <th>客户名称</th>
+            <th>订单</th>
+            <th>收款</th>
+            <th>佣金</th>
             <th>机构名称</th>
             <th>经办人</th>
-            <th data-order-direction='desc' data-order-field='addtime'>生成时间</th>
             <th>状态</th>
         </tr>
         </thead>
@@ -41,18 +36,26 @@
             <tr>
                 <td></td>
                 <td>{$v.id}</td>
-                <td>{$v.jhcode}</td>
-                <td>{$v.jine}</td>
-                <td>{$v.profit}</td>
-                <td>{$v.rate}%</td>
-                <td>{$v.commission}</td>
-                <td>{$v.yifu}</td>
-                <td>{$v.cuname}</td>
+                <td>
+                    <p>编号：{$v.jhcode}</p>
+                    <p>金额：{$v.jine}</p>
+                    <p>客户：{$v.cuname}</p>
+                    <p>生成时间：{$v.addtime|date="Y-m-d H:i",###}</p>
+                </td>
+                <td>
+                    <p>应收金额：{$v.jine}</p>
+                    <p>已收款：{$v.yishou}</p>
+                    <p>未收款：{$v.weishou}</p>
+                </td>
+                <td>
+                    <p>佣金比率：{$v.rate}%</p>
+                    <p>应返佣金：{$v.commission} = {$v.profit} x {$v.rate}%</p>
+                    <p>已返佣金：{$v.yifu}</p>
+                </td>
                 <td>{$v.jcname}</td>
                 <td>{$v.juname}</td>
-                <td>{$v.addtime|date="Y-m-d H:i",###}</td>
                 <td>
-                    <a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/wait_fanxian',array('id'=>$v['id'],'hid'=>$v['jhid'],'navTabId'=>CONTROLLER_NAME))}"   class="btn btn-green btn-sm" data-toggle="dialog" data-width="900" data-height="500" data-id="dialog-mask" data-mask="true" >待付款</a>
+                    <a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/wait_fanxian',array('id'=>$v['id'],'hid'=>$v['jhid'],'navTabId'=>CONTROLLER_NAME))}"   class="btn btn-green btn-sm" data-toggle="dialog" data-width="900" data-height="500" data-id="dialog-mask" data-mask="true" >去返现</a>
                 </td>
                 </td>
             </tr>

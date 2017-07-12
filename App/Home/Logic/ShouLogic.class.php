@@ -171,4 +171,8 @@ class ShouLogic extends Model{
 		return M("shou")->field($field)->where($condition)->find();
 	}
 
+	public function getSumForYiShouByHid($hid){
+		return M("shou")->where("jhid=".$hid)->sum("jine");
+	}
+
 }

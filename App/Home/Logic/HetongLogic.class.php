@@ -225,4 +225,52 @@ class HetongLogic extends Model{
 		return M("hetong")->field($field)->where($condition)->order($order)->select();
 	}
 
+	/**
+	 * 按月度统计订单的收支财务
+	 * @return array
+	 */
+	public function reportMoneyByMonth(){
+		$records = array();
+		$cur_month = date("m",time());
+		for($i=1;$i<=12;$i++){
+			if($i - intval($cur_month) > 0){
+				$records[] = array(
+					"month" => $i,
+					"data" => array(
+						"num" => "-",
+						"jine" => "-",
+						"profit" => "-",
+						"yishou" => "-",
+						"weishou" => "-",
+						"cnum" => "-",
+						"commission" => "-",
+						"yifu" => "-"
+					)
+				);
+			}
+			else{
+				$records[] = array("month"=>$i,"data"=>$this->reportMoneyByOneMonth($i));
+			}
+		}
+		return $records;
+	}
+
+	/**
+	 * 统计指定月份的订单财务收支
+	 * @param $index
+	 * @return array|mixed
+	 */
+	public function reportMoneyByOneMonth($index){
+		//统计指定月份的金额
+		$BeginDate = date("Y-0".$index."-01");//获取指定月份的第一天
+		$firstDay = strtotime($BeginDate);//指定月的第一天
+		$endDay = strtotime("$BeginDate +1 month -1 day");
+		$map["addtime"] = array(array('egt',$firstDay),array('elt',$endDay));
+		$result = M("hetong")->field("count(id) as 'num',sum(jine) as 'jine',sum(profit) as 'profit',sum(yishou) as 'yishou',sum(weishou) as 'weishou'")->where($map)->find();
+		$cusprofit_data = D("cusprofit","Logic")->reportMoneyByInterval($firstDay,$endDay);
+		if(!empty($cusprofit_data)){
+			$result = array_merge($result,$cusprofit_data);
+		}
+		return $result;
+	}
 }

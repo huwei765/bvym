@@ -502,6 +502,7 @@ class PublicController extends Controller {
 			$where['_logic'] = 'or';
 		}
 		$numPerPage=10;
+		$where['status'] = 1;
 		$list=$info->where($where)->order("`" . $order . "` " . $sort)->limit($numPerPage)->page($pageCurrent.','.$numPerPage.'')->select();
 		$this->assign('list',$list);
 		$count = $info->where($where)->count();

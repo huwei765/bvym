@@ -20,6 +20,8 @@ class CustModel extends Model{
         array('title','','名称已经存在！',0,'unique',1),
 		array('phone','/^1[3|4|5|8][0-9]\d{4,8}$/','手机号码错误！',0,'regex',1),
 		array('email','email','email格式错误！',2),
+		array('rate','require','请输入提成比率！',1),
+		array('rate',array(0,100),'提成比率必须是0~100之间！',1,"between"),
     );
     
 		// 自动完成规则

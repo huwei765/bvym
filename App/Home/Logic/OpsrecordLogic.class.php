@@ -16,7 +16,7 @@ class OpsrecordLogic extends Model{
 	}
 
 	/**
-	 * 根据合同ID获取手术记录
+	 * 根据合同ID获取整形记录
 	 * @param $hid
 	 * @param string $field
 	 * @param string $order

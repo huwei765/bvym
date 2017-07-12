@@ -30,8 +30,7 @@ class HetongController extends CommonController{
 
 	}
 	
-   public function _befor_index(){ 
-   
+   public function _befor_index(){
    }
 
 	/**
@@ -47,6 +46,7 @@ class HetongController extends CommonController{
 			}
 			if($model->add($data)){
 				$id = $model->getLastInsID();
+				$ops_str = "";
 				//新增相关项目
 				for($i = 0;$i<10;$i++){
 					$tmp_data = array("hid"=>$id,"bianhao"=>$bianhao);
@@ -57,11 +57,14 @@ class HetongController extends CommonController{
 					$tmp_data["num"] = I("post.ops".$i."_num");
 					$tmp_data["money"] = I("post.ops".$i."_sumprice");
 					if(intval($tmp_data["oid"]) > 0 && intval($tmp_data["num"]) > 0){
+						$ops_str = $ops_str."【".$tmp_data["oname"]."】,";
 						D("htops","Logic")->addHtOpsInfo($tmp_data);
 					}
 				}
+				//项目简介去掉最后一个逗号
+				$ops_str = ltrim(rtrim(rtrim($ops_str,","),""),"");
 				//发送消息
-				D("message","Logic")->sendMsgForHtNew(array("hid"=>$id));
+				D("message","Logic")->sendMsgForHtNew(array("hid"=>$id,"memo"=>$ops_str));
 				//订单生成时，生成提成信息
 				D("hetong","Logic")->afterOrderAdd($id);
 				//返回
@@ -494,6 +497,12 @@ class HetongController extends CommonController{
 			$order_over_sum[$i-1] = intval($tmp_yi_sum);
 		}
 		return array("order_total_sum"=>$order_total_sum,"order_wei_sum"=>$order_wei_sum,"order_over_sum"=>$order_over_sum);
+	}
+
+	public function reportmoney(){
+		$list_records = D("hetong","Logic")->reportMoneyByMonth();
+		$this->assign('list', $list_records);
+		$this->display("report_money");
 	}
 
 }

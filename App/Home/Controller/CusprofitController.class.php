@@ -130,7 +130,7 @@ class CusprofitController extends CommonController{
 	 */
 	public function no_pay(){
 		$model = D("cusprofit",'Logic');
-		$list = $model->GetNoPayProfitList();
+		$list = $model->GetNoPayProfitListForFan();
 		$this->assign('list', $list);
 		$this->display("index_no_pay");
 	}
@@ -248,9 +248,9 @@ class CusprofitController extends CommonController{
 			$tmpData["jcname"] = $cusprofitData["jcname"];//机构名称
 
 			//查询收款单信息
-			$shouData = D("shou","Logic")->getInfoByIdForNoFu($tmpData["shouid"]);
+			$shouData = D("shou","Logic")->getInfoById($tmpData["shouid"]);
 			if(empty($shouData)){
-				$this->mtReturn(300,"操作失败，该收款已经返现，请不要重复返现！",$_REQUEST['navTabId'],true);
+				$this->mtReturn(300,"操作失败，该收款单不存在，请确认收款单信息！",$_REQUEST['navTabId'],true);
 			}
 			//组装收款单数据
 			$tmpData["sbianhao"] = $shouData["bianhao"];//收款单编号
@@ -310,15 +310,19 @@ class CusprofitController extends CommonController{
 		$id = I("get.id");
 		$hid = I("get.hid");
 		if(isset($id) && is_numeric($id) && intval($id) > 0 && isset($hid) && is_numeric($hid) && intval($hid) > 0){
+
+			$list = D("cusprofit","Logic")->getWaitFanListByCusProfit($id);
+			$this->assign('list',$list);
+
 			//根据id查询详情
-			$info = D("cusprofit","Logic")->getInfoById($id);
-			if(!empty($info) && isset($info["jhid"])){
-				if(intval($info["jhid"]) == intval($hid)){
-					//根据cuid查询
-					$list = D("shou","Logic")->getListByHid($hid);
-					$this->assign('list',$list);
-				}
-			}
+//			$info = D("cusprofit","Logic")->getInfoById($id);
+//			if(!empty($info) && isset($info["jhid"])){
+//				if(intval($info["jhid"]) == intval($hid)){
+//					//根据cuid查询
+//					$list = D("shou","Logic")->getListByHid($hid);
+//					$this->assign('list',$list);
+//				}
+//			}
 		}
 		$this->assign('cpid',$id);
 		$this->display();

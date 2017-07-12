@@ -15,6 +15,18 @@ use Think\Model;
 class FuLogic extends Model{
 
 	/**
+	 * 查询付款信息
+	 * @param $sid
+	 * @param $pid
+	 * @param $jcid
+	 * @param string $field
+	 * @return mixed
+	 */
+	public function getInfoByShouIdAndPidAndJcid($sid,$pid,$jcid,$field="*"){
+		return $this->getInfo(array("shouid"=>$sid,"profitid"=>$pid,"jcid"=>$jcid),$field);
+	}
+
+	/**
 	 * 返现操作
 	 * @param $newData
 	 * @return int|mixed
@@ -31,8 +43,8 @@ class FuLogic extends Model{
 		if(empty($info)){
 			return 0;
 		}
-		//查询收款是否是未返现状态
-		$shouData = D("shou","Logic")->getInfoByIdForNoFu($newData["shouid"],"id");
+		//查询收款是否存在
+		$shouData = D("shou","Logic")->getInfoById($newData["shouid"],"id");
 		if(empty($shouData)){
 			return 0;
 		}
@@ -59,8 +71,11 @@ class FuLogic extends Model{
 		}
 		$ret = $this->addFuInfoForAgent($tmpData);
 		if($ret){
+			//付款完成时发送的消息
+			$pay_type = getPayWay($tmpData["type"]);
+			D("message","Logic")->sendMsgForFu(array("hid"=>$tmpData["jhid"],"pay_money"=>$tmpData["jine"],"pay_type"=>$pay_type));
 			//修改收款状态为已返现
-			D("shou","Logic")->setFanOverById($tmpData["shouid"]);
+			//D("shou","Logic")->setFanOverById($tmpData["shouid"]);//去掉收款单中的付款状态标示
 			//更新提成明细中的已付款
 			D("cusprofit","Logic")->doFuForAgent($tmpData["profitid"],$ret,$tmpData["shouid"],$tmpData["jine"]);
 		}
@@ -124,6 +139,16 @@ class FuLogic extends Model{
 	 */
 	public function getCount($condtion,$field = "id"){
 		return M("fu")->where($condtion)->count($field);
+	}
+
+	/**
+	 * 查询付款信息
+	 * @param $condition
+	 * @param string $field
+	 * @return mixed
+	 */
+	public function getInfo($condition,$field="*"){
+		return M("fu")->field($field)->where($condition)->find();
 	}
 
 }

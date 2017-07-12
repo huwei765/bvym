@@ -28,7 +28,7 @@ class MessageLogic extends MessagebaseLogic{
 	}
 
 	/**
-	 * 增加手术记录后发送消息
+	 * 增加整形记录后发送消息
 	 * @param $param
 	 * @return array
 	 */
@@ -70,6 +70,15 @@ class MessageLogic extends MessagebaseLogic{
 	 */
 	public function sendMsgForHtNew($param){
 		return $this->sendMsgByOrder("sendMsgForHtNew",$param);
+	}
+
+	/**
+	 * 返现完成时发送消息
+	 * @param $param
+	 * @return array
+	 */
+	public function sendMsgForFu($param){
+		return $this->sendMsgByOrder("sendMsgForFu",$param);
 	}
 
 	/**

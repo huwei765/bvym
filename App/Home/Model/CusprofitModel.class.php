@@ -20,7 +20,7 @@ class CusprofitModel extends Model{
     
 		// 自动完成规则
 	protected $_auto = array (
-	    array('status',0,1), // 对status字段在新增的时候赋值0
+	    array('status',2,1), //暂时默认去掉待审核和待确认
 	    array('addtime','getUnixTime',1,'function'),
 		array('uuid','getuserid',2,'function'),
         array('uuname','gettruename',2,'function'),

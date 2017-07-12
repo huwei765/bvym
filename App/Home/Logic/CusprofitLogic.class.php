@@ -266,4 +266,60 @@ class CusprofitLogic extends Model{
 		return M("cusprofit")->field($field)->where($condition)->find();
 	}
 
+	public function reportMoneyByOneMonth($index){
+		//统计指定月份的金额
+		$BeginDate = date("Y-0".$index."-01");//获取指定月份的第一天
+		$firstDay = strtotime($BeginDate);//指定月的第一天
+		$endDay = strtotime("$BeginDate +1 month -1 day");
+		return $this->reportMoneyByInterval($firstDay,$endDay);
+	}
+
+	public function reportMoneyByInterval($firstDay,$endDay){
+		$map["addtime"] = array(array('egt',$firstDay),array('elt',$endDay));
+		$result = M("cusprofit")->field("count(id) as 'cnum',sum(commission) as 'commission',sum(yifu) as 'yifu'")->where($map)->find();
+		return $result;
+	}
+
+	public function getWaitFanListByCusProfit($profitId){
+		//查询profit信息
+		if(!is_numeric($profitId) || intval($profitId) <= 0){
+			return false;
+		}
+		$info = D("cusprofit","Logic")->getInfoById($profitId);
+		$list = array();
+		//查询收款信息
+		if(!empty($info) && isset($info["jhid"]) && is_numeric($info["jhid"])){
+			$list = D("shou","Logic")->getListByHid($info["jhid"]);
+			foreach($list as $key => $val){
+				$list[$key]["rate"] = $info["rate"];//佣金比率
+				$list[$key]["jcname"] = $info["jcname"];//返现机构
+				$list[$key]["commission"] = intval($val["jine"] * $info["rate"] /100);//预返现
+				$list[$key]["yifan"] = 0;//已返现
+				$list[$key]["status"] = 0;//状态
+				//根据收款id,订单id,机构id查询返现记录
+				$fuInfo = D("fu","Logic")->getInfoByShouIdAndPidAndJcid($val["id"],$info["id"],$info["jcid"]);
+				if(!empty($fuInfo)){
+					$list[$key]["yifan"] = $fuInfo["jine"];
+					$list[$key]["fantime"] = $fuInfo["addtime"];
+					if(intval($fuInfo["jine"]) - intval($list[$key]["commission"]) == 0){
+						$list[$key]["status"] = 1;
+					}
+				}
+			}
+		}
+		return $list;
+	}
+
+	public function GetNoPayProfitListForFan($field = '*', $group = '',$order = '', $limit = 0, $page = 0, $lock = false, $count = 0){
+		$list = $this->GetNoPayProfitList($field, $group,$order, $limit, $page, $lock, $count);
+		if(!empty($list)){
+			foreach($list as $key => $val){
+				//查询已收款
+				$yishou = D("shou","Logic")->getSumForYiShouByHid($val["jhid"]);
+				$list[$key]["yishou"] = intval($yishou);
+				$list[$key]["weishou"] = intval($val["jine"]) - intval($yishou);
+			}
+		}
+		return $list;
+	}
 }

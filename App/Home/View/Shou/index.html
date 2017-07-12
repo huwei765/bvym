@@ -28,9 +28,6 @@
 <th>备注</th>
 <th data-order-direction='desc' data-order-field='uname'>添加人</th>
 <th data-order-direction='desc' data-order-field='addtime'>添加时间</th>
-
-			<th>详细</th>
-		    <th <php>echo display(CONTROLLER_NAME.'/edit');</php> >操作</th>
             </tr>
         </thead>
         <tbody>
@@ -40,7 +37,8 @@
 		   <td></td>
 		   <td>{$v.id}</td>
 <td>{$v.bianhao|msubstr=###,0,30}</td>
-<td>{$v.jhname|msubstr=###,0,20}</td>
+<td><a href="{:U(MODULE_NAME.'/hetong/view',array('id'=>$v['jhid'],'navTabId'=>CONTROLLER_NAME))}" data-toggle="dialog" data-width="900" data-height="500">{$v.jhname|msubstr=###,0,20}</a>
+    </td>
 <td>{$v.jine|msubstr=###,0,20}</td>
 <td>{$v.stype|getPayWay=###}</td>
 <td>{$v.cuname}</td>
@@ -48,11 +46,6 @@
 <td>{$v.beizhu|msubstr=###,0,20}</td>
 <td>{$v.uname}</td>
 <td>{$v.addtime|date="Y-m-d H:i",###}</td>
-
-		   <td><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/view',array('id'=>$v['id'],'navTabId'=>CONTROLLER_NAME))}"  data-toggle="dialog" data-width="900" data-height="500" data-id="dialog-mask" data-mask="true" >详细</a></td>
-		   <td>
-               <a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/del',array('id'=>$v['id'],'navTabId'=>CONTROLLER_NAME))}" class="btn btn-sm" data-toggle="doajax" data-confirm-msg="确定要删除该行信息吗？">删除</a>
-		   </td>
          </tr> 
           </volist>
         </tbody>
