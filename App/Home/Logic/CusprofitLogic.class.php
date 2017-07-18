@@ -36,7 +36,11 @@ class CusprofitLogic extends Model{
 		}
 		//更新已付款记录
 		if(intval($cusprofitData["yifu"]) + intval($jine) - intval($cusprofitData["commission"]) <= 0){
-			M("cusprofit")->where('id='.$id)->setInc('yifu',$jine);
+			$ret = M("cusprofit")->where('id='.$id)->setInc('yifu',$jine);
+			if($ret){
+				//同步订单中的已付款
+				D("hetong","Logic")->doFuForAgent($cusprofitData["jhid"]);
+			}
 		}
 		//检测该笔提成是否完成
 		if(intval($cusprofitData["yifu"]) + intval($jine) - intval($cusprofitData["commission"]) == 0){
@@ -51,7 +55,7 @@ class CusprofitLogic extends Model{
 	 * @return array
 	 */
 	public function doOrderProfit($data){
-		if(empty($data) || !isset($data["jcid"]) || !isset($data["jhid"]) || !isset($data["jhcode"]) || !isset($data["jine"]) || !isset($data["profit"]) || !isset($data["level"])){
+		if(empty($data) || !isset($data["jcid"]) || !isset($data["jhid"]) || !isset($data["jhcode"]) || !isset($data["jine"]) || !isset($data["level"])){
 			return false;
 		}
 		//查询是否已经增加利润提成
@@ -74,7 +78,7 @@ class CusprofitLogic extends Model{
 		}
 		$tmpData["rate"] = intval($cust_info["rate"]) - intval($tmpData["pre_rate"]);//本机构利润率减去下级机构的利润率
 		//计算佣金
-		$tmpData["commission"] = floatval(intval($tmpData["profit"]) * intval($tmpData["rate"]) / 100);
+		$tmpData["commission"] = floatval(intval($tmpData["jine"]) * intval($tmpData["rate"]) / 100);
 		//保存数据
 		$cusprofit_model = D("cusprofit");
 		$cusprofit_model->startTrans();
@@ -321,5 +325,14 @@ class CusprofitLogic extends Model{
 			}
 		}
 		return $list;
+	}
+
+	/**
+	 * 根据订单ID统计订单的已付款总额
+	 * @param $order_id
+	 * @return mixed
+	 */
+	public function countSumYiFuByOrderId($order_id){
+		return M("cusprofit")->where("jhid=".$order_id)->sum("yifu");
 	}
 }

@@ -482,6 +482,34 @@ class MessagebaseLogic extends BaseLogic{
 	}
 
 	/**
+	 * 返现完成发送消息给客户
+	 * @param $param
+	 * @return array
+	 */
+	public function sendMsgForFuByCustomer($param){
+		if(empty($param) || !isset($param["customer_id"]) || !is_numeric($param["customer_id"]) || intval($param["customer_id"]) <= 0 || !isset($param["customer_openid"]) || !isset($param["customer_name"])){
+			return $this->callback(false,"sendMsgForPayByCustomer customer param valid");
+		}
+		if(!isset($param["order_bianhao"]) || !isset($param["order_summoney"]) || !isset($param["order_jine"]) || !isset($param["order_yishou"]) || !isset($param["order_weishou"]) || !isset($param["order_addtime"])){
+			return $this->callback(false,"sendMsgForPayByCustomer order param valid");
+		}
+		if(!isset($param["pay_money"]) || !is_numeric($param["pay_money"]) || intval($param["pay_money"]) <= 0){
+			return $this->callback(false,"sendMsgForPayByCustomer pay money valid");
+		}
+		//从配置文件中读取消息模板
+		$msg_tpl = $this->getMsgTpl($this->code["fu_customer"]);
+		if(empty($msg_tpl)){
+			return $this->callback(false,"tpl not found");
+		}
+		//填充数据模板
+		$msg_tpl["touser"] = $param["customer_openid"];
+		$msg_tpl["data"]["keyword1"]["value"] = sprintf($msg_tpl["data"]["keyword1"]["value"],$param["customer_name"]);
+		//发送模板消息
+		D("wechat","Logic")->sendTemplateMessage($msg_tpl);
+		return $this->callback(true);
+	}
+
+	/**
 	 * 根据code读取消息模板
 	 * @param $code
 	 * @return string

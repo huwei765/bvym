@@ -71,13 +71,13 @@ class FuLogic extends Model{
 		}
 		$ret = $this->addFuInfoForAgent($tmpData);
 		if($ret){
-			//付款完成时发送的消息
-			$pay_type = getPayWay($tmpData["type"]);
-			D("message","Logic")->sendMsgForFu(array("hid"=>$tmpData["jhid"],"pay_money"=>$tmpData["jine"],"pay_type"=>$pay_type));
 			//修改收款状态为已返现
 			//D("shou","Logic")->setFanOverById($tmpData["shouid"]);//去掉收款单中的付款状态标示
 			//更新提成明细中的已付款
 			D("cusprofit","Logic")->doFuForAgent($tmpData["profitid"],$ret,$tmpData["shouid"],$tmpData["jine"]);
+			//付款完成时发送的消息
+			$pay_type = getPayWay($tmpData["type"]);
+			D("message","Logic")->sendMsgForFu(array("hid"=>$tmpData["jhid"],"pay_money"=>$tmpData["jine"],"pay_type"=>$pay_type));
 		}
 		return $ret;
 	}

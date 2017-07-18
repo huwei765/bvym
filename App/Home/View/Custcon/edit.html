@@ -2,38 +2,94 @@
     <form action="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/edit',array('navTabId'=>CONTROLLER_NAME))}" class="pageForm" data-toggle="validate">
 		<input type="hidden" name="id" value="{$id}">
         <div class="pageFormContent" data-layout-h="0">
-          <table class="table table-condensed table-hover" width="100%">
-              <tbody>
-              <tr>
-                  <td><label for='xingming_input' class='control-label x85'>客户姓名:</label><input type='text' id='xingming' name='xingming'  size='20' data-rule='required;chinese;'   value='{$Rs.xingming}'  ></td>
-                  <td><label for='sex_input' class='control-label x85'>性别:</label>
-                      <select name='sex'  data-toggle='selectpicker' >
-                          <option value=''>请选择</option>
-                          <volist name='Think.config.SYS_SEX' id='sex'>
-                              <option value='{$sex.value}' <if condition=" $sex.value EQ $Rs['sex'] " >selected</if> >{$sex.name}</option>
-                          </volist>
-                  </td>
-              </tr>
-              <tr>
-                  <td><label for='phone_input' class='control-label x85'>手机号码:</label><input type='text' id='phone' name='phone' data-rule="required;mobile;" size='20'   value='{$Rs.phone}'  ></td>
-                  <td><label for='email_input' class='control-label x85'>EMAIL:</label><input type='text' id='email' name='email' data-rule="email;"  size='20'   value='{$Rs.email}'  ></td>
-              </tr>
-              <tr>
-                  <td colspan="2"><label for='wxname_input' class='control-label x85'>绑定微信号:</label><input type='text' id='nickname' name='nickname'  size='20' data-toggle='lookup' data-url='{:U(MODULE_NAME."/public/wxuser",array("navTabId"=>CONTROLLER_NAME))}'  value='{$Rs.nickname}'>
-                      <input type="hidden" id='wxid' name='wxid' value='{$Rs.wxid}'>
-                  </td>
-              </tr>
-              <tr>
-                  <td colspan="2"><label for='jcname_input' class='control-label x85'>渠道商:</label><input type='text' id='jcname' name='jcname'  size='0' data-toggle='lookup' data-url='{:U(MODULE_NAME."/public/cname",array("navTabId"=>CONTROLLER_NAME))}'  value='{$jcname}'>
-                      <input type="hidden" id='jcid' name='jcid' value='{$jcid}'>
-                  </td>
-              </tr>
-              <tr></tr>
-              <tr>
-                  <td colspan=2><label for='beizhu_input' class='control-label x85'>备注:</label><textarea name='beizhu'  cols='65' rows='5' >{$Rs.beizhu}</textarea></td>
-              </tr>
-              </tbody>
-          </table>
+            <table class="table table-condensed table-hover" width="100%">
+                <tbody>
+                <tr>
+                    <td><label for='xingming_input' class='control-label x120'>客户姓名:</label><input type='text' id='xingming' name='xingming'  size='20' data-rule="required;"   value='{$Rs.xingming}'  ></td>
+                    <td><label for='sex_input' class='control-label x120'>性别:</label>
+                        <select name='sex'  data-toggle='selectpicker' size="20">
+                            <option value=''>请选择</option>
+                            <volist name='Think.config.SYS_SEX' id='sex'>
+                                <option value='{$sex.value}' <if condition=" $sex.value EQ $Rs['sex'] " >selected</if> >{$sex.name}</option>
+                            </volist></select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for='phone_input' class='control-label x120'>手机号码:</label><input type='text' id='phone' name='phone' size='20'   value='{$Rs.phone}' data-rule="mobile;" ></td>
+                    <td><label for='email_input' class='control-label x120'>EMAIL:</label><input type='text' id='email' name='email'  size='20'   value='{$Rs.email}' data-rule="email;"  ></td>
+                </tr>
+                <tr>
+                    <td><label for='nickname_input' class='control-label x120'>绑定微信号:</label><input type='text' id='nickname' name='nickname'  size='20' data-toggle='lookup' data-url='{:U(MODULE_NAME."/public/wxuser",array("navTabId"=>CONTROLLER_NAME))}'  value='{$Rs.nickname}'>
+                        <input type="hidden" id='wxid' name='wxid' value='{$Rs.wxid}'>
+                    </td>
+                    <td><label for='jcname_input' class='control-label x120'>所属店家:</label><input type='text' id='jcname' name='jcname'  size='20' data-toggle='lookup' data-url='{:U(MODULE_NAME."/public/cname",array("navTabId"=>CONTROLLER_NAME))}'  value='{$Rs.jcname}'>
+                        <input type="hidden" id='jcid' name='jcid' value='{$Rs.jcid}'>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for='card_input' class='control-label x120'>VIP卡号:</label><input type='text' id='card' name='card' size='20'   value='{$DetailRs.card}' data-rule="digit;" ></td>
+                    <td><label for='points_input' class='control-label x120'>客户积分:</label><input type='text' id='points' name='points'  size='20'   value='{$DetailRs.points}' ></td>
+                </tr>
+                <tr>
+                    <td><label for='birthday_input' class='control-label x120'>生日:</label><input type='text' data-toggle='datepicker' id='birthday' name='birthday'   size='20'   value='{$DetailRs.birthday|substr=###,0,10}'  ></td>
+                    <td><label for='marriage_input' class='control-label x120'>婚姻:</label>
+                        <select name='marriage'  data-toggle='selectpicker' size="20">
+                            <option value='0'>保密</option>
+                            <option value='1'>未婚</option>
+                            <option value='2'>已婚</option>
+                            <option value='3'>离异</option>
+                            <option value='4'>丧偶</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for='job_input' class='control-label x120'>职业/工作:</label><input type='text' id='job' name='job' size='20'   value='{$DetailRs.job}'></td>
+                    <td><label for='memberage_input' class='control-label x120'>成为店家会员年限:</label><input type='text' id='memberage' name='memberage'  size='20'   value='{$DetailRs.memberage}' ></td>
+                </tr>
+                <tr>
+                    <td><label for='maxcost_input' class='control-label x120'>在店家单笔最大消费:</label><input type='text' id='maxcost' name='maxcost' size='20'   value='{$DetailRs.maxcost}'></td>
+                    <td><label for='sumcost_input' class='control-label x120'>在店家累计消费:</label><input type='text' id='sumcost' name='sumcost'  size='20'   value='{$DetailRs.sumcost}' ></td>
+                </tr>
+                <tr>
+                    <td><label for='hometown_input' class='control-label x120'>家乡:</label><input type='text' id='hometown' name='hometown' size='20'   value='{$DetailRs.hometown}' ></td>
+                    <td><label for='obode_input' class='control-label x120'>常住地:</label><input type='text' id='obode' name='obode'  size='20'   value='{$DetailRs.obode}' ></td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for='haslover_input' class='control-label x120'>是否有情人:</label>
+                        <input type='radio'  name='haslover' data-toggle='icheck'  data-label='没有' value='0'>
+                        <input type='radio'  name='haslover' data-toggle='icheck'  data-label='有' value='1' >
+                    </td>
+                    <td>
+                        <label for='hasloverh_input' class='control-label x120'>配偶是否有情人:</label>
+                        <input type='radio'  name='hasloverh' data-toggle='icheck'  data-label='没有' value='0' >
+                        <input type='radio'  name='hasloverh' data-toggle='icheck'  data-label='有' value='1' >
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for='clothingbrand_input' class='control-label x120'>服装品牌:</label><input type='text' id='clothingbrand' name='clothingbrand' size='20'   value='{$DetailRs.clothingbrand}'></td>
+                    <td><label for='bagbrand_input' class='control-label x120'>包包品牌:</label><input type='text' id='bagbrand' name='bagbrand'  size='20'   value='{$DetailRs.bagbrand}' ></td>
+                </tr>
+                <tr>
+                    <td><label for='house_input' class='control-label x120'>住宅情况:</label><textarea name='house'  cols='20' rows='2' >{$DetailRs.house}</textarea></td>
+                    <td><label for='car_input' class='control-label x120'>私家车情况:</label><textarea name='car'  cols='20' rows='2' >{$DetailRs.car}</textarea></td>
+                </tr>
+                <tr>
+                    <td><label for='assets_input' class='control-label x120'>资产情况:</label><textarea name='assets'  cols='20' rows='2' >{$DetailRs.assets}</textarea></td>
+                    <td><label for='cost_input' class='control-label x120'>花销情况:</label><textarea name='cost'  cols='20' rows='2' >{$DetailRs.cost}</textarea></td>
+                </tr>
+                <tr>
+                    <td><label for='xingge_input' class='control-label x120'>性格:</label><textarea name='xingge'  cols='20' rows='2' >{$DetailRs.xingge}</textarea></td>
+                    <td><label for='taboo_input' class='control-label x120'>忌讳:</label><textarea name='taboo'  cols='20' rows='2' >{$DetailRs.taboo}</textarea></td>
+                </tr>
+                <tr>
+                    <td colspan=2><label for='interest_input' class='control-label x120'>兴趣:</label><textarea name='interest'  cols='65' rows='3' >{$DetailRs.interest}</textarea></td>
+                </tr>
+                <tr>
+                    <td colspan=2><label for='beizhu_input' class='control-label x120'>备注:</label><textarea name='beizhu'  cols='65' rows='3' >{$DetailRs.beizhu}</textarea></td>
+                </tr>
+                </tbody>
+            </table>
         </div>
         <div class="bjui-footBar">
             <ul>

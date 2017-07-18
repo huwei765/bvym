@@ -42,8 +42,6 @@ class HetongLogic extends Model{
 		$tmpdata["jhname"] = $data["title"];//合同名称
 		$tmpdata["jhcode"] = $data["bianhao"];//合同编号
 		$tmpdata["jine"] = $data["jine"];//合同金额
-		$tmpdata["base_jine"] = $data["base_jine"];//合同成本
-		$tmpdata["profit"] = $data["profit"];//提成利润基数
 		$tmpdata["cuid"] = $data["cuid"];//客户id
 		$tmpdata["cuname"] = $data["cuname"];//客户姓名
 
@@ -239,7 +237,6 @@ class HetongLogic extends Model{
 					"data" => array(
 						"num" => "-",
 						"jine" => "-",
-						"profit" => "-",
 						"yishou" => "-",
 						"weishou" => "-",
 						"cnum" => "-",
@@ -266,11 +263,31 @@ class HetongLogic extends Model{
 		$firstDay = strtotime($BeginDate);//指定月的第一天
 		$endDay = strtotime("$BeginDate +1 month -1 day");
 		$map["addtime"] = array(array('egt',$firstDay),array('elt',$endDay));
-		$result = M("hetong")->field("count(id) as 'num',sum(jine) as 'jine',sum(profit) as 'profit',sum(yishou) as 'yishou',sum(weishou) as 'weishou'")->where($map)->find();
+		$result = M("hetong")->field("count(id) as 'num',sum(jine) as 'jine',sum(yishou) as 'yishou',sum(weishou) as 'weishou'")->where($map)->find();
 		$cusprofit_data = D("cusprofit","Logic")->reportMoneyByInterval($firstDay,$endDay);
 		if(!empty($cusprofit_data)){
 			$result = array_merge($result,$cusprofit_data);
 		}
 		return $result;
+	}
+
+	/**
+	 * 同步已付款到订单信息中
+	 * @param $id
+	 * @return bool
+	 */
+	public function doFuForAgent($id){
+		//查询订单信息
+		$hetong = $this->getHetongInfo(array("id"=>$id));
+		if(empty($hetong)){
+			return false;
+		}
+		//根据订单ID统计提成中的已付款
+		$yifu = D("cusprofit","Logic")->countSumYiFuByOrderId($id);
+		//比较已付款
+		//更新已付款
+		if(intval($hetong["yishou"]) > intval($yifu)){
+			M("hetong")->where('id='.$id)->setInc('fukuan',$yifu);
+		}
 	}
 }

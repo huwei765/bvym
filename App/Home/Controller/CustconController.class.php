@@ -44,6 +44,10 @@ class CustconController extends CommonController{
   }
 	
    public function _after_add($id){
+	   $data=I('post.');
+	   //新增客户基本信息后，再增加详细信息
+	   $data["cuid"] = $id;
+	   D("custcon","Logic")->addConDetailInfo($data);
 	   //新增客户后发送消息
 	   D("message","Logic")->sendMsgForCustomerNew(array("customer_id"=>$id));
    }
@@ -62,18 +66,23 @@ class CustconController extends CommonController{
   }
   
   public function _befor_edit(){
-     $model = D($this->dbname);
-	 $info = $model->find(I('get.id'));
-	 $attid=$info['attid'];
-	 $this->assign('attid',$attid);
+	  //查询详细信息
+	  $cuid = I("get.id");
+	  if(is_numeric($cuid)){
+		  $detailInfo = D("custcon","Logic")->getDetailInfoByCUid($cuid);
+		  $this->assign('DetailRs',$detailInfo);
+	  }
   }
    
   public function _befor_update($data){
-
+	  return $data;
   }
   
     public function _after_edit($id){
-     
+		if(is_numeric($id)){
+			$form_data=I('post.');
+			D("custcon","Logic")->editDetailInfoByCUid($id,$form_data);
+		}
    }
 
    public function _befor_del($id){

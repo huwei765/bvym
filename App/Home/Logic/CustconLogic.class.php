@@ -97,4 +97,57 @@ class CustconLogic extends Model{
 		return M("custcon")->field($field)->where($condition)->order($order)->select();
 	}
 
+	/**
+	 * 根据CUID查询客户详细信息
+	 * @param $cuid
+	 * @param string $field
+	 * @return mixed
+	 */
+	public function getDetailInfoByCUid($cuid,$field="*"){
+		return $this->getDetailInfo(array("cuid"=>$cuid),$field);
+	}
+
+	/**
+	 * 查询详细信息
+	 * @param $condition
+	 * @param string $field
+	 * @return mixed
+	 */
+	public function getDetailInfo($condition,$field="*"){
+		return M("condetail")->field($field)->where($condition)->find();
+	}
+
+	/**
+	 * 添加客户详细信息
+	 * @param $data
+	 * @return bool|mixed
+	 */
+	public function addConDetailInfo($data){
+		if(empty($data)){
+			return false;
+		}
+		if(!isset($data["cuid"]) || !is_numeric($data["cuid"])){
+			return false;
+		}
+		$cuid = $data["cuid"];
+		//查询客户基本信息
+		$cinfo = $this->getCustconInfoById($cuid);
+		if(empty($cinfo)){
+			return false;
+		}
+		$data["cuid"] = $cuid;
+		$data["cuname"] = $cinfo["xingming"];
+		$conDetailModel = D("condetail");
+		if($conDetailModel->create($data)){
+			return $conDetailModel->add();
+		}
+		else{
+			return false;
+		}
+	}
+
+	public function editDetailInfoByCUid($cuid,$data){
+		unset($data["id"]);
+		return M("condetail")->where("cuid=".$cuid)->save($data);
+	}
 }

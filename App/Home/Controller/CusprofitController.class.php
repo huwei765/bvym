@@ -130,7 +130,7 @@ class CusprofitController extends CommonController{
 	 */
 	public function no_pay(){
 		$model = D("cusprofit",'Logic');
-		$list = $model->GetNoPayProfitListForFan();
+		$list = $model->GetNoPayProfitListForFan('*','','id desc');
 		$this->assign('list', $list);
 		$this->display("index_no_pay");
 	}
