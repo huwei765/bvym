@@ -32,8 +32,6 @@ class HrController extends CommonController{
   
   
   public function _befor_add(){
-	  $attid=time();
-	  $this->assign('attid',$attid);
     
   }
 	
@@ -42,7 +40,6 @@ class HrController extends CommonController{
    }
 
   public function _befor_insert($data){
-	$data['birthday']=substr(I('shengri'),5,2);
 	 return $data;
   }
   

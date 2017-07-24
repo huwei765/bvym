@@ -27,11 +27,9 @@
 <th data-order-direction='desc' data-order-field='bumen'>部门</th>
 <th data-order-direction='desc' data-order-field='zhiwei'>职位</th>
 <th data-order-direction='desc' data-order-field='shengri'>生日</th>
-<th>员工类型</th>
+
 <th data-order-direction='desc' data-order-field='ruzhi'>入职时间</th>
-<th>在职状态</th>
-<th data-order-direction='desc' data-order-field='zhuanye'>专业</th>
-<th data-order-direction='desc' data-order-field='xueli'>学历</th>
+
 
 			<th>详细</th>
 		    <th <php>echo display(CONTROLLER_NAME.'/del');</php> >状态</th>
@@ -45,16 +43,13 @@
 		   <td></td>
 		   <td>{$v.id}</td>
 <td>{$v.xingming|msubstr=###,0,20}</td>
-<td>{$v.sex}</td>
+<td>{$v.sex|getSex=###}</td>
 <td>{$v.gonghao}</td>
 <td>{$v.bumen}</td>
 <td>{$v.zhiwei}</td>
 <td>{$v.shengri|substr=###,0,10}</td>
-<td>{$v.type|msubstr=###,0,20}</td>
+
 <td>{$v.ruzhi|substr=###,0,10}</td>
-<td>{$v.zaizhi|msubstr=###,0,20}</td>
-<td>{$v.zhuanye}</td>
-<td>{$v.xueli}</td>
 
 		   <td><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/view',array('id'=>$v['id'],'navTabId'=>CONTROLLER_NAME))}"  data-toggle="dialog" data-width="900" data-height="500" data-id="dialog-mask" data-mask="true" >详细</a></td>
 		   <td <php>echo display(CONTROLLER_NAME.'/del');</php> ><a href="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/del',array('id'=>$v['id'],'navTabId'=>CONTROLLER_NAME))}" data-toggle="doajax" data-confirm-msg="确定要操作吗？"><if condition="$v.status EQ 1 "><img src="__PUBLIC__/images/ok.gif" border="0"/><else/><img src="__PUBLIC__/images/locked.gif" border="0"/></if></a></td>
