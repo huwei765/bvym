@@ -1,0 +1,71 @@
+<div class="bjui-pageContent">
+        <div class="pageFormContent" style="margin:1px;" data-layout-h="0">
+		          <ul class="nav nav-tabs" role="tablist">
+                      <li class="active"><a href="#cust" role="tab" data-toggle="tab">机构信息</a></li>
+                      <!--<li><a href="{:U(MODULE_NAME.'/custgd/getlist',array('jcid'=>I('id'),'navTabId'=>'custgd'))}" role="tab" data-toggle="ajaxtab" data-target="#custgd" data-reload="true">跟单记录</a></li>-->
+                      <!--<li><a href="{:U(MODULE_NAME.'/jght/getbase',array('jcid'=>I('id'),'navTabId'=>'jght'))}" role="tab" data-toggle="ajaxtab" data-target="#jght" data-reload="true">合同管理</a></li>-->
+                      <li><a href="{:U(MODULE_NAME.'/custcon/getlist',array('jcid'=>I('id'),'navTabId'=>'custcon'))}" role="tab" data-toggle="ajaxtab" data-target="#custcon" data-reload="true">客户管理</a></li>
+                      <li><a href="{:U(MODULE_NAME.'/cust/getlistbycust',array('jcid'=>I('id'),'navTabId'=>'cust'))}" role="tab" data-toggle="ajaxtab" data-target="#custlist" data-reload="true">机构管理</a></li>
+                  </ul>
+		 <div class="tab-content">
+             <div class="tab-pane fade active in" id="cust">
+               <table class="table table-bordered table-striped table-hover">
+           <tbody>
+		   <tr>
+               <td><label for='title_input' class='control-label x85'>机构名称:</label>{$Rs.title}</td>
+               <td><label for='title_input' class='control-label x85'>机构类别:</label>{$Rs.cate|getCustCate=###,0,20}</td>
+               <td><label for='dizhi_input' class='control-label x85'>机构地址:</label>{$Rs.dizhi}</td>
+           </tr>
+           <tr>
+               <td><label for='xingming_input' class='control-label x85'>联系人:</label>{$Rs.xingming}</td>
+               <td><label for='sex_input' class='control-label x85'>性别:</label>{$Rs.sex|getSex=###}</td>
+               <td><label for='bumen_input' class='control-label x85'>部门职务:</label>{$Rs.bumen}</td>
+           </tr>
+           <tr>
+               <td><label for='phone_input' class='control-label x85'>手机号码:</label>{$Rs.phone}</td>
+               <td><label for='email_input' class='control-label x85'>EMAIL:</label>{$Rs.email}</td>
+               <td><label for='wx_input' class='control-label x85'>关联微信用户:</label>{$Rs.wxname}</td>
+           </tr>
+           <tr>
+               <td><label for='juname_input' class='control-label x85'>跟单人:</label>{$Rs.juname}</td>
+               <td><label for='uname_input' class='control-label x85'>添加人:</label>{$Rs.uname}</td>
+               <td><label for='addtime_input' class='control-label x85'>添加时间:</label>{$Rs.addtime|date="Y-m-d H:i",###}</td>
+           </tr>
+           <tr>
+               <td colspan="3"><label for='jcname_input' class='control-label x85'>上级:</label>{$Rs.jcname}</td>
+           </tr>
+           <tr><td colspan=3><label for='beizhu_input' class='control-label x85'>客户描述:</label><textarea name='beizhu'  cols='65' rows='5' >{$Rs.beizhu}</textarea></td></tr>
+           </tbody>
+          </table>
+		  </div>
+             <div class='tab-pane fade' id='custgd'></div>
+             <div class='tab-pane fade' id='jght'></div>
+             <div class='tab-pane fade' id='custcon'></div>
+             <div class='tab-pane fade' id='custlist'></div>
+		 </div>
+        </div>
+		<div class="bjui-footBar">
+        <ul>
+            <li><button type="button" class="btn-close" data-icon="close">关闭</button></li>
+        </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    //注册各种回调事件
+    function dialogCloseFunForCustgd() {
+        $("a[data-target='#custgd']").click();
+        return true;
+    }
+    function dialogCloseFunForHT() {
+        $("a[data-target='#jght']").click();
+        return true;
+    }
+    function dialogCloseFunForCustcon() {
+        $("a[data-target='#custcon']").click();
+        return true;
+    }
+    function dialogCloseFunForCustlist() {
+        $("a[data-target='#custlist']").click();
+        return true;
+    }
+</script>

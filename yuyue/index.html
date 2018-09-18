@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>碧薇医美在线预约</title>
+    <link href="./css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="./css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+    <style>
+        body{font-size:16px}
+        h2{text-align:center}
+        .form-horizontal .control-label {
+            text-align: right;
+        }
+        .col-sm-2 {
+            width: 20%;
+        }
+        .col-sm-10 {
+            width: 70%;
+        }
+        .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11 {
+            float: left;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <form id="yuyueForm" action="" class="form-horizontal"  role="form">
+        <fieldset>
+            <div class="form-group">
+                <label for="dtp_input1" class="col-sm-2 control-label">店 家</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="dtp_input1" name="jcname" placeholder="店家">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="dtp_input2" class="col-sm-2 control-label">时 间</label>
+                <div class="input-group date form_datetime col-sm-10" data-date="2018-9-18T05:25:07Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input2">
+                    <input class="form-control" size="16" type="text" value="" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                </div>
+                <input type="hidden" id="dtp_input2" name="oktime" value="" /><br/>
+            </div>
+            <div class="form-group">
+                <label for="dtp_input3" class="col-sm-2 control-label">地 点</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="dtp_input3" name="address" placeholder="地点">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="dtp_input4" class="col-sm-2 control-label">老 师</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="dtp_input4" name="uname" placeholder="老师">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="dtp_input5" class="col-sm-2 control-label">接 待</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="dtp_input5" name="juname" placeholder="接待">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="dtp_input6" class="col-sm-2 control-label">备 注</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="dtp_input6" name="beizhu" placeholder="备注">
+                </div>
+            </div>
+            <div class="modal-footer" style="text-align: center;">
+                <button style="width: 50%;" id="signnow" class="btn btn-info btn-lg" role="button" data-toggle="modal" data-target="#signUpModal">立即报名</button>
+            </div>
+        </fieldset>
+        <!-- 报名申请模态框 -->
+        <div class="modal fade" id="signUpModal" role="dialog" aria-labelledby="signUpModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content" style="padding: 0 20px">
+                        <div class="modal-header">
+                            <div class="modal-title" id="signUpModalLabel">
+                                <div style="text-align:center;font-size: 22px;font-weight: bold">报名申请</div>
+                            </div>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label class="control-label" for="phone">手机号码</label>
+                                <input type="text" id="phone" name="phone" class="form-control" placeholder="输入你的手机号码" />
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="cuname">姓　名</label>
+                                <input type="text" id="cuname" name="cuname" class="form-control" placeholder="输入你的姓名" />
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            <button type="button" id="btn_ok" class="btn btn-info">确认</button>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript" src="./js/jquery-1.11.3.min.js" charset="UTF-8"></script>
+<script type="text/javascript" src="./js/bootstrap.min.js"></script>
+<script type="text/javascript" src="./js/bootstrap-datetimepicker.min.js" charset="UTF-8"></script>
+<script type="text/javascript" src="./js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<script type="text/javascript">
+    $('.form_datetime').datetimepicker({
+        language:  'zh-CN',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1
+    });
+    $('.form_date').datetimepicker({
+        language:  'zh-CN',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        forceParse: 0
+    });
+    $('.form_time').datetimepicker({
+        language:  'fr',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 1,
+        minView: 0,
+        maxView: 1,
+        forceParse: 0
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#btn_ok").click(function(){
+            var cuname = $("input[name='cuname']").val();
+            var phone = $("input[name='phone']").val();
+            var jcname = $("input[name='jcname']").val();
+            var uname = $("input[name='uname']").val();
+            var juname = $("input[name='juname']").val();
+            var address = $("input[name='address']").val();
+            var oktime = $("input[name='oktime']").val();
+            var beizhu = $("input[name='beizhu']").val();
+            var _data = {
+                cuname:cuname,
+                phone:phone,
+                jcname:jcname,
+                uname:uname,
+                juname:juname,
+                address:address,
+                oktime:oktime,
+                beizhu:beizhu
+            };
+            $.ajax({
+                url:"/index.php?m=Home&c=yuyue&a=add",
+                type:"post",
+                data:_data,
+                dataType:"json",
+                success:function(data){
+                    if(data && data.statusCode){
+                        if(data.statusCode == 200){
+                            alert("预约成功");
+                        }
+                        else{
+                            alert("预约失败，或你已经预约过！");
+                        }
+                    }
+                    else{
+                        alert("连接错误，请联系客服");
+                    }
+                    location.href = location.href;
+                },
+                error:function(err){
+                    console.log(err);
+                }
+            });
+        });
+//        $('#yuyueForm').formValidation({
+//            framework:'bootstrap',
+//            excluded:':disabled',
+//            fields:{
+//                phone:{
+//                    validators:{
+//                        notEmpty:{
+//                            message:'请输入手机号~'
+//                        },
+//                        stringLength:{
+//                            max:11,
+//                            utf8Bytes:true,
+//                            trim:true,
+//                            message:'手机号格式不对'
+//                        }
+//                    }
+//                },
+//                cuname:{
+//                    validators:{
+//                        notEmpty:{
+//                            message:'请输入客户姓名~'
+//                        },
+//                        stringLength:{
+//                            max:20,
+//                            trim:true,
+//                            message:'姓名太长'
+//                        }
+//                    }
+//                },
+//                jcname:{
+//                    validators:{
+//                        notEmpty:{
+//                            message:'请输入店家姓名~'
+//                        },
+//                        stringLength:{
+//                            max:20,
+//                            trim:true,
+//                            message:'店家姓名太长'
+//                        }
+//                    }
+//                },
+//                address:{
+//                    validators:{
+//                        notEmpty:{
+//                            message:'请输入地址~'
+//                        }
+//                    }
+//                },
+//                juname:{
+//                    validators:{
+//                        notEmpty:{
+//                            message:'请输入接待人员姓名'
+//                        }
+//                    }
+//                }
+//            }
+//        }).on("success",function(){
+//            alert("xx");
+//        });
+    });
+    $('input#phone').on({change:function(){this.value=this.value.replace(/\s/g,"")}});
+    $('input#cuname').on({change:function(){this.value=this.value.replace(/\s/g,"")}});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,63 @@
+<div class="bjui-pageContent">
+    <form action="{:U(MODULE_NAME.'/'.CONTROLLER_NAME.'/edit',array('navTabId'=>CONTROLLER_NAME))}" class="pageForm" data-toggle="validate">
+		<input type="hidden" name="id" value="{$id}">
+        <div class="pageFormContent" data-layout-h="0">
+          <table class="table table-condensed table-hover" width="100%">
+              <tbody>
+              <tr>
+                  <td><label for='title_input' class='control-label x85'>机构名称:</label><input type='text' id='title' name='title' data-rule='required;' size='20'   value='{$Rs.title}'  ></td>
+                  <td><label for='dizhi_input' class='control-label x85'>机构地址:</label><input type='text' id='dizhi' name='dizhi'  size='20'   value='{$Rs.dizhi}'  ></td>
+              </tr>
+              <tr>
+                  <td><label for='xingming_input' class='control-label x85'>联系人:</label><input type='text' id='xingming' name='xingming'  size='20' data-rule='required;chinese;'   value='{$Rs.xingming}'  ></td>
+                  <td><label for='sex_input' class='control-label x85'>性别:</label><select name='sex'  data-toggle='selectpicker' ><option value=''>请选择</option>
+                      <volist name='Think.config.SYS_SEX' id='sex'>
+                          <option value='{$sex.value}' <if condition=" $sex.value EQ $Rs['sex'] " >selected</if> >{$sex.name}</option></volist></select>
+                  </td>
+              </tr>
+              <tr>
+                  <td><label for='bumen_input' class='control-label x85'>部门职务:</label><input type='text' id='bumen' name='bumen'  size='20'   value='{$Rs.bumen}'  ></td>
+                  <td><label for='phone_input' class='control-label x85'>手机号码:</label><input type='text' id='phone' name='phone' data-rule='required;mobile;' size='20'   value='{$Rs.phone}'  ></td>
+              </tr>
+              <tr>
+                  <td><label for='email_input' class='control-label x85'>EMAIL:</label><input type='text' id='email' name='email' data-rule='email;'  size='20'   value='{$Rs.email}'  ></td>
+                  <td><label for='type_input' class='control-label x85'>机构类别:</label>
+                      <select name='cate'  data-toggle='selectpicker' >
+                          <option value=''>请选择</option>
+                          <volist name='Think.config.CUS_CATE' id='cate'><option value='{$cate.value}' <if condition=" $cate.value EQ $Rs['type'] " >selected</if> >{$cate.name}</option></volist>
+                      </select>
+                  </td>
+              </tr>
+              <tr>
+                  <td><label for='wxname_input' class='control-label x85'>绑定微信号:</label><input type='text' id='wxname' name='wxname'  size='20' data-toggle='lookup' data-url='{:U(MODULE_NAME."/public/wxuser",array("navTabId"=>CONTROLLER_NAME))}'  value='{$Rs.wxname}' readonly>
+                      <input type="hidden" id='wxid' name='wxid' value='{$Rs.wxid}'>
+                  </td>
+                  <td><label for='rate_input' class='control-label x85'>提成比例:</label><input type='text' id='rate' name='rate' data-rule='required;digits;' size='20'   value='{$Rs.rate}'  >&nbsp;<i class="fa fa-percent"></i>
+                  </td>
+              </tr>
+              <tr>
+                  <td><label for='kssj_input' class='control-label x85'>生效日期:</label><input type='text' data-toggle='datepicker' id='kssj' name='kssj'   size='20'   value='{$Rs.kssj|substr=###,0,10}'  ></td>
+                  <td><label for='jsrj_input' class='control-label x85'>结束日期:</label><input type='text' data-toggle='datepicker' id='jsrj' name='jsrj'   size='20'   value='{$Rs.jsrj|substr=###,0,10}'  ></td>
+              </tr>
+              <tr>
+                  <td colspan="2"><label for='jcname_input' class='control-label x85'>上级:</label><input type='text' id='jcname' name='jcname'  size='20' data-toggle='lookup' data-url='{:U(MODULE_NAME."/public/cname",array("navTabId"=>CONTROLLER_NAME))}'  value='{$Rs.jcname}'  readonly>
+                      <input type="hidden" id="jcid" name="jcid" value="{$Rs.jcid}">
+                  </td>
+              </tr>
+              <tr>
+                  <td colspan="2"><label for='juname_input' class='control-label x85'>跟单人:</label><input type='text' id='juname' name='juname'  size='20' data-toggle='lookup' data-url='{:U(MODULE_NAME."/public/hruser",array("navTabId"=>CONTROLLER_NAME))}'  value='{$Rs.juname}'  readonly>
+                      <input type="hidden" id="juid" name="juid" value="{$Rs.juid}">
+                  </td>
+              </tr>
+              <tr><td colspan=2><label for='beizhu_input' class='control-label x85'>备注:</label><textarea name='beizhu'  cols='65' rows='5' >{$Rs.beizhu}</textarea></td></tr>
+              </tbody>
+          </table>
+        </div>
+        <div class="bjui-footBar">
+            <ul>
+                <li><button type="button" class="btn-close" data-icon="close">取消</button></li>
+                <li><button type="submit" class="btn-default" data-icon="save">保存</button></li>
+            </ul>
+        </div>
+    </form>
+</div>
