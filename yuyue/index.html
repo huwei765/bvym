@@ -7,7 +7,7 @@
     <link href="./css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="./css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
     <style>
-        body{font-size:16px}
+        body{font-size:16px;padding-top: 2em;}
         h2{text-align:center}
         .form-horizontal .control-label {
             text-align: right;
@@ -27,6 +27,29 @@
 <body>
 <div class="container">
     <form id="yuyueForm" action="" class="form-horizontal"  role="form">
+        <fieldset>
+            <div class="form-group">
+                <label for="dtp_input03" class="col-sm-2 control-label">客户类型</label>
+                <div class="col-sm-10">
+                    <select class="form-control" id="dtp_input03" name="ctype">
+                        <option value="0">新客</option>
+                        <option value="1">复诊</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="dtp_input01" class="col-sm-2 control-label">客 户</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="dtp_input01" name="cuname" placeholder="客户姓名">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="dtp_input02" class="col-sm-2 control-label">手机号码</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="dtp_input02" name="phone" placeholder="手机号码">
+                </div>
+            </div>
+        </fieldset>
         <fieldset>
             <div class="form-group">
                 <label for="dtp_input1" class="col-sm-2 control-label">店 家</label>
@@ -67,35 +90,9 @@
                 </div>
             </div>
             <div class="modal-footer" style="text-align: center;">
-                <button style="width: 50%;" id="signnow" class="btn btn-info btn-lg" role="button" data-toggle="modal" data-target="#signUpModal">立即报名</button>
+                <button style="width: 50%;" id="btn_ok" class="btn btn-info btn-lg" role="button" data-toggle="modal" data-target="#signUpModal">立即报名</button>
             </div>
         </fieldset>
-        <!-- 报名申请模态框 -->
-        <div class="modal fade" id="signUpModal" role="dialog" aria-labelledby="signUpModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-sm">
-                <div class="modal-content" style="padding: 0 20px">
-                        <div class="modal-header">
-                            <div class="modal-title" id="signUpModalLabel">
-                                <div style="text-align:center;font-size: 22px;font-weight: bold">报名申请</div>
-                            </div>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label class="control-label" for="phone">手机号码</label>
-                                <input type="text" id="phone" name="phone" class="form-control" placeholder="输入你的手机号码" />
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label" for="cuname">姓　名</label>
-                                <input type="text" id="cuname" name="cuname" class="form-control" placeholder="输入你的姓名" />
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                            <button type="button" id="btn_ok" class="btn btn-info">确认</button>
-                        </div>
-                </div>
-            </div>
-        </div>
     </form>
 </div>
 
@@ -114,31 +111,11 @@
         forceParse: 0,
         showMeridian: 1
     });
-    $('.form_date').datetimepicker({
-        language:  'zh-CN',
-        weekStart: 1,
-        todayBtn:  1,
-        autoclose: 1,
-        todayHighlight: 1,
-        startView: 2,
-        minView: 2,
-        forceParse: 0
-    });
-    $('.form_time').datetimepicker({
-        language:  'fr',
-        weekStart: 1,
-        todayBtn:  1,
-        autoclose: 1,
-        todayHighlight: 1,
-        startView: 1,
-        minView: 0,
-        maxView: 1,
-        forceParse: 0
-    });
 </script>
 <script type="text/javascript">
     $(document).ready(function(){
         $("#btn_ok").click(function(){
+            $("#btn_ok").attr("disabled",true);
             var cuname = $("input[name='cuname']").val();
             var phone = $("input[name='phone']").val();
             var jcname = $("input[name='jcname']").val();
@@ -147,6 +124,27 @@
             var address = $("input[name='address']").val();
             var oktime = $("input[name='oktime']").val();
             var beizhu = $("input[name='beizhu']").val();
+            var ctype = $("select[name='ctype'] option:selected").val();
+            if(!(/^(?!_)(?!.*?_$)[a-zA-Z0-9_\u4e00-\u9fa5]+$/.test(cuname))){
+                alert("客户名称格式不对");
+                $("#btn_ok").attr("disabled",false);
+                return;
+            }
+            if(!(/^(?!_)(?!.*?_$)[a-zA-Z0-9_\u4e00-\u9fa5]+$/.test(juname))){
+                alert("接待人名称格式不对");
+                $("#btn_ok").attr("disabled",false);
+                return;
+            }
+            if(!(/^(?!_)(?!.*?_$)[a-zA-Z0-9_\u4e00-\u9fa5]+$/.test(jcname))){
+                alert(" 店家名称格式不对");
+                $("#btn_ok").attr("disabled",false);
+                return;
+            }
+            if(!(/^1[3|4|5|8|7][0-9]\d{4,8}$/.test(phone))){
+                alert(" 客户手机号码格式不对");
+                $("#btn_ok").attr("disabled",false);
+                return;
+            }
             var _data = {
                 cuname:cuname,
                 phone:phone,
@@ -155,7 +153,8 @@
                 juname:juname,
                 address:address,
                 oktime:oktime,
-                beizhu:beizhu
+                beizhu:beizhu,
+                ctype:ctype
             };
             $.ajax({
                 url:"/index.php?m=Home&c=yuyue&a=add",
@@ -174,9 +173,11 @@
                     else{
                         alert("连接错误，请联系客服");
                     }
+                    $("#btn_ok").attr("disabled",false);
                     location.href = location.href;
                 },
                 error:function(err){
+                    $("#btn_ok").attr("disabled",false);
                     console.log(err);
                 }
             });

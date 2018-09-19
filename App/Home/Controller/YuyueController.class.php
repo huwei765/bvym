@@ -16,7 +16,13 @@ class YuyueController extends Controller{
         	if (false === $data = $model->create()) {
         		$this->mtReturn(300,"失败，".$model->getError(),$_REQUEST['navTabId'],true);
             }
-            $data = $this->_befor_insert($data);
+            //$data = $this->_befor_insert($data);
+            if (method_exists($this, '_befor_insert')) {
+                $data = $this->_befor_insert($data);
+            }
+            if (method_exists($this, '_befor_add')) {
+                $this->_befor_add($data);
+            }
             if($model->add($data)){
         		$id = $model->getLastInsID();
         		$this->mtReturn(200,"新增成功",$_REQUEST['navTabId'],true);
@@ -26,13 +32,17 @@ class YuyueController extends Controller{
 	}
 
 	public function _befor_insert($data){
-	    $phone = $data["phone"];
-	    $count = D($this->dbname,"Logic")->getCountByPhone($phone);
-	    if($count >0){
-	        $this->mtReturn(100,"该客户已经预约",$_REQUEST['navTabId'],true);
-	    }
-
+	    $data["oktime"] = strtotime($data["oktime"]);
+	    $data["ctype"] = intval($data["ctype"]);
+	    return $data;
 	}
+	public function _befor_add($data){
+    	$phone = $data["phone"];
+        $count = D($this->dbname,"Logic")->getCountByPhone($phone);
+        if($count >0){
+        	$this->mtReturn(100,"该客户已经预约",$_REQUEST['navTabId'],true);
+        }
+    }
 
 	public function _befor_edit(){}
 

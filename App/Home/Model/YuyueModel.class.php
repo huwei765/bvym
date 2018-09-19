@@ -14,13 +14,14 @@ class YuyueModel extends Model{
 		array('uname','require','请输入老师名称！'),
 		array('juname','require','请输入接待人名称！'),
 		array('address','require','请输入地址！'),
-		array('oktime','require','请输入预约时间！')
+		array('oktime','require','请输入预约时间！'),
+		array('ctype','require','请输入客户类型！')
     );
     
 		// 自动完成规则
 	protected $_auto = array (
 	    array('stype',0,1),
-	    array('addtime','getUnixTime',1,'function'),
+	    array('addtime','getUnixTime',1,'function')
 	);
 
 }
