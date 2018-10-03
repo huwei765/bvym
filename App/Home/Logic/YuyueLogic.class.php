@@ -5,6 +5,16 @@ use Think\Model;
 
 class YuyueLogic extends Model{
 
+
+    public function getCountByCName($cuname,$field="*",$order="id desc"){
+	    $BeginDate = date("Y-m-d");
+    	$firstDay = strtotime($BeginDate);
+    	$endDay = strtotime("$BeginDate +1 month -1 day");
+	    $map["cuname"] = $cuname;
+	    $map["addtime"] = array(array('egt',$firstDay),array('elt',$endDay));
+		return $this->getCount($map,$field,$order);
+	}
+
 	public function getCountByPhone($phone,$field="*",$order="id desc"){
 	    $BeginDate = date("Y-m-d");
     	$firstDay = strtotime($BeginDate);

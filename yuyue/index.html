@@ -43,12 +43,6 @@
                     <input type="text" class="form-control" id="dtp_input01" name="cuname" placeholder="客户姓名">
                 </div>
             </div>
-            <div class="form-group">
-                <label for="dtp_input02" class="col-sm-2 control-label">手机号码</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="dtp_input02" name="phone" placeholder="手机号码">
-                </div>
-            </div>
         </fieldset>
         <fieldset>
             <div class="form-group">
@@ -59,17 +53,11 @@
             </div>
             <div class="form-group">
                 <label for="dtp_input2" class="col-sm-2 control-label">时 间</label>
-                <div class="input-group date form_datetime col-sm-10" data-date="2018-9-18T05:25:07Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input2">
+                <div class="input-group date form_datetime col-sm-10"  data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input2">
                     <input class="form-control" size="16" type="text" value="" readonly>
                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                 </div>
                 <input type="hidden" id="dtp_input2" name="oktime" value="" /><br/>
-            </div>
-            <div class="form-group">
-                <label for="dtp_input3" class="col-sm-2 control-label">地 点</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="dtp_input3" name="address" placeholder="地点">
-                </div>
             </div>
             <div class="form-group">
                 <label for="dtp_input4" class="col-sm-2 control-label">老 师</label>
@@ -104,24 +92,28 @@
     $('.form_datetime').datetimepicker({
         language:  'zh-CN',
         weekStart: 1,
-        todayBtn:  1,
+        todayBtn:  0,
+        todayHighlight:false,
         autoclose: 1,
         todayHighlight: 1,
         startView: 2,
         forceParse: 0,
         showMeridian: 1
     });
+    var currentDate = new Date();
+    currentDate.setDate(currentDate.getDate()+1);
+    $('.form_datetime').datetimepicker('setStartDate', currentDate);
+    currentDate.setDate(currentDate.getDate()+7);
+    $('.form_datetime').datetimepicker('setEndDate', currentDate);
 </script>
 <script type="text/javascript">
     $(document).ready(function(){
         $("#btn_ok").click(function(){
             $("#btn_ok").attr("disabled",true);
             var cuname = $("input[name='cuname']").val();
-            var phone = $("input[name='phone']").val();
             var jcname = $("input[name='jcname']").val();
             var uname = $("input[name='uname']").val();
             var juname = $("input[name='juname']").val();
-            var address = $("input[name='address']").val();
             var oktime = $("input[name='oktime']").val();
             var beizhu = $("input[name='beizhu']").val();
             var ctype = $("select[name='ctype'] option:selected").val();
@@ -140,18 +132,11 @@
                 $("#btn_ok").attr("disabled",false);
                 return;
             }
-            if(!(/^1[3|4|5|8|7][0-9]\d{4,8}$/.test(phone))){
-                alert(" 客户手机号码格式不对");
-                $("#btn_ok").attr("disabled",false);
-                return;
-            }
             var _data = {
                 cuname:cuname,
-                phone:phone,
                 jcname:jcname,
                 uname:uname,
                 juname:juname,
-                address:address,
                 oktime:oktime,
                 beizhu:beizhu,
                 ctype:ctype

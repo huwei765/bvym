@@ -37,8 +37,8 @@ class YuyueController extends Controller{
 	    return $data;
 	}
 	public function _befor_add($data){
-    	$phone = $data["phone"];
-        $count = D($this->dbname,"Logic")->getCountByPhone($phone);
+    	$cuname = $data["cuname"];
+        $count = D($this->dbname,"Logic")->getCountByCName($cuname);
         if($count >0){
         	$this->mtReturn(100,"该客户已经预约",$_REQUEST['navTabId'],true);
         }
