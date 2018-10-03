@@ -430,13 +430,11 @@ Class CommonController extends Controller{
 	private function _getMenuList() {
 		$menu_list = array(
 			'customer' => array('name' => '客户管理','sort' => 0,'id' => 1, 'child' => array(
+			    array('name' => '客户预约','id' => 10, 'act'=>'yuyuemanager', 'op'=>'index'),
 				array('name' => '客户签到','id' => 11, 'act'=>'signin', 'op'=>'index'),
 				array('name' => '客户信息','id' => 12, 'act'=>'custcon', 'op'=>'index'),
 				array('name' => '跟单记录','id' => 13, 'act'=>'congd', 'op'=>'index'),
 				//array('name' => '咨询方案','id' => 14, 'act'=>'design', 'op'=>'index'),
-				array('name' => '订单管理','id' => 15, 'act'=>'hetong', 'op'=>'index'),
-				array('name' => '收款记录','id' => 16, 'act'=>'shou', 'op'=>'index'),
-				array('name' => '开票记录','id' => 17, 'act'=>'piao', 'op'=>'index'),
 				array('name' => '整形记录','id' => 18, 'act'=>'opsrecord', 'op'=>'index'),
 				array('name' => '统计分析','id' => 19, 'act'=>'cus_analyse', 'op'=>'index','child' => array(
 					array('name' => '客户分析','id' => 191, 'act'=>'custcon', 'op'=>'fenxi'),
@@ -459,9 +457,24 @@ Class CommonController extends Controller{
 				array('name' => '返现记录','id' => 26, 'act'=>'fu', 'op'=>'index'),
 //				array('name' => '提成设置','id' => 27, 'act'=>'cus_set', 'op'=>'index'),
 				array('name' => '统计分析','id' => 28, 'act'=>'cus_analyse', 'op'=>'index','child' => array(
-					array('name' => '机构分析','id' => 281, 'act'=>'cust', 'op'=>'fenxi')
+					array('name' => '机构分析','id' => 281, 'act'=>'cust', 'op'=>'fenxi'),
+					array('name' => '机构年流水账统计','id' => 281, 'act'=>'cust', 'op'=>'reportmoney')
 				)),
 
+			)),
+			'order' => array('name' => '订单管理','sort' => 7,'id' => 8, 'child' => array(
+				array('name' => '订单管理','id' => 81, 'act'=>'hetong', 'op'=>'index','child' => array(
+					array('name' => '待收款订单','id' => 811, 'act'=>'hetong', 'op'=>'wait_shou'),
+					array('name' => '收款完成订单','id' => 812, 'act'=>'hetong', 'op'=>'over_shou'),
+					array('name' => '待手术订单','id' => 813, 'act'=>'hetong', 'op'=>'wait_ops'),
+					array('name' => '手术完成订单','id' => 814, 'act'=>'hetong', 'op'=>'over_ops'),
+				)),
+				array('name' => '收款记录','id' => 82, 'act'=>'shou', 'op'=>'index'),
+				array('name' => '开票记录','id' => 83, 'act'=>'piao', 'op'=>'index'),
+				array('name' => '订单查询','id' => 84, 'act'=>'hetong', 'op'=>'index','child' => array(
+					array('name' => '按机构查询','id' => 841, 'act'=>'hetong', 'op'=>'query_agent'),
+					array('name' => '按客户查询','id' => 842, 'act'=>'hetong', 'op'=>'query_custcon'),
+				)),
 			)),
 			'weixin' => array('name' => '微信用户','sort' => 2,'id' => 3, 'child' => array(
 				array('name' => '微信用户','id' => 31, 'act'=>'wxuser', 'op'=>'index'),
