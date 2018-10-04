@@ -77,7 +77,7 @@ class FuLogic extends Model{
 			D("cusprofit","Logic")->doFuForAgent($tmpData["profitid"],$ret,$tmpData["shouid"],$tmpData["jine"]);
 			//付款完成时发送的消息
 			$pay_type = getPayWay($tmpData["type"]);
-			D("message","Logic")->sendMsgForFu(array("hid"=>$tmpData["jhid"],"pay_money"=>$tmpData["jine"],"pay_type"=>$pay_type));
+			D("message","Logic")->sendMsgForFu(array("hid"=>$tmpData["jhid"],"jcid"=>$tmpData["jcid"],"pay_money"=>$tmpData["jine"],"pay_type"=>$pay_type));
 		}
 		return $ret;
 	}

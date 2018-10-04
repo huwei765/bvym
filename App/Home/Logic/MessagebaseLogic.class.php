@@ -447,7 +447,7 @@ class MessagebaseLogic extends BaseLogic{
 	 * @return array
 	 */
 	public function sendMsgForFuByAgent($param){
-		if(empty($param) || !isset($param["customer_name"]) || !isset($param["agent_openid"]) || !isset($param["agent_name"]) || !isset($param["agent_child"]) || !isset($param["child_level"])){
+		if(empty($param) || !isset($param["customer_name"]) || !isset($param["agent_openid"]) || !isset($param["agent_name"])){
 			return $this->callback(false,"sendMsgForPayByAgent param valid");
 		}
 		if(!isset($param["order_bianhao"]) || !isset($param["order_summoney"]) || !isset($param["order_jine"]) || !isset($param["order_yishou"]) || !isset($param["order_weishou"]) || !isset($param["order_addtime"])){
@@ -462,20 +462,11 @@ class MessagebaseLogic extends BaseLogic{
 			return $this->callback(false,"tpl not found");
 		}
 		//填充数据模板
-		if(intval($param["child_level"]) == 1){
-			$msg_tpl["touser"] = $param["agent_openid"];
-			$msg_tpl["data"]["first"]["value"] = sprintf($msg_tpl["data"]["first"]["value"],$param["agent_child"]);
-			$msg_tpl["data"]["keyword1"]["value"] = sprintf($msg_tpl["data"]["keyword1"]["value"],$param["order_bianhao"]);
-			$msg_tpl["data"]["keyword3"]["value"] = sprintf($msg_tpl["data"]["keyword3"]["value"],$param["pay_money"]);
-			$msg_tpl["data"]["keyword4"]["value"] = sprintf($msg_tpl["data"]["keyword4"]["value"],$param["pay_type"]);
-		}
-		else{
-			$msg_tpl["touser"] = $param["agent_openid"];
-			$msg_tpl["data"]["first"]["value"] = sprintf($msg_tpl["data"]["first"]["value"],$param["agent_name"]);
-			$msg_tpl["data"]["keyword1"]["value"] = sprintf($msg_tpl["data"]["keyword1"]["value"],$param["order_bianhao"]);
-			$msg_tpl["data"]["keyword3"]["value"] = sprintf($msg_tpl["data"]["keyword3"]["value"],$param["pay_money"]);
-			$msg_tpl["data"]["keyword4"]["value"] = sprintf($msg_tpl["data"]["keyword4"]["value"],$param["pay_type"]);
-		}
+		$msg_tpl["touser"] = $param["agent_openid"];
+		$msg_tpl["data"]["first"]["value"] = sprintf($msg_tpl["data"]["first"]["value"],$param["agent_name"]);
+		$msg_tpl["data"]["keyword1"]["value"] = sprintf($msg_tpl["data"]["keyword1"]["value"],$param["order_bianhao"]);
+		$msg_tpl["data"]["keyword3"]["value"] = sprintf($msg_tpl["data"]["keyword3"]["value"],$param["pay_money"]);
+		$msg_tpl["data"]["keyword4"]["value"] = sprintf($msg_tpl["data"]["keyword4"]["value"],$param["pay_type"]);
 		//发送模板消息
 		D("wechat","Logic")->sendTemplateMessage($msg_tpl);
 		return $this->callback(true);

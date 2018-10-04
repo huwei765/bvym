@@ -290,4 +290,65 @@ class HetongLogic extends Model{
 			M("hetong")->where('id='.$id)->setInc('fukuan',$yifu);
 		}
 	}
+
+	/**
+	 * 查询指定代理商当年的统计数据
+	 * @param $agentid
+	 * @return array
+	 */
+	public function reportMoneyByYearAndAgent($agentid){
+		$records = array();
+		$cur_month = date("m",time());
+		for($i=1;$i<=12;$i++){
+			if($i - intval($cur_month) > 0){
+				$records[$i] = array(
+					"num" => "-",
+					"jine" => "-",
+					"yishou" => "-",
+					"weishou" => "-",
+					"cnum" => "-",
+					"commission" => "-",
+					"yifu" => "-"
+				);
+			}
+			else{
+				$records[$i] = $this->reportMoneyByOneMonthAndAgent($agentid,$i);
+			}
+		}
+		return $records;
+	}
+
+	/**
+	 * 查询指定代理商指定月份的统计数据
+	 * @param $agentid
+	 * @param $index
+	 * @return mixed
+	 */
+	public function reportMoneyByOneMonthAndAgent($agentid,$index){
+		//根据agentid查询所有的订单ID
+		$con_ids = M()->query("select id from xy_custcon where jcid=".$agentid);
+		if(empty($con_ids)){
+			return array("num" => 0,"jine" => 0,"yishou" => 0,"weishou" => 0,"cnum" => 0,"commission" => 0,"yifu" => 0);
+		}
+		else{
+			//客户ID集合
+			$con_ids_array = array();
+			foreach ( $con_ids as $val ) {
+				$con_ids_array[] = $val["id"];
+			}
+			//统计指定月份的金额
+			//日期参数处理
+			$BeginDate = date("Y-0".$index."-01");//获取指定月份的第一天
+			$firstDay = strtotime($BeginDate);//指定月的第一天
+			$endDay = strtotime("$BeginDate +1 month -1 day");
+			$map["addtime"] = array(array('egt',$firstDay),array('elt',$endDay));
+			$map["cuid"] = array("in",$con_ids_array);
+			$result = M("hetong")->field("count(id) as 'num',sum(jine) as 'jine',sum(yishou) as 'yishou',sum(weishou) as 'weishou'")->where($map)->find();
+			$cusprofit_data = D("cusprofit","Logic")->reportMoneyByIntervalAndAgent($agentid,$firstDay,$endDay);
+			if(!empty($cusprofit_data)){
+				$result = array_merge($result,$cusprofit_data);
+			}
+			return $result;
+		}
+	}
 }

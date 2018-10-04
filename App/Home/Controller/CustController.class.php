@@ -228,5 +228,10 @@ class CustController extends CommonController{
 		}
 		return array("cust_total_num"=>$cust_total_num,"cust_cate0_num"=>$cust_cate0_num,"cust_cate1_num"=>$cust_cate1_num);
 	}
+	public function reportmoney(){
+		$reportData = D("cust","Logic")->reportMoneyByAgent();
+		$this->assign('list',$reportData);
+		$this->display("report_money");
+	}
 
 }

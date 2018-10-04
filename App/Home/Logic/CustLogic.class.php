@@ -47,4 +47,21 @@ class CustLogic extends Model{
 		return M("cust")->field($field)->where($condition)->order($order)->select();
 	}
 
+	/**
+	 * 按代理商统计财务
+	 * @return array
+	 */
+	public function reportMoneyByAgent(){
+		$reportArray = array();
+		//查询所有的代理商
+		$agentList = $this->getList(array(),"id,title,xingming");
+		foreach($agentList as $key=>$val){
+			$reportArray[$key]["agent"] = $val;
+			$tmpData = D("hetong","Logic")->reportMoneyByYearAndAgent($val["id"]);
+			$reportArray[$key]["data"] = $tmpData;
+		}
+		return $reportArray;
+	}
+
+
 }

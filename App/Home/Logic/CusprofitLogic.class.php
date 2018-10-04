@@ -335,4 +335,18 @@ class CusprofitLogic extends Model{
 	public function countSumYiFuByOrderId($order_id){
 		return M("cusprofit")->where("jhid=".$order_id)->sum("yifu");
 	}
+
+	/**
+	 * 按代理商统计在指定时间内的佣金返现
+	 * @param $agentid
+	 * @param $firstDay
+	 * @param $endDay
+	 * @return mixed
+	 */
+	public function reportMoneyByIntervalAndAgent($agentid,$firstDay,$endDay){
+		$map["addtime"] = array(array('egt',$firstDay),array('elt',$endDay));
+		$map["jcid"] = $agentid;
+		$result = M("cusprofit")->field("count(id) as 'cnum',sum(commission) as 'commission',sum(yifu) as 'yifu'")->where($map)->find();
+		return $result;
+	}
 }
